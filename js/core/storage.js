@@ -102,7 +102,7 @@ function validateBackup(data){
   program.days=backupUnique(backupList(program.days,label+' · jours',(d,dl,di)=>{
    const day=backupFields(d,dl,{id:'legacy-day-'+pi+'-'+di},{id,name:text});text(day.name,dl);
    day.exercises=backupUnique(backupList(day.exercises,dl+' · exercices',(e,el,ei)=>{
-    const exercise=backupFields(e,el,{id:'legacy-ex-'+pi+'-'+di+'-'+ei,rest:90},{id,name:text,sets:(v,l)=>backupNumber(v,l,1,100,true),repsMin:(v,l)=>backupNumber(v,l,1,100000),repsMax:(v,l)=>backupNumber(v,l,1,100000),rest:(v,l)=>backupNumber(v,l,0,86400)});
+    const exercise=backupFields(e,el,{id:'legacy-ex-'+pi+'-'+di+'-'+ei,rest:90},{id,catalogId:id,name:text,sets:(v,l)=>backupNumber(v,l,1,100,true),repsMin:(v,l)=>backupNumber(v,l,1,100000),repsMax:(v,l)=>backupNumber(v,l,1,100000),rest:(v,l)=>backupNumber(v,l,0,86400)});
     for(const key of ['name','sets','repsMin','repsMax'])if(exercise[key]===undefined)throw backupError(el+' est incomplet.');
     if(exercise.repsMax<exercise.repsMin)throw backupError(el+' contient un intervalle de répétitions invalide.');return exercise;
    },100),dl+' · exercices');return day;
@@ -113,7 +113,7 @@ function validateBackup(data){
  result.sessions=backupUnique(backupList(result.sessions,'Séances',(s,label)=>{
   const record=backupFields(s,label,{program:'',day:'Séance',duration:0,volume:0,sets:0},{id,date:backupDay,iso:backupTimestamp,program:text,day:text,duration:num,volume:num,sets:int});
   id(record.id,label);backupDay(record.date,label);
-  record.exercises=backupList(record.exercises,label+' · exercices',(e,el)=>{const exercise=backupFields(e,el,{}, {name:text});text(exercise.name,el);exercise.sets=backupList(exercise.sets,el+' · séries',(s,sl)=>backupSet(s,sl,true),100);return exercise},100);return record;
+  record.exercises=backupList(record.exercises,label+' · exercices',(e,el)=>{const exercise=backupFields(e,el,{}, {name:text,catalogId:id});text(exercise.name,el);exercise.sets=backupList(exercise.sets,el+' · séries',(s,sl)=>backupSet(s,sl,true),100);return exercise},100);return record;
  },50000),'Séances');
  result.meals=backupUnique(backupList(result.meals,'Repas',(m,label)=>{
   const item=backupFields(m,label,{}, {id,date:backupDay,meal:text,food:text,grams:num,kcal:num,p:num,c:num,f:num});

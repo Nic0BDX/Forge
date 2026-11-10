@@ -251,35 +251,117 @@
         }
       ],
       "day_closed": false
+    },
+    {
+      "at": "2026-11-10T18:54:11+01:00",
+      "day": 4,
+      "completed": "X01",
+      "current": "X02",
+      "detail": "X01 validée : 1324 fiches Atlas, 7710 étapes françaises, 1323 médias présents dans Git, trois GIF distants téléchargés en HTTPS et décodés. Import reproductible, variantes contrôlées et attribution documentée. Les sources applicatives complètes passent les 265 contrôles ; clôture des tâches X02 et X03 à enregistrer ensuite.",
+      "evidence": [
+        {
+          "path": "docs/atlas-source-audit.json",
+          "sha256": "c92ea0c5306967a6f5f2656c38caf237ed88215a0e45708383ea9c33436a119e"
+        },
+        {
+          "path": "tests/resultats-atlas.json",
+          "sha256": "309b87804959acf24150fead282bcfafdcc8b89cbc08cdd6c43837cc8def1bd5"
+        },
+        {
+          "path": "tests/resultats-atlas-medias-live.json",
+          "sha256": "1cefc3e369fcf9ea4ec02ea4e630a4b2a94b0902621296f9c1dffdf49277069e"
+        }
+      ],
+      "day_closed": false
+    },
+    {
+      "at": "2026-11-10T18:54:28+01:00",
+      "day": 4,
+      "completed": "X02",
+      "current": "X03",
+      "detail": "X02 validée : bibliothèque Atlas intégrée, recherche FR/EN et sans accents, filtres, pagination, consignes et GIF avec arrêt/réessai. Ajout au programme et jour choisis, doublons et alias protégés, identifiant conservé dans programmes, brouillons et historique. Les 30 anciens exercices et les noms personnalisés sont préservés. Contrôles mobile et compatibilité réussis ; clôture X03 à enregistrer.",
+      "evidence": [
+        {
+          "path": "tests/resultats-atlas.json",
+          "sha256": "309b87804959acf24150fead282bcfafdcc8b89cbc08cdd6c43837cc8def1bd5"
+        },
+        {
+          "path": "tests/resultats-atlas-sauvegardes.json",
+          "sha256": "24daf63a7c1f7a628fd88b332ee43baaad978f021cf420552ab57e0d8d5e04f9"
+        },
+        {
+          "path": "tests/resultats-atlas-regression.json",
+          "sha256": "d15b713d70b991e029fcd0a4a5c4ac54a3edefb797b991137c3d0e0b918c2d20"
+        }
+      ],
+      "day_closed": false
+    },
+    {
+      "at": "2026-11-10T18:54:43+01:00",
+      "day": 4,
+      "completed": "X03",
+      "current": "",
+      "detail": "ATLAS TERMINÉ ET VALIDÉ : X01, X02 et X03 livrées. 1324 fiches Atlas, 7710 consignes FR, 1323 liens GIF vérifiés dans Git ; Pont de Londres reste sans animation. Les 30 anciens exercices sont conservés, 15 avec correspondance exacte de démonstration. Recherche FR/EN, filtres, pagination, ajout au jour choisi, démonstration pendant séance et catalogId persistant. Validation : 74 contrôles Atlas, 33 de régression sur 342 états, 66 accueil, 22 aperçu et 70 sauvegardes = 265 réussis, aucun échec. Trois GET HTTPS de GIF réels vérifiés en plus ; rendu distant Chromium standard non validé à cause du certificat du proxy. Aucun téléphone physique ni file:// testé. ZIP Forge-Exercices-Atlas.zip et copie Forge-Jour-4-Atlas.zip ; APERCU autonome avec GIF externes. Autres finitions en attente ; ne pas refaire accueil A01–A03 ni Atlas X01–X03.",
+      "evidence": [
+        {
+          "path": "tests/resultats-atlas.json",
+          "sha256": "309b87804959acf24150fead282bcfafdcc8b89cbc08cdd6c43837cc8def1bd5"
+        },
+        {
+          "path": "tests/resultats-atlas-regression.json",
+          "sha256": "d15b713d70b991e029fcd0a4a5c4ac54a3edefb797b991137c3d0e0b918c2d20"
+        },
+        {
+          "path": "tests/resultats-atlas-accueil.json",
+          "sha256": "880ecc3b79e1f859607d75213f220cea95f38743ec0c7bf00ccf05cd16a6b15e"
+        },
+        {
+          "path": "tests/resultats-atlas-apercu.json",
+          "sha256": "8e9a6dedfa957c2bdef9bb71afe61654e9b111ab9375da08548661e74d5eb2cb"
+        },
+        {
+          "path": "tests/resultats-atlas-sauvegardes.json",
+          "sha256": "24daf63a7c1f7a628fd88b332ee43baaad978f021cf420552ab57e0d8d5e04f9"
+        },
+        {
+          "path": "tests/resultats-atlas-medias-live.json",
+          "sha256": "1cefc3e369fcf9ea4ec02ea4e630a4b2a94b0902621296f9c1dffdf49277069e"
+        }
+      ],
+      "day_closed": false
     }
   ],
   "mode": "paused",
   "day": 4,
-  "updated_at": "2026-11-03T14:28:05+01:00",
+  "updated_at": "2026-11-10T18:54:43+01:00",
   "current": "",
-  "detail": "ACCUEIL ANIMÉ TERMINÉ ET VALIDÉ : A01, A02 et A03 livrées. Corps original et lumière pectorale liée aux sept accents, pause mémorisée et réduction des animations ; grille 3+3+2, Bouger / Exercice / Debout, pas avec courbe, distance, calories actives et étages. Valeurs manuelles inconnues distinctes de zéro, minutes calculées depuis les séances. Validation : 31 contrôles de données, 66 ciblés accueil, 33 régression sur 342 états, 71 interactions, 22 aperçu ; 223 contrôles réussis, aucun débordement ni exception JS. APERCU.html autonome testé hors réseau ; file:// et appareils physiques non testés. Desktop1280 : rang1 y86/h352, rang2 y450/h280,5, pas y742,5. Livrable Forge-Accueil-Anime.zip, détails TESTS_ACCUEIL.md et docs/BILAN_ACCUEIL.md. La licence ajoutée sur GitHub a été préservée. Cette demande est terminée ; les finitions générales restent en pause.",
+  "detail": "ATLAS TERMINÉ ET VALIDÉ : X01, X02 et X03 livrées. 1324 fiches Atlas, 7710 consignes FR, 1323 liens GIF vérifiés dans Git ; Pont de Londres reste sans animation. Les 30 anciens exercices sont conservés, 15 avec correspondance exacte de démonstration. Recherche FR/EN, filtres, pagination, ajout au jour choisi, démonstration pendant séance et catalogId persistant. Validation : 74 contrôles Atlas, 33 de régression sur 342 états, 66 accueil, 22 aperçu et 70 sauvegardes = 265 réussis, aucun échec. Trois GET HTTPS de GIF réels vérifiés en plus ; rendu distant Chromium standard non validé à cause du certificat du proxy. Aucun téléphone physique ni file:// testé. ZIP Forge-Exercices-Atlas.zip et copie Forge-Jour-4-Atlas.zip ; APERCU autonome avec GIF externes. Autres finitions en attente ; ne pas refaire accueil A01–A03 ni Atlas X01–X03.",
   "next": "V03",
-  "next_command": "Attendre une nouvelle demande. Lire ce point et docs/BILAN_ACCUEIL.md. Ne pas refaire A01/A02/A03. Restent C03 (relecture générale), U04 (accessibilité), V03 (comparaison des autres écrans), P04 et cinq blocages externes. Ne pas prétendre que le corps original est le fichier exact de la vidéo.",
+  "next_command": "Lire docs/JOURNAL_ATLAS.md et TESTS_ATLAS.md. Cette demande est terminée. Attendre la prochaine instruction avant de reprendre C03, U04, V03 globale ou P04. Propositions : GIF manquant, relecture des traductions, favoris. Reprendre le point de reprise sans refaire les tâches validées.",
   "evidence": [
     {
-      "path": "tests/resultats-activite-donnees.json",
-      "sha256": "eaaaa6b9fd1bbdd48f961a005e08a45d3d2038a504e5611a611ff1cefcd4a9f0"
+      "path": "tests/resultats-atlas.json",
+      "sha256": "309b87804959acf24150fead282bcfafdcc8b89cbc08cdd6c43837cc8def1bd5"
     },
     {
-      "path": "tests/resultats-accueil-anime.json",
-      "sha256": "1f326d2f26bb428383bd9ea50cb30854f5c6822dc0655cf05baabb028f8b7c9a"
+      "path": "tests/resultats-atlas-regression.json",
+      "sha256": "d15b713d70b991e029fcd0a4a5c4ac54a3edefb797b991137c3d0e0b918c2d20"
     },
     {
-      "path": "tests/resultats-accueil-regression.json",
-      "sha256": "1bcff4062baca2855465b4193486562a127c5589e8d338d3e5b3128a5f566b76"
+      "path": "tests/resultats-atlas-accueil.json",
+      "sha256": "880ecc3b79e1f859607d75213f220cea95f38743ec0c7bf00ccf05cd16a6b15e"
     },
     {
-      "path": "tests/resultats-accueil-interactions.json",
-      "sha256": "4761472b902fb590cd3cbd7785e289c7eaa3ee8182dcf1f0a062bb03842f4041"
+      "path": "tests/resultats-atlas-apercu.json",
+      "sha256": "8e9a6dedfa957c2bdef9bb71afe61654e9b111ab9375da08548661e74d5eb2cb"
     },
     {
-      "path": "tests/resultats-accueil-apercu.json",
-      "sha256": "521dd811e71c51f71d80a57a88a0ca05c796ad8cca907a3c1224f8f8fb6e4f36"
+      "path": "tests/resultats-atlas-sauvegardes.json",
+      "sha256": "24daf63a7c1f7a628fd88b332ee43baaad978f021cf420552ab57e0d8d5e04f9"
+    },
+    {
+      "path": "tests/resultats-atlas-medias-live.json",
+      "sha256": "1cefc3e369fcf9ea4ec02ea4e630a4b2a94b0902621296f9c1dffdf49277069e"
     }
   ],
   "day_closed": false,

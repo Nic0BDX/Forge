@@ -331,3 +331,22 @@ Les corrections éditoriales C03 déjà écrites sont incluses et passent les pa
 - `tests/activity-data.cjs`, `home-video-smoke.cjs`, rapports `resultats-accueil-*.json`, `resultats-activite-donnees.json` et `tests/captures-accueil/` : preuves de la mission.
 - `docs/PLAN_ACCUEIL_VIDEO.md`, `docs/BILAN_ACCUEIL.md`, `TESTS_ACCUEIL.md` : répartition, bilan et validation.
 - `LICENSE` : licence ajoutée sur GitHub par le propriétaire, conservée lors de la synchronisation.
+
+
+## Ajout Atlas — 10 novembre 2026
+
+| Fichier | Rôle / état validé |
+|---|---|
+| `js/data/atlas-exercises.js` | 1 324 fiches, 7 710 consignes FR, 1 323 URL de démonstration ; catalogue statique reproductible |
+| `js/features/exercise-atlas.js` | Adaptation des données, traduction des catégories, alias conservateurs des anciens exercices, recherche, filtres, pagination, fiche et ajout atomique |
+| `css/exercises-atlas.css` | Cartes et modale dans le style Forge, mobile et thèmes |
+| `docs/import-atlas.py` | Reconstruit le catalogue à partir de deux révisions Git figées et contrôle les variantes |
+| `docs/atlas-source-audit.json` | Provenance, empreintes, compteurs et correspondances |
+| `docs/SOURCES_ATLAS.md` | Sources, limites des médias et avis de licence du dépôt de sauvegarde |
+| `docs/PLAN_ATLAS.md`, `docs/JOURNAL_ATLAS.md` | Responsables, tâches X01–X03 et bilan |
+| `tests/atlas-smoke.cjs` | 74 contrôles fonctionnels et de compatibilité |
+| `tests/fixtures/atlas-demo.gif` | GIF source réel servant de témoin de test, provenance documentée |
+| `tests/resultats-atlas*.json`, `tests/captures-atlas/` | Rapports et captures de validation |
+| `TESTS_ATLAS.md` | Couverture, résultats et commandes reproductibles |
+
+Les points d’entrée `index.html` et `preview/demo.html` chargent les nouveaux fichiers ; `APERCU.html` les embarque. Les fichiers `storage.js`, `workouts.js` et `screens.js` préservent l’identifiant facultatif `catalogId` du programme à l’historique. `ui.js` nettoie le lecteur à la fermeture. `exercises.js` conserve les modèles de programme ; l’ancien lecteur YouTube de recherche, non fiable, a été remplacé par des GIF référencés par exercice. Les quinze exercices historiques dont la variante reste ambiguë ne reçoivent pas de démonstration arbitraire.

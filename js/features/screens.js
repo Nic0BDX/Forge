@@ -2,17 +2,17 @@
 let previewSel=null,progRange='week',memFilter='all';
 function previewWorkout(pid,di){previewSel={pid,di};view='preview';window.__fresh=true;render();scrollTo(0,0)}
 function setProgRange(r){progRange=r;keepScroll(render)}
-function exMeta(name){return exerciseCatalog.find(x=>x.name===name)||{}}
+function exMeta(name,catalogId){return atlasFind(catalogId,name)||{}}
 function thumb(emoji,cls=''){return `<div class="r-thumb ${cls}" aria-hidden="true">${emoji||'🏋️'}</div>`}
 
 /* 2. Présentation de séance */
 function estDuration(d){const t=d.exercises.reduce((a,e)=>a+(Number(e.sets)||0)*(45+(Number(e.rest)||60)),0),m=Math.round(t/60);return m>=60?`${Math.floor(m/60)}h ${String(m%60).padStart(2,'0')}`:`${m} min`}
-function equipOf(d){const q=[...new Set(d.exercises.map(e=>exMeta(e.name).equipment).filter(Boolean))];return q.length?'Matériel : '+q.slice(0,2).join(', '):'Matériel : —'}
+function equipOf(d){const q=[...new Set(d.exercises.map(e=>exMeta(e.name,e.catalogId).equipment).filter(Boolean))];return q.length?'Matériel : '+q.slice(0,2).join(', '):'Matériel : —'}
 function doneToday(n){return DB.sessions.some(s=>s.date===today()&&(s.exercises||[]).some(e=>e.name===n))}
 function previewPage(){
  const p=previewSel&&DB.programs.find(x=>x.id===previewSel.pid),d=p?.days[previewSel.di];
  if(!d){view='home';return home()}
- const muscles=[...new Set(d.exercises.map(e=>exMeta(e.name).muscle).filter(Boolean))];
+ const muscles=[...new Set(d.exercises.map(e=>exMeta(e.name,e.catalogId).muscle).filter(Boolean))];
  const sets=d.exercises.reduce((a,e)=>a+(Number(e.sets)||0),0);
  return `<div class="r-prev">
   <div class="r-sub rise" style="--i:0"><button class="es-round" onclick="nav('program')" aria-label="Retour">${ico('back')}</button><h1>Séance</h1></div>
@@ -22,7 +22,7 @@ function previewPage(){
     <div class="r-meta"><span>${ico('clock')}Environ ${estDuration(d)}</span><span>${ico('bolt')}${esc(DB.profile.level||'Intermédiaire')}</span><span>${ico('train')}${esc(equipOf(d))}</span></div>
     <button class="eh-go" onclick="startWorkout('${p.id}',${previewSel.di})">${ico('play')} Commencer la séance</button></div></section>
   <h2 class="r-h2 rise" style="--i:1">Exercices</h2>
-  <div class="r-list rise" style="--i:2">${d.exercises.map(e=>`<div class="r-row">${thumb(exMeta(e.name).ico)}<div><b>${esc(e.name)}</b><small>${e.sets} × ${e.repsMin}–${e.repsMax}</small></div>${doneToday(e.name)?'<span class="r-ok">'+ico('check')+'</span>':''}${ico('chev')}</div>`).join('')||'<div class="eh-empty">Aucun exercice dans ce jour.</div>'}</div>
+  <div class="r-list rise" style="--i:2">${d.exercises.map(e=>`<div class="r-row">${thumb(exMeta(e.name,e.catalogId).ico)}<div><b>${esc(e.name)}</b><small>${e.sets} × ${e.repsMin}–${e.repsMax}</small></div>${doneToday(e.name)?'<span class="r-ok">'+ico('check')+'</span>':''}${ico('chev')}</div>`).join('')||'<div class="eh-empty">Aucun exercice dans ce jour.</div>'}</div>
  </div>`}
 
 /* 3. Progression */

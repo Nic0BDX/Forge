@@ -55,7 +55,7 @@ function readWorkoutDraft(email=currentEmail()){
   if(d.version!==1||!Number.isFinite(d.updatedAt)||d.updatedAt<=Number(DB.workoutDraftResetAt||0)||d.owner!==email||!s||s.owner!==email||!id(s.id)||!id(s.pid)||!Number.isInteger(s.di)||s.di<0||!text(s.program)||!text(s.day)||!Number.isFinite(s.started)||s.started<0||s.started>Date.now()+60000)return null;
   if(!Array.isArray(s.exercises)||!s.exercises.length||s.exercises.length>100)return null;
   for(const e of s.exercises){
-   if(!e||!text(e.name)||!text(e.target)||!Number.isFinite(e.rest)||e.rest<0||e.rest>86400||!Array.isArray(e.sets)||e.sets.length>100)return null;
+   if(!e||(e.catalogId!==undefined&&!id(e.catalogId))||!text(e.name)||!text(e.target)||!Number.isFinite(e.rest)||e.rest<0||e.rest>86400||!Array.isArray(e.sets)||e.sets.length>100)return null;
    for(const set of e.sets)if(!set||!value(set.weight)||!value(set.reps)||!value(set.rpe)||typeof set.done!=='boolean'||(set.done&&workoutSetError(set)))return null;
   }
   const r=d.rest;
@@ -105,7 +105,7 @@ function startWorkout(pid,di){
  if(session||readWorkoutDraft())return existingWorkoutChoice();
  const p=DB.programs.find(x=>x.id===pid),d=p?.days[di];if(!d)return;
  if(!d.exercises?.length)return toast('Ajoute au moins un exercice à cette séance.');
- session={id:uid(),owner:currentEmail(),pid,di,program:p.name,day:d.name,started:Date.now(),exercises:d.exercises.map(e=>({name:e.name,target:`${e.sets}×${e.repsMin}-${e.repsMax}`,rest:Number(e.rest)||0,sets:Array.from({length:e.sets},(_,j)=>{const last=DB.lastSets[e.name]?.[j]||{};return {weight:last.weight??'',reps:last.reps??'',rpe:last.rpe??'',done:false}})}))};
+ session={id:uid(),owner:currentEmail(),pid,di,program:p.name,day:d.name,started:Date.now(),exercises:d.exercises.map(e=>({name:e.name,...(e.catalogId?{catalogId:e.catalogId}:{}),target:`${e.sets}×${e.repsMin}-${e.repsMax}`,rest:Number(e.rest)||0,sets:Array.from({length:e.sets},(_,j)=>{const last=DB.lastSets[e.name]?.[j]||{};return {weight:last.weight??'',reps:last.reps??'',rpe:last.rpe??'',done:false}})}))};
  rest=0;restDeadline=0;restRemainingMs=0;restPaused=false;restOpen=false;
  view='session';persistWorkoutDraft();startWorkoutClock();render();
 }
@@ -152,11 +152,12 @@ function sessionPage(){
   <button class="es-round light" onclick="finishWorkout()" aria-label="Terminer la séance">${ico('flag')}</button></div>
   <div class="es-seg" aria-hidden="true">${session.exercises.map(e=>`<i style="--f:${e.sets.length?e.sets.filter(x=>x.done).length/e.sets.length:0}"></i>`).join('')}</div></div>
  <p id="workoutDraftStatus" class="sub" role="status">${workoutDraftSaved?'Saisie conservée dans ce navigateur.':'La sauvegarde locale a échoué. Garde cette page ouverte pour conserver ta saisie.'}</p><p class="sub">RPE : effort ressenti de 0 à 10. Facultatif.</p>
- ${session.exercises.map((e,i)=>{const cat=exerciseCatalog.find(x=>x.name===e.name);const dn=e.sets.filter(x=>x.done).length;return `<section class="es-ex ${i===cur?'cur':''}">
+ ${session.exercises.map((e,i)=>{const cat=atlasFind(e.catalogId,e.name);const dn=e.sets.filter(x=>x.done).length;return `<section class="es-ex ${i===cur?'cur':''}">
   ${i===cur?`<span class="es-tag">${ico('bolt')} En cours</span>`:''}
   <div class="es-ex-h"><div class="es-thumb" aria-hidden="true">${cat?.ico||'🏋️'}</div><div><b>${esc(e.name)}</b><small>${esc(cat?.muscle||'')}${cat?' · ':''}${esc(e.target)}</small></div><span class="es-count">${dn}/${e.sets.length}</span></div>
   <div class="es-sets"><div class="es-lab"><span>SÉRIE</span><span>KG</span><span>REPS</span><span>RPE</span><span></span></div>
   ${e.sets.map((s,j)=>`<div class="es-set ${s.done?'done':''}"><span class="es-n">${j+1}</span><input type="number" inputmode="decimal" step="any" min="0" value="${esc(s.weight)}" aria-label="Charge série ${j+1}" oninput="updateWorkoutField(${i},${j},'weight',this.value)"><input type="number" inputmode="numeric" min="1" step="1" value="${esc(s.reps)}" aria-label="Répétitions série ${j+1}" oninput="updateWorkoutField(${i},${j},'reps',this.value)"><input type="number" inputmode="decimal" step=".5" min="0" max="10" value="${esc(s.rpe)}" aria-label="RPE série ${j+1}" oninput="updateWorkoutField(${i},${j},'rpe',this.value)"><button class="es-check ${s.done?'on':''}" aria-pressed="${s.done}" aria-label="Valider la série ${j+1}" onclick="toggleSet(${i},${j})">${ico('check')}</button></div>`).join('')}</div>
+  ${cat?`<button class="ax-button ax-session-demo" onclick="openExerciseModal('${cat.id}')">Voir le mouvement</button>`:''}
   <div class="es-ex-f"><button onclick="addSet(${i})">${ico('plus')} Série</button><button onclick="startRest(${e.rest})">${ico('clock')} Repos ${e.rest}s</button></div></section>`}).join('')}
  <div class="es-end"><button class="btn primary wide" onclick="finishWorkout()">Terminer la séance</button><button class="btn ghost wide" onclick="cancelWorkout()">Annuler sans enregistrer</button></div>
  <div class="es-bar ${rest>0?'resting':''} ${restOpen?'open':''}" id="restBar" role="group" aria-label="Minuteur de repos">
@@ -210,7 +211,7 @@ function finishWorkout(){
  let latest;try{const raw=localStorage.getItem('forge_data_'+email);if(raw===null)throw new Error('Carnet absent');const saved=JSON.parse(raw);if(!saved||typeof saved!=='object'||Array.isArray(saved)||!Array.isArray(saved.sessions))throw new Error('Carnet incompatible');latest=validateBackup(saved)}catch{return toast('Le carnet enregistré ne peut pas être lu. Garde cette page ouverte et réessaie.')}
  if(latest.sessions.some(x=>x.id===running.id)){DB=latest;clearWorkoutDraft(email);stopWorkoutRuntime();nav('summary');return}
  let sets=0,volume=0,prs=[];
- const completed=running.exercises.map(e=>({name:e.name,sets:e.sets.filter(s=>s.done)}));
+ const completed=running.exercises.map(e=>({name:e.name,...(e.catalogId?{catalogId:e.catalogId}:{}),sets:e.sets.filter(s=>s.done)}));
  for(const e of completed)for(const s of e.sets){const error=workoutSetError(s);if(error)return toast(error);sets++;volume+=Number(s.weight)*Number(s.reps)}
  if(!sets)return toast('Valide au moins une série pour enregistrer ta séance.');
  if(!Number.isFinite(volume))return toast('Le volume calculé est trop élevé. Vérifie tes charges et répétitions.');

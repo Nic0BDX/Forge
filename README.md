@@ -2,21 +2,37 @@
 
 **Plus qu'une app, une discipline.**
 
-Le projet complet est disponible dans ce dépôt. Dernière livraison : [Forge — Accueil animé](https://github.com/Nic0BDX/SITE-AGENTS-CLAUDE-FORGE/raw/refs/heads/main/livraisons/Forge-Accueil-Anime.zip). L’archive précédente reste dans `livraisons/`. Décompresser le ZIP pour ouvrir le site et **APERCU.html**, la démonstration autonome complète.
+Le projet complet est disponible dans ce dépôt. Dernière livraison : [Forge — Exercices Atlas](https://github.com/Nic0BDX/FORGE-APP-DEV-EN-COURS/raw/refs/heads/main/livraisons/Forge-Exercices-Atlas.zip). L’archive précédente reste dans `livraisons/`. Décompresser le ZIP pour ouvrir le site et **APERCU.html**, la démonstration autonome complète.
 
 Un carnet de musculation, nutrition, habitudes et progression, conçu d’abord pour le téléphone. Le projet fourni a été conservé : HTML, CSS et JavaScript natifs, sans framework ni compilation. Les comptes et les données restent dans le navigateur.
 
-**Jour 4 — accueil animé finalisé et testé.** La dernière demande porte sur l’accueil de la vidéo : le corps et l’éclairage des pectoraux sont intégrés, les anneaux représentent maintenant **Bouger / Exercice / Debout**, et **Pas du jour** montre courbe, distance, calories actives et étages. Le rendu desktop suit la grille **3 + 3 + 2** ; un raccourci vers les pas apparaît sur mobile. La mission reste limitée à l’accueil : les autres finitions du projet ne sont pas déclarées terminées.
+**Jour 4 — Atlas Muscu intégré et testé.** La bibliothèque ajoute 1 324 fiches avec consignes françaises et 1 323 références d’animations. L’accueil animé précédent reste disponible : corps et éclairage pectoral, anneaux **Bouger / Exercice / Debout**, pas, distance, calories actives et étages, dans la grille desktop **3 + 3 + 2**. Les autres finitions du projet ne sont pas déclarées terminées.
 
-Le ZIP contient le site complet, **APERCU.html** autonome, les sources, les tests, le journal, **AVANCEMENT.html**, la feuille de route et **POINT_DE_REPRISE.md**. Lors de la prochaine demande, repartir de ce dernier fichier sans refaire les journées validées. Les archives antérieures sont conservées.
+Le ZIP contient le site complet, **APERCU.html** autonome (animations Atlas distantes), les sources, les tests, le journal, **AVANCEMENT.html**, la feuille de route et **POINT_DE_REPRISE.md**. Lors de la prochaine demande, repartir de ce dernier fichier sans refaire les journées validées. Les archives antérieures sont conservées.
 
 <!-- FORGE_CURRENT_START -->
-**État courant : Jour 4 · en pause · 26/35 tâches terminées (74 %).**
+**État courant : Jour 4 · en pause · 29/38 tâches terminées (76 %).**
 
-Dernier point enregistré : 2026-11-03T14:28:05+01:00. Travail courant : **aucune tâche active**.
+Dernier point enregistré : 2026-11-10T18:54:43+01:00. Travail courant : **aucune tâche active**.
 
 Lire [POINT_DE_REPRISE.md](POINT_DE_REPRISE.md) pour reprendre sans refaire les tâches livrées. Archive courante : `Forge-Actuel.zip` ; archives quotidiennes conservées.
 <!-- FORGE_CURRENT_END -->
+
+## Exercices Atlas — 10 novembre 2026
+
+La bibliothèque intègre les **1 324 fiches du snapshot public Atlas Muscu**, avec noms français et anglais, muscles, matériel et **7 710 étapes en français**. Elle conserve aussi les **30 exercices Forge historiques**, sans renommer les anciens programmes. La liste présente donc 1 354 fiches, et non 1 354 mouvements distincts : certaines fiches Forge et Atlas décrivent le même exercice.
+
+- Recherche avec ou sans accents, par nom français ou anglais ; filtres muscle et matériel ; 24 fiches par page.
+- **1 323 démonstrations GIF référencées**, chargées seulement à l’ouverture d’une fiche. Le GIF « Pont de Londres » manque dans la source ; ses consignes restent disponibles.
+- Choix du programme et du jour avant ajout, protection contre les doublons et les erreurs de stockage. Aucun programme n’est créé à la simple consultation d’une fiche.
+- Bouton **Voir le mouvement** pendant la séance, sans perdre séries, charges ni repos. L’identifiant du catalogue reste conservé dans le programme, le brouillon, l’historique et l’export.
+- Fermeture par Échap, navigation au clavier, animations arrêtables et chargement volontaire si la réduction des animations est activée.
+
+Les fiches et consignes sont embarquées dans **APERCU.html** ; les GIF nécessitent Internet. L’erreur réseau affiche un message et un bouton Réessayer. La source correspond à une version publiée vérifiée, pas à un flux API synchronisé automatiquement. [Provenance et reproduction de l’import](docs/SOURCES_ATLAS.md).
+
+**Validation : 265 contrôles réussis** — 74 Atlas, 33 de régression sur 342 états, 66 accueil animé, 22 aperçu et 70 sauvegardes. Aucun débordement horizontal ni exception JavaScript observé. Les tests fonctionnels des GIF utilisent un fichier réel contrôlé ; ils ne prouvent pas la disponibilité permanente de tous les hébergements. Les téléphones physiques et l’ouverture directe `file://` restent non testés.
+
+Sources ajoutées : `js/data/atlas-exercises.js`, `js/features/exercise-atlas.js`, `css/exercises-atlas.css` et `docs/import-atlas.py`. Voir [le journal Atlas](docs/JOURNAL_ATLAS.md), [les tests](TESTS_ATLAS.md) et [le tableau de bord](AVANCEMENT.html). L’accueil animé précédemment livré reste conservé ; les autres finitions restent en attente.
 
 ## Ouvrir le projet
 
@@ -158,7 +174,7 @@ assets/
   icons/                   Favicon
   images/                  Illustrations SVG locales
 preview/                   Galerie, démonstration isolée et générateur autonome
-APERCU.html                Aperçu autonome généré, sans assets à charger
+APERCU.html                Aperçu autonome généré ; GIF Atlas externes
 tests/                    Scripts de validation (voir le rapport de tests)
 docs/
   DESIGN.md                Choix visuels

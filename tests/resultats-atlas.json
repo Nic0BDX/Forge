@@ -1,0 +1,643 @@
+{
+  "checkedAt": "2026-11-10T17:52:11.716Z",
+  "browser": "154.0.8037.57",
+  "checks": [
+    {
+      "name": "Le GIF fixture est présent et possède un en-tête GIF réel",
+      "status": "passed"
+    },
+    {
+      "name": "Les 1 324 fiches Atlas sont intégrées",
+      "status": "passed",
+      "detail": {
+        "actual": 1324
+      }
+    },
+    {
+      "name": "Les identifiants source Atlas sont uniques",
+      "status": "passed"
+    },
+    {
+      "name": "Le catalogue conserve les 30 exercices Forge et les 1 324 fiches Atlas",
+      "status": "passed"
+    },
+    {
+      "name": "Chaque identifiant Atlas est stable et distinct",
+      "status": "passed"
+    },
+    {
+      "name": "La seule fiche sans GIF reste explicitement identifiée",
+      "status": "passed"
+    },
+    {
+      "name": "Les fiches gardent leurs noms et consignes source",
+      "status": "passed"
+    },
+    {
+      "name": "Une fiche française accentuée est disponible pour le parcours",
+      "status": "passed"
+    },
+    {
+      "name": "La bibliothèque limite le premier écran à 24 cartes sans GIF",
+      "status": "passed"
+    },
+    {
+      "name": "La provenance Atlas et ExerciseDB est visible",
+      "status": "passed"
+    },
+    {
+      "name": "La première page désactive le bouton précédent",
+      "status": "passed"
+    },
+    {
+      "name": "La page suivante présente 24 autres exercices",
+      "status": "passed"
+    },
+    {
+      "name": "Revenir en arrière restitue exactement la première page",
+      "status": "passed"
+    },
+    {
+      "name": "Toutes les fiches sont accessibles par pagination, sans perte ni doublon",
+      "status": "passed"
+    },
+    {
+      "name": "La pagination ne télécharge aucun GIF en arrière-plan",
+      "status": "passed"
+    },
+    {
+      "name": "La recherche française ignore accents et casse",
+      "status": "passed"
+    },
+    {
+      "name": "Le nom anglais retrouve la même fiche",
+      "status": "passed"
+    },
+    {
+      "name": "Une recherche sans résultat affiche un état vide",
+      "status": "passed"
+    },
+    {
+      "name": "Réinitialiser retire la recherche et revient au début",
+      "status": "passed"
+    },
+    {
+      "name": "Les filtres exposent un couple muscle et matériel du catalogue",
+      "status": "passed"
+    },
+    {
+      "name": "Les filtres muscle et matériel se combinent",
+      "status": "passed"
+    },
+    {
+      "name": "Ouvrir une fiche ne modifie pas le carnet",
+      "status": "passed"
+    },
+    {
+      "name": "Les consignes françaises sont affichées dans la fiche",
+      "status": "passed"
+    },
+    {
+      "name": "Le lecteur affiche le GIF fixture réel",
+      "status": "passed"
+    },
+    {
+      "name": "Échap ferme la fiche et rend le focus à sa carte",
+      "status": "passed"
+    },
+    {
+      "name": "Une panne du média montre un message et conserve les consignes",
+      "status": "passed"
+    },
+    {
+      "name": "La panne du média ne modifie aucune donnée du carnet",
+      "status": "passed"
+    },
+    {
+      "name": "Le lecteur propose de réessayer après une panne",
+      "status": "passed"
+    },
+    {
+      "name": "Réessayer restaure la démonstration sans fermer la fiche",
+      "status": "passed"
+    },
+    {
+      "name": "Une fiche sans média reste honnête et utilisable",
+      "status": "passed"
+    },
+    {
+      "name": "Un échec de stockage ne crée aucun exercice en mémoire ni faux succès",
+      "status": "passed"
+    },
+    {
+      "name": "L’ajout cible exactement le programme et le jour choisis",
+      "status": "passed"
+    },
+    {
+      "name": "L’ajout conserve l’ancien historique et les programmes non ciblés",
+      "status": "passed"
+    },
+    {
+      "name": "Le même exercice n’est pas ajouté deux fois à la même séance",
+      "status": "passed"
+    },
+    {
+      "name": "Une fiche Atlas ne duplique pas son ancien équivalent Forge",
+      "status": "passed"
+    },
+    {
+      "name": "Le choix de catalogue survit à un rechargement du carnet",
+      "status": "passed"
+    },
+    {
+      "name": "L’export/import conserve les IDs Atlas et les anciennes séances",
+      "status": "passed"
+    },
+    {
+      "name": "Une ancienne sauvegarde sans catalogId reste importable",
+      "status": "passed"
+    },
+    {
+      "name": "Un catalogId invalide est refusé à l’import",
+      "status": "passed"
+    },
+    {
+      "name": "La séance active conserve le catalogId Atlas",
+      "status": "passed"
+    },
+    {
+      "name": "La démonstration en séance préserve séries, charges et repos",
+      "status": "passed"
+    },
+    {
+      "name": "Le brouillon persistant conserve le catalogId et la série validée",
+      "status": "passed"
+    },
+    {
+      "name": "La reprise de séance restaure la démonstration accessible",
+      "status": "passed"
+    },
+    {
+      "name": "L’historique final conserve ID Atlas, volume et ancien carnet",
+      "status": "passed"
+    },
+    {
+      "name": "L’historique avec catalogId passe aussi par l’export/import",
+      "status": "passed"
+    },
+    {
+      "name": "Un mouvement personnel reste utilisable sans lien de démonstration erroné",
+      "status": "passed"
+    },
+    {
+      "name": "La bibliothèque est accessible depuis la navigation mobile",
+      "status": "passed"
+    },
+    {
+      "name": "Bibliothèque sans débordement dark à 320 px",
+      "status": "passed",
+      "detail": {
+        "width": 320,
+        "scrollWidth": 320,
+        "smallButtons": []
+      }
+    },
+    {
+      "name": "Cibles tactiles de la bibliothèque dark à 320 px",
+      "status": "passed",
+      "detail": []
+    },
+    {
+      "name": "Fiche lisible sans débordement dark à 320 px",
+      "status": "passed",
+      "detail": {
+        "left": 18,
+        "right": 302,
+        "width": 320,
+        "scrollWidth": 282,
+        "clientWidth": 282,
+        "pageScrollWidth": 320
+      }
+    },
+    {
+      "name": "Bibliothèque sans débordement dark à 390 px",
+      "status": "passed",
+      "detail": {
+        "width": 390,
+        "scrollWidth": 390,
+        "smallButtons": []
+      }
+    },
+    {
+      "name": "Cibles tactiles de la bibliothèque dark à 390 px",
+      "status": "passed",
+      "detail": []
+    },
+    {
+      "name": "Fiche lisible sans débordement dark à 390 px",
+      "status": "passed",
+      "detail": {
+        "left": 18,
+        "right": 372,
+        "width": 390,
+        "scrollWidth": 352,
+        "clientWidth": 352,
+        "pageScrollWidth": 390
+      }
+    },
+    {
+      "name": "Bibliothèque sans débordement dark à 768 px",
+      "status": "passed",
+      "detail": {
+        "width": 768,
+        "scrollWidth": 768,
+        "smallButtons": []
+      }
+    },
+    {
+      "name": "Fiche lisible sans débordement dark à 768 px",
+      "status": "passed",
+      "detail": {
+        "left": 18,
+        "right": 750,
+        "width": 768,
+        "scrollWidth": 730,
+        "clientWidth": 730,
+        "pageScrollWidth": 768
+      }
+    },
+    {
+      "name": "Bibliothèque sans débordement dark à 1280 px",
+      "status": "passed",
+      "detail": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "smallButtons": []
+      }
+    },
+    {
+      "name": "Fiche lisible sans débordement dark à 1280 px",
+      "status": "passed",
+      "detail": {
+        "left": 150,
+        "right": 1130,
+        "width": 1280,
+        "scrollWidth": 978,
+        "clientWidth": 978,
+        "pageScrollWidth": 1280
+      }
+    },
+    {
+      "name": "Bibliothèque sans débordement light à 320 px",
+      "status": "passed",
+      "detail": {
+        "width": 320,
+        "scrollWidth": 320,
+        "smallButtons": []
+      }
+    },
+    {
+      "name": "Cibles tactiles de la bibliothèque light à 320 px",
+      "status": "passed",
+      "detail": []
+    },
+    {
+      "name": "Fiche lisible sans débordement light à 320 px",
+      "status": "passed",
+      "detail": {
+        "left": 18,
+        "right": 302,
+        "width": 320,
+        "scrollWidth": 282,
+        "clientWidth": 282,
+        "pageScrollWidth": 320
+      }
+    },
+    {
+      "name": "Bibliothèque sans débordement light à 390 px",
+      "status": "passed",
+      "detail": {
+        "width": 390,
+        "scrollWidth": 390,
+        "smallButtons": []
+      }
+    },
+    {
+      "name": "Cibles tactiles de la bibliothèque light à 390 px",
+      "status": "passed",
+      "detail": []
+    },
+    {
+      "name": "Fiche lisible sans débordement light à 390 px",
+      "status": "passed",
+      "detail": {
+        "left": 18,
+        "right": 372,
+        "width": 390,
+        "scrollWidth": 352,
+        "clientWidth": 352,
+        "pageScrollWidth": 390
+      }
+    },
+    {
+      "name": "Bibliothèque sans débordement light à 768 px",
+      "status": "passed",
+      "detail": {
+        "width": 768,
+        "scrollWidth": 768,
+        "smallButtons": []
+      }
+    },
+    {
+      "name": "Fiche lisible sans débordement light à 768 px",
+      "status": "passed",
+      "detail": {
+        "left": 18,
+        "right": 750,
+        "width": 768,
+        "scrollWidth": 730,
+        "clientWidth": 730,
+        "pageScrollWidth": 768
+      }
+    },
+    {
+      "name": "Bibliothèque sans débordement light à 1280 px",
+      "status": "passed",
+      "detail": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "smallButtons": []
+      }
+    },
+    {
+      "name": "Fiche lisible sans débordement light à 1280 px",
+      "status": "passed",
+      "detail": {
+        "left": 150,
+        "right": 1130,
+        "width": 1280,
+        "scrollWidth": 978,
+        "clientWidth": 978,
+        "pageScrollWidth": 1280
+      }
+    },
+    {
+      "name": "L’aperçu autonome inclut les 1 354 fiches et isole les données démo",
+      "status": "passed"
+    },
+    {
+      "name": "L’aperçu autonome conserve la recherche anglaise",
+      "status": "passed"
+    },
+    {
+      "name": "Sans réseau, le catalogue et la recherche autonome restent disponibles",
+      "status": "passed"
+    },
+    {
+      "name": "Sans réseau, les consignes restent consultables sans perte de données",
+      "status": "passed"
+    },
+    {
+      "name": "Aucune erreur JavaScript non gérée",
+      "status": "passed",
+      "detail": []
+    },
+    {
+      "name": "Les sources sont restées gelées pendant les contrôles Atlas",
+      "status": "passed"
+    },
+    {
+      "name": "L’aperçu validé n’a pas changé pendant les contrôles Atlas",
+      "status": "passed"
+    }
+  ],
+  "errors": [],
+  "layouts": [
+    {
+      "theme": "dark",
+      "width": 320,
+      "listLayout": {
+        "width": 320,
+        "scrollWidth": 320,
+        "smallButtons": []
+      },
+      "detailLayout": {
+        "left": 18,
+        "right": 302,
+        "width": 320,
+        "scrollWidth": 282,
+        "clientWidth": 282,
+        "pageScrollWidth": 320
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "listLayout": {
+        "width": 390,
+        "scrollWidth": 390,
+        "smallButtons": []
+      },
+      "detailLayout": {
+        "left": 18,
+        "right": 372,
+        "width": 390,
+        "scrollWidth": 352,
+        "clientWidth": 352,
+        "pageScrollWidth": 390
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "listLayout": {
+        "width": 768,
+        "scrollWidth": 768,
+        "smallButtons": []
+      },
+      "detailLayout": {
+        "left": 18,
+        "right": 750,
+        "width": 768,
+        "scrollWidth": 730,
+        "clientWidth": 730,
+        "pageScrollWidth": 768
+      }
+    },
+    {
+      "theme": "dark",
+      "width": 1280,
+      "listLayout": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "smallButtons": []
+      },
+      "detailLayout": {
+        "left": 150,
+        "right": 1130,
+        "width": 1280,
+        "scrollWidth": 978,
+        "clientWidth": 978,
+        "pageScrollWidth": 1280
+      }
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "listLayout": {
+        "width": 320,
+        "scrollWidth": 320,
+        "smallButtons": []
+      },
+      "detailLayout": {
+        "left": 18,
+        "right": 302,
+        "width": 320,
+        "scrollWidth": 282,
+        "clientWidth": 282,
+        "pageScrollWidth": 320
+      }
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "listLayout": {
+        "width": 390,
+        "scrollWidth": 390,
+        "smallButtons": []
+      },
+      "detailLayout": {
+        "left": 18,
+        "right": 372,
+        "width": 390,
+        "scrollWidth": 352,
+        "clientWidth": 352,
+        "pageScrollWidth": 390
+      }
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "listLayout": {
+        "width": 768,
+        "scrollWidth": 768,
+        "smallButtons": []
+      },
+      "detailLayout": {
+        "left": 18,
+        "right": 750,
+        "width": 768,
+        "scrollWidth": 730,
+        "clientWidth": 730,
+        "pageScrollWidth": 768
+      }
+    },
+    {
+      "theme": "light",
+      "width": 1280,
+      "listLayout": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "smallButtons": []
+      },
+      "detailLayout": {
+        "left": 150,
+        "right": 1130,
+        "width": 1280,
+        "scrollWidth": 978,
+        "clientWidth": 978,
+        "pageScrollWidth": 1280
+      }
+    }
+  ],
+  "mediaVerification": {
+    "mode": "GIF fixture intercepté et panne réseau simulée",
+    "liveProviderRequests": 0,
+    "allRemoteMediaVerified": false,
+    "fixture": {
+      "file": "tests/fixtures/atlas-demo.gif",
+      "bytes": 252569,
+      "sha256": "bdbc14c2f05ef140cc95531a9f530bd02a02bb1e5dc840ff29c50e26514c92bb"
+    },
+    "interceptedRequests": 5
+  },
+  "catalog": {
+    "sourceCount": 1324,
+    "legacyCount": 30,
+    "totalCount": 1354,
+    "gifLinks": 1323,
+    "exerciseUnderTest": {
+      "id": "atlas-01qpYSe",
+      "nameFr": "Chien tête en haut (yoga)",
+      "nameEn": "upward facing dog"
+    }
+  },
+  "passed": 74,
+  "failed": 0,
+  "sourceFileSha256": {
+    "assets/icons/favicon.svg": "626f414a48f4a356213e6644719751b7b31845a33b32a036cbe73d62f0a82917",
+    "assets/images/athlete-fallback.svg": "1728c61c41286f6cd89de0eb055f0694c62089e449ec98eba3a298d6fafa9250",
+    "assets/images/forge-body-overlay.svg": "565ffc65ff1caf59f02c7a4cce2fc7cb86894eb57788738b419c9881f7c0655c",
+    "assets/images/forge-body.png": "22ea14f61f74770f636b3f0ebc3961e5d40b900f94e86403fc3e1cf17cd083a0",
+    "assets/images/hero-auth.svg": "8ed63dea7796fe0fc5ad33bce42eff7a06bca90d078edb3a12c549ab646d4eb2",
+    "assets/images/hero-summary.svg": "d577f5138d7f219102ab992831d61e47b2682b38d37fa95c2851e988609b21e1",
+    "assets/images/hero-today.svg": "1728c61c41286f6cd89de0eb055f0694c62089e449ec98eba3a298d6fafa9250",
+    "css/base.css": "c6989a428d39cbe799fc760c187aa531b0a25cdbb23b83509f07d673c15a548c",
+    "css/exercises-atlas.css": "ef7c96e270b932135a03d935dae18f2f87197ce7d5faa6cf00b11c2c2b14ec9e",
+    "css/forge-elite.css": "70a396602075abb6b8a1f9a3cdf4eb67d9cd9c91ef6a130e946ab5660f4e8950",
+    "css/home-video.css": "eb4e45bb016cbda361a921afde9a7efea8ac8134331669b07d5f87fcde06edf6",
+    "css/home.css": "192a85f2e8e594c8a9571466e4a241d8b2f85ecaef0eb6a83341cec2b995ba64",
+    "css/library.css": "d076044969ec8cae6479e0ab9832ab7eaa38914b1682f0c151adce4cdd87c523",
+    "css/monochrome.css": "51f898ac2b795a1440eea812fa4ff97cd94b903655d7313e4477dc8a50230226",
+    "css/reference.css": "387c97c0ae0b45520d3daaa48c93d234d4f78f0d8bc3d10a8ed0196701bf75f4",
+    "css/video-forge.css": "ab885620d4bb90afbf152888541c5190b9e78428bcaf70c70d598e1761d92bf3",
+    "index.html": "1427c7e5942d2551adcf56e77bd1ff948ee5e400802fb5773e9b19c10fadea53",
+    "js/app.js": "324bd061eb5e5dd7b469eb1aef0045fa80618df3a9e22561d80902b1273c0dfd",
+    "js/core/auth.js": "12cf96041c0c2c808cf64e85a44f496bc418e177ad15961552da276f93b45eaf",
+    "js/core/default-db.js": "e0f02d2e4f783ad7664e5f4c78852e6e6638e900b51ae767227e8170df4e9f17",
+    "js/core/gamification.js": "65bd1a5e90153ed818a119facaa8d2ce9680aa5736cd2f1598367a6ce24ec99b",
+    "js/core/layout.js": "8bdf817f73d1f5dd53742d61cb71ede9e7961d6daa17f98cd245d086ed49e704",
+    "js/core/router.js": "f2de7964901cc69c4fea0c7e462ffea654aa54a00b2d5c702b7da29397250555",
+    "js/core/state.js": "43bc563512a930f6b4023009ac4486e7c5224bb3b838c7c5bb4c60351022c55b",
+    "js/core/storage.js": "80ae3982b26dda6d4ce687de0bccc4921cb5eed51e52410ecde065d9c21acc39",
+    "js/core/streak.js": "e0901fc43af7953a1db4591ed510283cc3eab1512e8a7ab3bcf31c1d70d838c3",
+    "js/core/ui.js": "836d64f56c4e2fc136055741973c72e0a94e5707b37ae20ce4076a0bdd779a34",
+    "js/core/utils.js": "2b6b69b4773a30ccdae92926b40c7565d0b4726b19262ad6a3905e62a9009c7d",
+    "js/data/atlas-exercises.js": "1bcb3f9a41c532dad9694531f01787852c9e9c50dc7601656dd6f6fc5214cac2",
+    "js/data/avatars.js": "7a38751f615a0eabb35bf6a3675b99e54424f8efcfe043a28c5e2f8f32190675",
+    "js/data/catalog.js": "fa5ac6f436e4554dab842f59699d09696448c010e4d289a6ac4c6d2f159765ae",
+    "js/features/activity.js": "0183fdc9956524ee2aca587c567a37530ded238a4a8d8a9e655d3f3258560579",
+    "js/features/ai.js": "a1d8c13d1901ccc22056b2a346d437093a1e054c2b58271a4bf83c79fd570b61",
+    "js/features/calendar.js": "0b90296ad4945c1e94dc06bf6ac3f655fe6de060a88f8855c2b06d83e957ab79",
+    "js/features/community.js": "20a9e535221ba21e018f7cce795afe65a159db909815754bf0f6e1e2c3b37e97",
+    "js/features/exercise-atlas.js": "9372d03141f6ec22a68e57789649283e7cc77dbffb8dc3e023b781037acfd3f9",
+    "js/features/exercises.js": "16d6825451a97efbdb4632771da7a8a0e3da91b77d64def13ea9a9ed3c4d7608",
+    "js/features/goals.js": "1200cd729973b20869dd68bfc08aa9f29444b665b6fdf7ce3fd51985c334f28f",
+    "js/features/habits.js": "5af9da856077fe541adcc055c777d32e40a6eafa8fca653b957088914ee5f4e4",
+    "js/features/history.js": "4b86f11ae38f2d316b96b1f118c41d99710c509c85fad127c38b4bd2c4e4a678",
+    "js/features/home-video.js": "da5c7e24130b6f01448115303754cff2d3594f09f7d5bb574f221021ba665c51",
+    "js/features/home.js": "0cf7d64daed42d490cc21ded7cfbf9dc7e6e80d44ffd9a9cbc6748bb9ee9ea34",
+    "js/features/nutrition.js": "444bcc8c6122a541ca1bb008f83076132d5f5a945421c29bbcf42421d0a8d3fc",
+    "js/features/photos.js": "5b3327b5508bf567a15b4bfe6dd75e228f1c2766849961f56d532013a582b54a",
+    "js/features/profile.js": "bcd3f27d852637c915938d1ed0c73206e8b402971b311143ef46872edace62c0",
+    "js/features/progress.js": "682e299a5f4be5604b1435ca13804c1c0a4e1cc0fce319fdadb4a8a9162eb803",
+    "js/features/reminders.js": "92e1a2db28cdd81a5b8e506f9d831368b744d79d828ce61e30ed19dad32aaefc",
+    "js/features/screens.js": "945efc68b9a5323eea1a7d8c563874a6ec147e6548adc211cb9a5562ba5ed375",
+    "js/features/settings.js": "25251f4c5e7d81522767c90c336f6d823149bd75069059683b666505f43c1b17",
+    "js/features/setup.js": "f1136bc573e55bcabfa27d5c008571df29683773c32fe42bbbfd142ca906a8b7",
+    "js/features/video-forge.js": "829c2c4ee98c6f34f2211b1a696deb40e0175fe901ad785d60dd1a49005feaff",
+    "js/features/whey.js": "509698a6d74905a9a354ceccce1cbc532d2e10db24ae8340fbe54235dbbe3d02",
+    "js/features/workouts.js": "b71031484086ffec710af25fc6f814da7e0178aef4e7f4866faa390147d6d496",
+    "preview/build-standalone.py": "030cedd8e6e1500df4623beec088c7d6ae3154e3a5a1057f27a33473d970d18f",
+    "preview/demo-data.js": "a25523cd9a46de45d7344edadf0896b7d3817ce11b37577fad43c4dffd539b59",
+    "preview/demo-store.js": "26e8e9463babd507094be3b18f064a15af918f4d4ea05f37a17e5bfc4e071f2c",
+    "preview/demo.html": "3eda074b4ffd4dbdbe88028cf30d9d9da3b1e936467f4477f2592694c6e4b149",
+    "preview/phone.css": "a0131f9200cb552e1b80ba8dfa2865876c322be61e73429f7c6f6a896d5b1925",
+    "preview/phone.html": "02dff796ced63226382ccea3470ac5cf81a876f7cc7c167c283385a200820fca",
+    "preview/phone.js": "59939f4a4f20c304ad2cc3ead75756b7ca930f3ab73a126997353cd2df8de78a"
+  },
+  "sourceSha256": "759819b106430db77e4bfa453e83fc87da0da8eab211bbe326053646f76e40c5",
+  "apercuSha256": "671f574d13b258b190f8c2784aa2c5a725500edb03a903526cbd9aa9ca0deeb5",
+  "testSha256": "a895cd527837ce29425b5325fa796720b64851eb464d34ee0f7c2d6f7617fa2d",
+  "finishedAt": "2026-11-10T17:52:18.041Z"
+}

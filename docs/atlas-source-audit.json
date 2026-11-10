@@ -1,0 +1,156 @@
+{
+  "importedAt": "2026-11-10",
+  "observedAt": "2026-11-03",
+  "revisions": {
+    "atlasIndex": "9f53402c8eac88303a41320437d77012db335719",
+    "atlasTranslations": "1a4f2a4389a79447cc5b3a23511fe214c8deaf64",
+    "mediaBackup": "ebf642cd90fdf73a6c73e7127e93b607b12c229e"
+  },
+  "sources": {
+    "atlas": "https://github.com/AnTh0nY47/atlas-muscu",
+    "backup": "https://github.com/omercotkd/exercises-gifs",
+    "api": "https://oss.exercisedb.dev/api/v1/exercises",
+    "backupOrigin": "https://www.kaggle.com/datasets/edoardoba/fitness-exercises-with-animations/data"
+  },
+  "counts": {
+    "atlasIndex": 1324,
+    "metadataRows": 1324,
+    "uniqueAtlasIds": 1324,
+    "uniqueMediaIds": 1324,
+    "exactUniqueNameMatches": 1311,
+    "visuallyResolvedMatches": 13,
+    "frenchNames": 1324,
+    "completeFrenchInstructions": 1324,
+    "instructionSteps": 7710,
+    "manualTranslationSteps": 3081,
+    "cacheTranslationSteps": 4629,
+    "gifPathsPresentInGit": 1323,
+    "actualAnimatedGifSamplesReviewed": 13,
+    "currentRemoteHttpGifChecks": 0
+  },
+  "missingMedia": [
+    {
+      "id": "bLyQokI",
+      "mediaBackupId": "0609",
+      "nameFr": "Pont de Londres"
+    }
+  ],
+  "visualMatching": {
+    "method": "First and middle GIF frames resized to 140x140; compared to Atlas revue contact sheets.",
+    "reviewedAt": "2026-11-03",
+    "recheckedDuringThisImport": true,
+    "matches": [
+      {
+        "atlasId": "2kattbR",
+        "mediaBackupId": "0454",
+        "meanAbsoluteError": 1.0126190476190475,
+        "otherVariantError": 38.82534013605442
+      },
+      {
+        "atlasId": "DOoWcnA",
+        "mediaBackupId": "0576",
+        "meanAbsoluteError": 1.2203231292517005,
+        "otherVariantError": 33.89701530612245
+      },
+      {
+        "atlasId": "E4PwJqI",
+        "mediaBackupId": "1766",
+        "meanAbsoluteError": 1.0643367346938777,
+        "otherVariantError": 25.603307823129253
+      },
+      {
+        "atlasId": "GwYwElT",
+        "mediaBackupId": "0697",
+        "meanAbsoluteError": 0.769906462585034,
+        "otherVariantError": 25.748707482993197
+      },
+      {
+        "atlasId": "H1PESYI",
+        "mediaBackupId": "2138",
+        "meanAbsoluteError": 1.536215986394558,
+        "otherVariantError": null
+      },
+      {
+        "atlasId": "Lsqrgh4",
+        "mediaBackupId": "1394",
+        "meanAbsoluteError": 1.13375,
+        "otherVariantError": 19.748154761904765
+      },
+      {
+        "atlasId": "T0yTjgW",
+        "mediaBackupId": "0577",
+        "meanAbsoluteError": 1.663639455782313,
+        "otherVariantError": 33.79776360544218
+      },
+      {
+        "atlasId": "Y4BRNQF",
+        "mediaBackupId": "0655",
+        "meanAbsoluteError": 0.9343707482993198,
+        "otherVariantError": 22.932721088435375
+      },
+      {
+        "atlasId": "Ye5Qxb0",
+        "mediaBackupId": "1628",
+        "meanAbsoluteError": 1.1918877551020408,
+        "otherVariantError": 38.662363945578235
+      },
+      {
+        "atlasId": "ipvgBnC",
+        "mediaBackupId": "1371",
+        "meanAbsoluteError": 1.3843282312925171,
+        "otherVariantError": 31.81625
+      },
+      {
+        "atlasId": "ktsFQAZ",
+        "mediaBackupId": "0088",
+        "meanAbsoluteError": 1.0717091836734696,
+        "otherVariantError": 31.753069727891152
+      },
+      {
+        "atlasId": "tgryw5Y",
+        "mediaBackupId": "0656",
+        "meanAbsoluteError": 0.7046853741496599,
+        "otherVariantError": 22.89744047619048
+      },
+      {
+        "atlasId": "ywaNfuh",
+        "mediaBackupId": "0763",
+        "meanAbsoluteError": 1.0866241496598639,
+        "otherVariantError": 19.515654761904763
+      }
+    ]
+  },
+  "sourceSha256": {
+    "atlasIndex": "172c4fb4954a446fd3ae0c4b11c140b9fb51fb09d8e1750c1357853f2e634ac1",
+    "metadataCsv": "ab3aadadfd55bb09483922efa769f6b0e5ea217c6b405033f4c40ceb3ab079dc",
+    "manualTranslations": "3e3e4c500118d4c8e61ce0fb3f0a41425ad99dfb429e347a36a34a867cf0aa24",
+    "cachedTranslations": "071c56bdb8e15f716d48d9912ffb0a30673ffbadce050e52027b7cef559a8faf"
+  },
+  "network": {
+    "apiAccessibleFromExecutionEnvironment": false,
+    "apiFailure": "HTTP 403, CONNECT proxy refusal",
+    "apiTotalVerified": false,
+    "apiPaginationVerified": false,
+    "gifHost": "raw.githubusercontent.com",
+    "gifHostHttpAvailabilityVerified": false,
+    "gitObjectsVerified": true
+  },
+  "fixture": {
+    "path": "tests/fixtures/atlas-demo.gif",
+    "atlasId": "tgryw5Y",
+    "mediaBackupId": "0656",
+    "sourceUrl": "https://raw.githubusercontent.com/omercotkd/exercises-gifs/ebf642cd90fdf73a6c73e7127e93b607b12c229e/assets/0656.gif",
+    "sha256": "bdbc14c2f05ef140cc95531a9f530bd02a02bb1e5dc840ff29c50e26514c92bb",
+    "bytes": 252569,
+    "width": 360,
+    "height": 360,
+    "frames": 12
+  },
+  "licenseNotes": {
+    "atlasLicenseFileFound": false,
+    "backupLicenseFile": "MIT",
+    "backupAuthorDisclaimsOwnershipOfMedia": true,
+    "mediaLicenseInferredFromBackupLicense": false,
+    "terms": "Les licences des médias et traductions ne sont pas établies par le seul LICENSE du dépôt de sauvegarde."
+  }
+}

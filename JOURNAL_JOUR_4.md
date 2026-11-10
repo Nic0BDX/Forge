@@ -90,3 +90,33 @@ ACCUEIL ANIMÉ TERMINÉ ET VALIDÉ : A01, A02 et A03 livrées. Corps original et
 Preuves : `tests/resultats-activite-donnees.json`, `tests/resultats-accueil-anime.json`, `tests/resultats-accueil-regression.json`, `tests/resultats-accueil-interactions.json`, `tests/resultats-accueil-apercu.json`.
 
 Avancement : **26/35 = 74 %**. Prochaine tâche : **V03**.
+
+## Checkpoint 2026-11-10T18:54:11+01:00
+
+✅ **X01 — Intégrer les sources Atlas, traductions et démonstrations référencées** · Développeur · terminé Jour 4.
+
+X01 validée : 1324 fiches Atlas, 7710 étapes françaises, 1323 médias présents dans Git, trois GIF distants téléchargés en HTTPS et décodés. Import reproductible, variantes contrôlées et attribution documentée. Les sources applicatives complètes passent les 265 contrôles ; clôture des tâches X02 et X03 à enregistrer ensuite.
+
+Preuves : `docs/atlas-source-audit.json`, `tests/resultats-atlas.json`, `tests/resultats-atlas-medias-live.json`.
+
+Avancement : **27/38 = 71 %**. Prochaine tâche : **X03**.
+
+## Checkpoint 2026-11-10T18:54:28+01:00
+
+✅ **X02 — Relier la bibliothèque Atlas aux programmes et séances Forge** · Développeur · terminé Jour 4.
+
+X02 validée : bibliothèque Atlas intégrée, recherche FR/EN et sans accents, filtres, pagination, consignes et GIF avec arrêt/réessai. Ajout au programme et jour choisis, doublons et alias protégés, identifiant conservé dans programmes, brouillons et historique. Les 30 anciens exercices et les noms personnalisés sont préservés. Contrôles mobile et compatibilité réussis ; clôture X03 à enregistrer.
+
+Preuves : `tests/resultats-atlas.json`, `tests/resultats-atlas-sauvegardes.json`, `tests/resultats-atlas-regression.json`.
+
+Avancement : **28/38 = 74 %**. Prochaine tâche : **X03**.
+
+## Checkpoint 2026-11-10T18:54:43+01:00
+
+✅ **X03 — Valider Atlas, les anciens carnets et les petits écrans** · Testeur mobile · terminé Jour 4.
+
+ATLAS TERMINÉ ET VALIDÉ : X01, X02 et X03 livrées. 1324 fiches Atlas, 7710 consignes FR, 1323 liens GIF vérifiés dans Git ; Pont de Londres reste sans animation. Les 30 anciens exercices sont conservés, 15 avec correspondance exacte de démonstration. Recherche FR/EN, filtres, pagination, ajout au jour choisi, démonstration pendant séance et catalogId persistant. Validation : 74 contrôles Atlas, 33 de régression sur 342 états, 66 accueil, 22 aperçu et 70 sauvegardes = 265 réussis, aucun échec. Trois GET HTTPS de GIF réels vérifiés en plus ; rendu distant Chromium standard non validé à cause du certificat du proxy. Aucun téléphone physique ni file:// testé. ZIP Forge-Exercices-Atlas.zip et copie Forge-Jour-4-Atlas.zip ; APERCU autonome avec GIF externes. Autres finitions en attente ; ne pas refaire accueil A01–A03 ni Atlas X01–X03.
+
+Preuves : `tests/resultats-atlas.json`, `tests/resultats-atlas-regression.json`, `tests/resultats-atlas-accueil.json`, `tests/resultats-atlas-apercu.json`, `tests/resultats-atlas-sauvegardes.json`, `tests/resultats-atlas-medias-live.json`.
+
+Avancement : **29/38 = 76 %**. Prochaine tâche : **V03**.

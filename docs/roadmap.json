@@ -2,7 +2,7 @@
   "project": "Forge",
   "slogan": "Plus qu’une app, une discipline.",
   "day": 4,
-  "date": "2026-11-03",
+  "date": "2026-11-10",
   "agents": [
     {
       "id": "chef",
@@ -362,6 +362,33 @@
       "status": "terminee",
       "completed_day": 4,
       "evidence": "tests/resultats-activite-donnees.json ; tests/resultats-accueil-anime.json ; tests/resultats-accueil-regression.json ; tests/resultats-accueil-interactions.json ; tests/resultats-accueil-apercu.json"
+    },
+    {
+      "id": "X01",
+      "agent": "dev",
+      "priority": "P0",
+      "title": "Intégrer les sources Atlas, traductions et démonstrations référencées",
+      "status": "terminee",
+      "completed_day": 4,
+      "evidence": "docs/atlas-source-audit.json ; tests/resultats-atlas.json ; tests/resultats-atlas-medias-live.json"
+    },
+    {
+      "id": "X02",
+      "agent": "dev",
+      "priority": "P0",
+      "title": "Relier la bibliothèque Atlas aux programmes et séances Forge",
+      "status": "terminee",
+      "completed_day": 4,
+      "evidence": "tests/resultats-atlas.json ; tests/resultats-atlas-sauvegardes.json ; tests/resultats-atlas-regression.json"
+    },
+    {
+      "id": "X03",
+      "agent": "test",
+      "priority": "P0",
+      "title": "Valider Atlas, les anciens carnets et les petits écrans",
+      "status": "terminee",
+      "completed_day": 4,
+      "evidence": "tests/resultats-atlas.json ; tests/resultats-atlas-regression.json ; tests/resultats-atlas-accueil.json ; tests/resultats-atlas-apercu.json ; tests/resultats-atlas-sauvegardes.json ; tests/resultats-atlas-medias-live.json"
     }
   ],
   "blockers": [
@@ -372,9 +399,9 @@
     "L’ouverture directe file:// est interdite par le navigateur de test géré : les aperçus sont validés via HTTP, pas par double-clic dans cet environnement."
   ],
   "next_steps": [
-    "Mission accueil A01–A03 livrée après validation ; attendre une prochaine demande pour la suite.",
-    "Finaliser C03 : relecture des messages et explications des nouvelles données.",
-    "Réaliser U04 (accessibilité complète), puis terminer V03 sur les autres écrans et P04."
+    "Atlas X01–X03 livré : bibliothèque, démonstrations et compatibilité testées.",
+    "Propositions : compléter le GIF manquant, relire les traductions, ajouter des favoris.",
+    "Les autres finitions C03, U04, V03 globale et P04 restent en attente."
   ],
   "mode": "paused"
 }

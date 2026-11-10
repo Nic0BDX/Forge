@@ -1,8 +1,8 @@
 # Forge — Feuille de route
 
-**Jour 4 · 2026-11-03 · 26/35 tâches terminées · 74 %**
+**Jour 4 · 2026-11-10 · 29/38 tâches terminées · 76 %**
 
-Avancement global : `████████████░░░░` **74 %**
+Avancement global : `████████████░░░░` **76 %**
 
 Calcul : tâches terminées ÷ tâches totales × 100, arrondi au pourcentage entier. Les tâches en cours ne donnent aucun crédit partiel. Chaque tâche pèse une unité, indépendamment de sa durée.
 
@@ -16,7 +16,7 @@ Ordre Jour 1 : **P01 → P02 → (U01, C01) → (U02, D01, C02) → (D02, D03, D
 
 Priorités : **P0** = base utilisable et conservation des fonctions ; **P1** = fiabilité et finition ; **P2** = évolution de production ou idée à valider. D08–D10 et T06 nécessitent des services externes : ils ne conditionnent pas l’utilisation locale, mais restent ouverts dans cette feuille complète.
 
-**Ordre courant :** P05 → D05 → D06 (Jour 2), puis T05 → D07 → U03 (Jour 3), puis C03 et V01 → V02 (Jour 4, demande vidéo), puis A01 → A02 → A03 (accueil animé) ; V03 globale, U04 et P04 restent à venir. Chaque clôture attend ses preuves de test avant le checkpoint.
+**Ordre courant :** P05 → D05 → D06 (Jour 2), puis T05 → D07 → U03 (Jour 3), puis C03 et V01 → V02 (Jour 4, demande vidéo), puis A01 → A02 → A03 (accueil animé), puis X01 → X02 → X03 (bibliothèque Atlas) ; V03 globale, U04 et P04 restent à venir. Chaque clôture attend ses preuves de test avant le checkpoint.
 
 **U04 : une tâche, trois étapes ordonnées.** Le Designer reste responsable de sa clôture ; ces étapes ne sont pas ajoutées au dénominateur.
 
@@ -32,8 +32,8 @@ Priorités : **P0** = base utilisable et conservation des fonctions ; **P1** = f
 |---|---|---:|
 | Chef de projet | `█████████████░░░` 80 % | 4/5 |
 | Designer UI/UX | `█████████████░░░` 83 % | 5/6 |
-| Développeur | `████████████░░░░` 75 % | 9/12 |
-| Testeur mobile | `██████████░░░░░░` 62 % | 5/8 |
+| Développeur | `█████████████░░░` 79 % | 11/14 |
+| Testeur mobile | `███████████░░░░░` 67 % | 6/9 |
 | Contenu & idées | `████████████░░░░` 75 % | 3/4 |
 
 ## Toutes les tâches
@@ -75,6 +75,9 @@ Priorités : **P0** = base utilisable et conservation des fonctions ; **P1** = f
 | A01 | P0 | Créer le corps du héro et son éclairage pectoral animé selon la vidéo | Designer UI/UX | ✅ Terminée | Jour 4 | tests/resultats-accueil-anime.json ; docs/COMPARAISON_VIDEO.md |
 | A02 | P0 | Aligner l’accueil, les anneaux d’activité et la carte des pas sur la référence | Développeur | ✅ Terminée | Jour 4 | tests/resultats-activite-donnees.json ; tests/resultats-accueil-anime.json ; tests/resultats-accueil-regression.json |
 | A03 | P0 | Comparer et tester l’accueil animé sur mobile, desktop et aperçu autonome | Testeur mobile | ✅ Terminée | Jour 4 | tests/resultats-activite-donnees.json ; tests/resultats-accueil-anime.json ; tests/resultats-accueil-regression.json ; tests/resultats-accueil-interactions.json ; tests/resultats-accueil-apercu.json |
+| X01 | P0 | Intégrer les sources Atlas, traductions et démonstrations référencées | Développeur | ✅ Terminée | Jour 4 | docs/atlas-source-audit.json ; tests/resultats-atlas.json ; tests/resultats-atlas-medias-live.json |
+| X02 | P0 | Relier la bibliothèque Atlas aux programmes et séances Forge | Développeur | ✅ Terminée | Jour 4 | tests/resultats-atlas.json ; tests/resultats-atlas-sauvegardes.json ; tests/resultats-atlas-regression.json |
+| X03 | P0 | Valider Atlas, les anciens carnets et les petits écrans | Testeur mobile | ✅ Terminée | Jour 4 | tests/resultats-atlas.json ; tests/resultats-atlas-regression.json ; tests/resultats-atlas-accueil.json ; tests/resultats-atlas-apercu.json ; tests/resultats-atlas-sauvegardes.json ; tests/resultats-atlas-medias-live.json |
 
 ## Points bloquants et limites
 
@@ -86,8 +89,8 @@ Priorités : **P0** = base utilisable et conservation des fonctions ; **P1** = f
 
 ## Prochaines étapes
 
-- Mission accueil A01–A03 livrée après validation ; attendre une prochaine demande pour la suite.
-- Finaliser C03 : relecture des messages et explications des nouvelles données.
-- Réaliser U04 (accessibilité complète), puis terminer V03 sur les autres écrans et P04.
+- Atlas X01–X03 livré : bibliothèque, démonstrations et compatibilité testées.
+- Propositions : compléter le GIF manquant, relire les traductions, ajouter des favoris.
+- Les autres finitions C03, U04, V03 globale et P04 restent en attente.
 
 **En pause à la demande du propriétaire.** Attendre une nouvelle demande. À « reprends », relire POINT_DE_REPRISE.md. Les tâches bloquées restent dans le dénominateur.

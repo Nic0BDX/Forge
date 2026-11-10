@@ -1,23 +1,23 @@
 # Forge — Point de reprise
 
 **Mode : PAUSE demandée par le propriétaire.** Attendre une nouvelle demande avant de poursuivre.
-Jour en cours : **4**. Dernier checkpoint : **2026-11-03T14:28:05+01:00** (Europe/Paris).
+Jour en cours : **4**. Dernier checkpoint : **2026-11-10T18:54:43+01:00** (Europe/Paris).
 État du jour : **en cours**.
 
 ## Tâches terminées — ne pas les refaire
 
-**26/35 tâches terminées (74 %).**
+**29/38 tâches terminées (76 %).**
 
 - Jour 1 : P01, P02, P03, U01, U02, D01, D02, D03, D04, T01, T02, T03, C01, C02, C04.
 - Jour 2 : P05, D05, D06.
 - Jour 3 : U03, D07, T05.
-- Jour 4 : V01, V02, A01, A02, A03.
+- Jour 4 : V01, V02, A01, A02, A03, X01, X02, X03.
 
 ## Travail exactement en cours
 
 **Tâche : Aucune : choisir la prochaine tâche utile.**
 
-ACCUEIL ANIMÉ TERMINÉ ET VALIDÉ : A01, A02 et A03 livrées. Corps original et lumière pectorale liée aux sept accents, pause mémorisée et réduction des animations ; grille 3+3+2, Bouger / Exercice / Debout, pas avec courbe, distance, calories actives et étages. Valeurs manuelles inconnues distinctes de zéro, minutes calculées depuis les séances. Validation : 31 contrôles de données, 66 ciblés accueil, 33 régression sur 342 états, 71 interactions, 22 aperçu ; 223 contrôles réussis, aucun débordement ni exception JS. APERCU.html autonome testé hors réseau ; file:// et appareils physiques non testés. Desktop1280 : rang1 y86/h352, rang2 y450/h280,5, pas y742,5. Livrable Forge-Accueil-Anime.zip, détails TESTS_ACCUEIL.md et docs/BILAN_ACCUEIL.md. La licence ajoutée sur GitHub a été préservée. Cette demande est terminée ; les finitions générales restent en pause.
+ATLAS TERMINÉ ET VALIDÉ : X01, X02 et X03 livrées. 1324 fiches Atlas, 7710 consignes FR, 1323 liens GIF vérifiés dans Git ; Pont de Londres reste sans animation. Les 30 anciens exercices sont conservés, 15 avec correspondance exacte de démonstration. Recherche FR/EN, filtres, pagination, ajout au jour choisi, démonstration pendant séance et catalogId persistant. Validation : 74 contrôles Atlas, 33 de régression sur 342 états, 66 accueil, 22 aperçu et 70 sauvegardes = 265 réussis, aucun échec. Trois GET HTTPS de GIF réels vérifiés en plus ; rendu distant Chromium standard non validé à cause du certificat du proxy. Aucun téléphone physique ni file:// testé. ZIP Forge-Exercices-Atlas.zip et copie Forge-Jour-4-Atlas.zip ; APERCU autonome avec GIF externes. Autres finitions en attente ; ne pas refaire accueil A01–A03 ni Atlas X01–X03.
 
 Les étapes ci-dessus décrivent les fichiers réellement préparés. Une tâche en cours ne donne aucun crédit partiel.
 
@@ -25,15 +25,16 @@ Les étapes ci-dessus décrivent les fichiers réellement préparés. Une tâche
 
 **Prochaine tâche : V03**
 
-Attendre une nouvelle demande. Lire ce point et docs/BILAN_ACCUEIL.md. Ne pas refaire A01/A02/A03. Restent C03 (relecture générale), U04 (accessibilité), V03 (comparaison des autres écrans), P04 et cinq blocages externes. Ne pas prétendre que le corps original est le fichier exact de la vidéo.
+Lire docs/JOURNAL_ATLAS.md et TESTS_ATLAS.md. Cette demande est terminée. Attendre la prochaine instruction avant de reprendre C03, U04, V03 globale ou P04. Propositions : GIF manquant, relecture des traductions, favoris. Reprendre le point de reprise sans refaire les tâches validées.
 
 ## Preuves du dernier checkpoint
 
-- `tests/resultats-activite-donnees.json` · SHA-256 `eaaaa6b9fd1bbdd48f961a005e08a45d3d2038a504e5611a611ff1cefcd4a9f0`
-- `tests/resultats-accueil-anime.json` · SHA-256 `1f326d2f26bb428383bd9ea50cb30854f5c6822dc0655cf05baabb028f8b7c9a`
-- `tests/resultats-accueil-regression.json` · SHA-256 `1bcff4062baca2855465b4193486562a127c5589e8d338d3e5b3128a5f566b76`
-- `tests/resultats-accueil-interactions.json` · SHA-256 `4761472b902fb590cd3cbd7785e289c7eaa3ee8182dcf1f0a062bb03842f4041`
-- `tests/resultats-accueil-apercu.json` · SHA-256 `521dd811e71c51f71d80a57a88a0ca05c796ad8cca907a3c1224f8f8fb6e4f36`
+- `tests/resultats-atlas.json` · SHA-256 `309b87804959acf24150fead282bcfafdcc8b89cbc08cdd6c43837cc8def1bd5`
+- `tests/resultats-atlas-regression.json` · SHA-256 `d15b713d70b991e029fcd0a4a5c4ac54a3edefb797b991137c3d0e0b918c2d20`
+- `tests/resultats-atlas-accueil.json` · SHA-256 `880ecc3b79e1f859607d75213f220cea95f38743ec0c7bf00ccf05cd16a6b15e`
+- `tests/resultats-atlas-apercu.json` · SHA-256 `8e9a6dedfa957c2bdef9bb71afe61654e9b111ab9375da08548661e74d5eb2cb`
+- `tests/resultats-atlas-sauvegardes.json` · SHA-256 `24daf63a7c1f7a628fd88b332ee43baaad978f021cf420552ab57e0d8d5e04f9`
+- `tests/resultats-atlas-medias-live.json` · SHA-256 `1cefc3e369fcf9ea4ec02ea4e630a4b2a94b0902621296f9c1dffdf49277069e`
 
 ## Archives et procédure de reprise
 
