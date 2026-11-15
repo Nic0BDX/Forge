@@ -1,6 +1,7 @@
 /* French source labels are stable keys; exercise names and user data stay untouched. */
 const I18N_ENTRIES = [
  ['Langue','Language'],
+ ['Ajouter ma photo','Add my photo'],
  ['LE RYTHME QUI TE RESSEMBLE','A RHYTHM THAT FITS YOU'],
  ['Trouve ton','Find your'],['rythme.','rhythm.'],
  ["Plus qu'une app, une discipline.",'More than an app, a discipline.'],

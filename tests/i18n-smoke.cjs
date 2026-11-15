@@ -32,6 +32,7 @@ const accountCheck=require('node:child_process').spawnSync(process.execPath,['te
   await page.locator('#regName').fill('Utilisateur test');await page.locator('#authEmail').fill('i18n-test@forge.example');await page.locator('#authPass').fill('ForgeTest123');
   await page.evaluate(()=>registerAccount());const recovery=await page.locator('.rec-code').innerText();
   assert.match(recovery,/^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/);
+  assert.equal(await page.evaluate(()=>DB.profile.avatar),'','Signup photo is optional');
   await page.waitForTimeout(800);await page.evaluate(()=>{closeModal();DB.profile.setup=true;save();nav('home')});
   assert.equal(await page.locator('.vf-nav button').first().innerText(),'Home');
   assert.match(await page.locator('.vf-hero h1').innerText(),/Overview/);
