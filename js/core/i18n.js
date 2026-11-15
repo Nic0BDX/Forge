@@ -366,7 +366,16 @@ const I18N_ENTRIES = [
  ['· séries','· sets'],['contient une catégorie inconnue.','contains an unknown category.'],['est incomplète.','is incomplete.'],['Historique XP','XP history'],['Jours de présence','Days of attendance'],['contient trop d’entrées.','contains too many entries.'],
  ['La durée de sommeil est absente.','Sleep duration is missing.'],['Le suivi d’habitudes est invalide.','Habit tracking is invalid.'],['Dernières séries','Latest sets'],['est invalide.','is invalid.'],['Prises whey','Whey intakes'],['Une prise de whey est invalide.','A whey intake is invalid.'],
  ['Prise whey','Whey intake'],['Rappel photo','Photo reminder'],['Réinitialisation de séance','Workout reset'],['Le fichier est trop volumineux.','The file is too large.'],['Le fichier local n’est plus un JSON lisible.','The local file is no longer readable JSON.'],
- ['Le carnet doit être récupéré avant de pouvoir le modifier.','The log must be recovered before it can be edited.'],['Le compte courant a changé.','The current account has changed.']
+ ['Le carnet doit être récupéré avant de pouvoir le modifier.','The log must be recovered before it can be edited.'],['Le compte courant a changé.','The current account has changed.'],
+ ['Bonne nuit','Good night'],['Bonjour','Hello'],['Bonsoir','Good evening'],['Jours de présence consécutifs','Consecutive days of attendance'],['Niv.','Lvl.'],
+ ['Prochaine séance','Next workout'],['Ton prochain pas','Your next step'],['Un rythme à toi.','Your own rhythm.'],['série','set'],['Ajoute tes jours et exercices','Add your days and exercises'],
+ ['Voir ma séance','View my workout'],['Choisir mon programme','Choose my programme'],['Cette semaine','This week'],['Volume semaine','Weekly volume'],
+ ['Volume cumulé','Total volume'],['6 derniers mois ·','Last 6 months ·'],['pas encore de comparaison','no comparison yet'],['% vs période précédente','% vs previous period'],
+ ['Détails','Details'],['Macros du jour','Today’s macros'],['total','total'],['sur','of'],['aujourd’hui','today'],['Aucune habitude pour l’instant.','No habits yet.'],
+ ['Ta première séance validée apparaîtra ici.','Your first completed workout will appear here.'],['Tes records personnels s’afficheront après ta première séance.','Your personal records will appear after your first workout.'],
+ ['kg soulevés au total','kg lifted in total'],['Raccourcis','Shortcuts'],['Forge','Forge'],['DISCIPLINE.','DISCIPLINE.'],['PROGRESSION.','PROGRESS.'],['LIBERTÉ.','FREEDOM.'],['Plus qu’une app,','More than an app,'],['une discipline.','a discipline.'],
+ ['Forge — Plus qu’une app, une discipline.','Forge — More than an app, a discipline.'],
+ ['Forge — Plus qu’une app, une discipline. Entraînement, nutrition et progression, à ton rythme.','Forge — More than an app, a discipline. Training, nutrition and progress, at your own pace.']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
@@ -375,11 +384,12 @@ const I18N = {
 let forgeLang='fr';
 try{const saved=localStorage.getItem('forge_lang');if(Object.hasOwn(I18N,saved))forgeLang=saved}catch{}
 document.documentElement.lang=forgeLang;
-function t(key){return I18N[forgeLang][key]??I18N.fr[key]??key}
+function t(key){return Object.hasOwn(I18N[forgeLang],key)?I18N[forgeLang][key]:Object.hasOwn(I18N.fr,key)?I18N.fr[key]:key}
 function forgeLocale(){return forgeLang==='en'?'en-GB':'fr-FR'}
 function applyI18n(root=document){
- const nodes=[...(root.matches?.('[data-i18n],[data-i18n-placeholder]')?[root]:[]),...root.querySelectorAll('[data-i18n],[data-i18n-placeholder]')];
- for(const node of nodes){if(node.dataset.i18n)node.textContent=t(node.dataset.i18n);if(node.dataset.i18nPlaceholder)node.setAttribute('placeholder',t(node.dataset.i18nPlaceholder))}
+ const selector='[data-i18n],[data-i18n-placeholder],[data-i18n-content]';
+ const nodes=[...(root.matches?.(selector)?[root]:[]),...root.querySelectorAll(selector)];
+ for(const node of nodes){if(node.dataset.i18n)node.textContent=t(node.dataset.i18n);if(node.dataset.i18nPlaceholder)node.setAttribute('placeholder',t(node.dataset.i18nPlaceholder));if(node.dataset.i18nContent)node.setAttribute('content',t(node.dataset.i18nContent))}
 }
 function setLanguage(lang){
  if(!Object.hasOwn(I18N,lang))return;

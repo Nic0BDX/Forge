@@ -66,7 +66,7 @@ function shell(content){
         <div><small>${t("NIVEAU")}</small><div style="font-size:10px;margin-top:3px">${t("Progression")}</div></div>
         <div class="side-level-ring" style="--value:${xpPct}"><b>${lvl.level}</b></div>
       </div>
-      <div style="margin-top:9px"><b style="font-size:12px">${t("Niveau")} ${lvl.level}</b><div class="xp-mini">${lvl.left.toLocaleString('fr-FR')} / ${lvl.need.toLocaleString('fr-FR')} XP</div></div>
+      <div style="margin-top:9px"><b style="font-size:12px">${t("Niveau")} ${lvl.level}</b><div class="xp-mini">${lvl.left.toLocaleString(forgeLocale())} / ${lvl.need.toLocaleString(forgeLocale())} XP</div></div>
       <div class="progress green" style="height:5px;margin-top:8px"><i style="width:${xpPct}%"></i></div>
     </div>
     <div class="side-streak"><div class="fire">${flame()}</div><div><small>${t("JOURS DE PRÉSENCE")}</small><b>${st} ${t("jours")}</b></div></div>
