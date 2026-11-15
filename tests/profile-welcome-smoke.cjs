@@ -52,5 +52,51 @@ const workspace=process.cwd();
   await page.evaluate(()=>logout());await page.evaluate(()=>goAuth('login'));await page.locator('#authEmail').fill('profile-test@forge.example');await page.locator('#authPass').fill('ForgeTest123');await page.evaluate(()=>loginAccount());await page.waitForFunction(()=>isLogged()&&document.querySelector('.vf-app'));
   assert.equal(await page.evaluate(()=>DB.profile.avatar),'');assert.equal(await page.evaluate(()=>DB.profile.name),'Nicolas modifié');assert.deepEqual(errors,[]);
   console.log('PASS: avatar crop/256px/JPEG, live display, initial, gallery/capture, invalid/large files, quota rollback, export/import, rename, re-login; 390x844 and 1920x1080; no page errors');
+  await page.close();
+  for(const viewport of [{width:390,height:844},{width:1920,height:1080}]){
+   const welcome=await browser.newPage({viewport,reducedMotion:'no-preference'}),pageErrors=[],consoleErrors=[];
+   welcome.on('pageerror',error=>pageErrors.push(error.message));welcome.on('console',message=>{if(message.type()==='error')consoleErrors.push(message.text())});
+   const email='welcome-'+viewport.width+'@forge.example';
+   async function login(){await welcome.evaluate(()=>goAuth('login'));await welcome.locator('#authEmail').fill(email);await welcome.locator('#authPass').fill('ForgeTest123');await welcome.evaluate(()=>loginAccount())}
+   async function seek(time){await welcome.locator('.forge-welcome video').evaluate((video,time)=>{video.pause();video.currentTime=time},time);await welcome.waitForFunction(time=>{const v=document.querySelector('.forge-welcome video');return v&&!v.seeking&&Math.abs(v.currentTime-time)<.1},time);await welcome.waitForTimeout(80)}
+   await welcome.goto(base);await welcome.evaluate(()=>goAuth('register'));await welcome.locator('#regName').fill('Nicolas');await welcome.locator('#authEmail').fill(email);await welcome.locator('#authPass').fill('ForgeTest123');await welcome.evaluate(()=>registerAccount());
+   await welcome.locator('.forge-welcome').waitFor({timeout:5000});
+   await welcome.waitForFunction(()=>document.querySelector('.forge-welcome video')?.currentTime>0,null,{timeout:5000});
+   const metadata=await welcome.locator('.forge-welcome video').evaluate(video=>({width:video.videoWidth,height:video.videoHeight,duration:video.duration,muted:video.muted,volume:video.volume,inline:video.playsInline}));
+   assert.equal(metadata.width,720);assert.equal(metadata.height,1560);assert.ok(metadata.duration>=13.4&&metadata.duration<14);assert.ok(metadata.muted&&metadata.inline);assert.equal(metadata.volume,0);
+   const frame=await welcome.locator('.forge-welcome-frame').boundingBox();assert.ok(Math.abs(frame.height-viewport.height)<2);assert.ok(Math.abs(frame.x+frame.width/2-viewport.width/2)<2);
+   assert.ok(Math.abs(frame.width-(viewport.width===390?390:1080*720/1560))<2);
+   await seek(1.6);assert.equal(await welcome.locator('.forge-welcome-title').innerText(),'Bonjour Nicolas,');assert.equal(await welcome.locator('.forge-welcome-name').innerText(),'Nicolas');
+   assert.ok(!(await welcome.locator('.forge-welcome-title').innerText()).includes('Alex'));assert.equal(await welcome.locator('.forge-welcome-name').evaluate(el=>getComputedStyle(el).color),'rgb(225, 29, 42)');
+   const normalSize=await welcome.locator('.forge-welcome-title').evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+   await seek(3.8);assert.equal(await welcome.locator('.forge-welcome-subtitle').innerText(),'Bonne séance à toi !');
+   await seek(4.5);assert.equal(await welcome.locator('.forge-welcome-title').innerText(),'');
+   await seek(7.8);assert.equal(await welcome.locator('.forge-welcome-title').innerText(),'Welcome Nicolas,');assert.equal(await welcome.locator('.forge-welcome-subtitle').innerText(),'Have a great workout!');
+   await seek(12.8);assert.equal(await welcome.locator('.forge-welcome-title').innerText(),'¡Hola, Nicolas!');assert.equal(await welcome.locator('.forge-welcome-subtitle').innerText(),'¡Que tengas una buena sesión!');
+   await seek(2);assert.equal(await welcome.locator('.forge-welcome-title').innerText(),'Bonjour Nicolas,');
+   await welcome.locator('.forge-welcome video').evaluate(video=>{video.currentTime=video.duration-.08;return video.play()});
+   await welcome.waitForFunction(()=>!document.querySelector('.forge-welcome'),null,{timeout:3000});assert.equal(await welcome.evaluate(()=>view),'setup');assert.ok(await welcome.locator('.rec-code').isVisible());assert.equal(await welcome.locator('#setupName').inputValue(),'Nicolas');
+   await welcome.evaluate(()=>{closeModal();finishSetup();nav('settings')});
+   const changedName=viewport.width===390?'nicolas':'nicolasWWWWWWWWWWWWWWWWWWWW';
+   await welcome.locator('#sn').fill(changedName);await welcome.evaluate(()=>{saveSettings();setLanguage('en')});assert.equal(await welcome.locator('.forge-bar-name').innerText(),changedName);
+   await welcome.evaluate(()=>logout());await login();await welcome.locator('.forge-welcome').waitFor({timeout:5000});await welcome.waitForFunction(()=>document.querySelector('.forge-welcome video')?.currentTime>0,null,{timeout:5000});
+   await seek(2.8);assert.equal(await welcome.locator('.forge-welcome-name').innerText(),Array.from(changedName).slice(0,20).join(''));assert.equal(await welcome.locator('.forge-welcome-skip').innerText(),'Skip');
+   if(viewport.width===1920)assert.ok(await welcome.locator('.forge-welcome-title').evaluate(el=>parseFloat(getComputedStyle(el).fontSize))<normalSize);
+   await welcome.locator('.forge-welcome-skip').focus();await welcome.keyboard.press('Enter');await welcome.waitForFunction(()=>!document.querySelector('.forge-welcome'));
+   assert.equal(await welcome.evaluate(()=>view),'home');assert.equal(await welcome.evaluate(()=>DB.profile.name),changedName);
+   await welcome.reload();await welcome.locator('.vf-app').waitFor();assert.equal(await welcome.locator('.forge-welcome').count(),0);assert.equal(await welcome.evaluate(()=>sessionStorage.getItem('forge_welcome_seen_v1')),'1');
+   await welcome.emulateMedia({reducedMotion:'reduce'});await welcome.evaluate(()=>logout());await login();await welcome.locator('.vf-app').waitFor();assert.equal(await welcome.locator('.forge-welcome').count(),0);
+   assert.deepEqual(consoleErrors,[]);assert.deepEqual(pageErrors,[]);
+   if(viewport.width===390){
+    await welcome.emulateMedia({reducedMotion:'no-preference'});await welcome.route('**/assets/forge_welcome_clean.mp4',route=>route.abort());
+    await welcome.evaluate(()=>logout());await login();await welcome.locator('.vf-app').waitFor({timeout:5000});assert.equal(await welcome.locator('.forge-welcome').count(),0);await welcome.unroute('**/assets/forge_welcome_clean.mp4');
+    let stalled;await welcome.route('**/assets/forge_welcome_clean.mp4',route=>{stalled=route});
+    await welcome.evaluate(()=>logout());await login();const started=Date.now();await welcome.locator('.vf-app').waitFor({timeout:5000});assert.ok(Date.now()-started<4000);assert.equal(await welcome.locator('.forge-welcome').count(),0);if(stalled)await stalled.abort();await welcome.unroute('**/assets/forge_welcome_clean.mp4');
+    await welcome.evaluate(()=>{window.originalMediaPlay=HTMLMediaElement.prototype.play;HTMLMediaElement.prototype.play=()=>Promise.reject(new DOMException('Blocked','NotAllowedError'));logout()});await login();await welcome.locator('.vf-app').waitFor({timeout:5000});assert.equal(await welcome.locator('.forge-welcome').count(),0);await welcome.evaluate(()=>{HTMLMediaElement.prototype.play=window.originalMediaPlay});
+    assert.deepEqual(pageErrors,[]);
+   }
+   await welcome.close();
+   console.log(`PASS: welcome ${viewport.width}x${viewport.height}, actual MP4/muted, Nicolas/rename/no Alex, FR/EN/ES media time, frame layout, long name, keyboard skip, fade/arrival/recovery, no replay, reduced motion; no unexpected console errors`);
+  }
  }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}
 })().catch(error=>{console.error(error);process.exitCode=1});

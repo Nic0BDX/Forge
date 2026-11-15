@@ -12,7 +12,7 @@ const workspace=process.cwd();
  try{
   const chrome=process.env.FORGE_BROWSER||(process.platform==='win32'?'C:/Program Files/Google/Chrome/Application/chrome.exe':undefined);
   browser=await chromium.launch({headless:true,...(chrome?{executablePath:chrome}:{})});
-  const page=await browser.newPage({viewport:{width:390,height:844}}),errors=[];
+  const page=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)errors.push(r.status()+' '+r.url())});
   const base='http://127.0.0.1:'+server.address().port;
   await page.goto(base);await page.locator('.ea-weights svg').waitFor();

@@ -386,7 +386,8 @@ const I18N_ENTRIES = [
  ['Photo de profil','Profile photo'],['Choisir une photo','Choose a photo'],['Prendre une photo','Take a photo'],
  ['Choisis un fichier image valide.','Choose a valid image file.'],['Photo trop volumineuse (8 Mo maximum).','Photo is too large (8 MB maximum).'],
  ['Photo non enregistrée. Vérifie le stockage disponible.','Photo not saved. Check the available storage.'],
- ['Photo de profil enregistrée.','Profile photo saved.'],['Photo de profil supprimée.','Profile photo removed.']
+ ['Photo de profil enregistrée.','Profile photo saved.'],['Photo de profil supprimée.','Profile photo removed.'],
+ ['Passer','Skip'],['Vidéo d’accueil','Welcome video']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([key,,source])=>[key,source??key])),

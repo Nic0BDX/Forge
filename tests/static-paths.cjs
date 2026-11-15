@@ -12,4 +12,5 @@ for(const file of ['index.html','preview/demo.html']){
 for(const name of fs.readdirSync('css').filter(name=>name.endsWith('.css'))){const file='css/'+name;for(const match of fs.readFileSync(file,'utf8').matchAll(/url\(\s*['"]?([^'"\s)]+)['"]?\s*\)/g))asset(file,match[1])}
 for(const dir of ['js/core','js/features'])for(const name of fs.readdirSync(dir).filter(name=>name.endsWith('.js'))){const file=dir+'/'+name;for(const match of fs.readFileSync(file,'utf8').matchAll(/\bphoto\(['"]([^'"]+)['"]\)/g))asset('index.html','assets/images/'+match[1]+'.svg')}
 const config=JSON.parse(fs.readFileSync('vercel.json','utf8'));assert.equal(config.framework,null);assert.equal(config.buildCommand,'');assert.equal(config.outputDirectory,'.');assert.ok(fs.existsSync('index.html'));
+asset('index.html','assets/forge_welcome_clean.mp4');
 console.log(`PASS: ${checked} relative local assets exist; static root, no build`);
