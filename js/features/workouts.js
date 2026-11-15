@@ -28,7 +28,7 @@ function addExerciseEditor(i){
 function saveProgramModal(id){
  const edited=JSON.parse(JSON.stringify(window.editProg));edited.name=document.getElementById('pn').value.trim()||'Mon programme';if(!edited.days.length)return toast(t("Ajoute au moins un jour"));
  const next=JSON.parse(JSON.stringify(DB));if(id){const index=next.programs.findIndex(program=>program.id===id);if(index<0)return toast(t("Ce programme n’existe plus."));next.programs[index]=edited}else{edited.id=uid();next.programs.push(edited);if(!next.activeProgram)next.activeProgram=edited.id}
- try{commitUserDB(validateBackup(next))}catch(error){return toast(error.message.replace('Cette sauvegarde ne correspond pas au format Forge.',t("Le programme n’a pas été enregistré.")))}
+ try{commitUserDB(validateBackup(next))}catch(error){return toast(error.message.replace(t('Cette sauvegarde ne correspond pas au format Forge.'),t("Le programme n’a pas été enregistré.")))}
  closeModal();render();toast(t("Programme enregistré"));
 }
 function activateProgram(id){DB.activeProgram=id;save();render();toast(t("Programme actif"))}

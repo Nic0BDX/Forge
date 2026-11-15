@@ -49,6 +49,9 @@ const workspace=process.cwd();
   for(const open of ['openActivityModal','openSleepModal','openWeightModal','openGoalModal','openHabitModal','openMealModal','vfOpenSteps','vfOpenPulse','openProgramModal']){
    await page.evaluate(name=>window[name](),open);assert.ok(await page.locator('#modalbox').innerText(),open);await page.evaluate(()=>closeModal());
   }
+  assert.match(await page.evaluate(()=>{try{validateBackup({})}catch(error){return error.message}}),/^This backup/);
+  await page.evaluate(()=>openMealModal());assert.equal(await page.locator('#mealType').inputValue(),'Petit-déjeuner');assert.equal(await page.locator('#mealType option').first().innerText(),'Breakfast');await page.evaluate(()=>closeModal());
+  await page.evaluate(()=>openGoalModal());assert.equal(await page.locator('#goalType option').nth(1).getAttribute('value'),'Poids');assert.equal(await page.locator('#goalType option').nth(1).innerText(),'Weight');await page.evaluate(()=>closeModal());
   await page.evaluate(()=>{installTemplate('push');const p=DB.programs.at(-1);startWorkout(p.id,0)});
   assert.equal(await page.locator('.es-ex-h b').first().innerText(),'Développé couché');
   await page.evaluate(()=>{updateWorkoutField(0,0,'weight','30');updateWorkoutField(0,0,'reps','8');toggleSet(0,0)});

@@ -351,7 +351,22 @@ const I18N_ENTRIES = [
  ['Débutant','Beginner'],['Avancé','Advanced'],['Séances / semaine','Workouts / week'],['Créer mon espace →','Create my space →'],
  ['100% local au départ · tes données restent dans ce navigateur.','100% local to start · your data stays in this browser.'],
  ['Configuration non enregistrée.','Configuration not saved.'],['Bienvenue dans FORGE','Welcome to FORGE'],['Séance terminée','Workout finished'],['Nouveau record personnel','New personal record'],
- ['Le réglage d’animation n’a pas pu être enregistré.','The animation setting could not be saved.'],['Membre Forge','Forge member'],['Whey','Whey']
+ ['Le réglage d’animation n’a pas pu être enregistré.','The animation setting could not be saved.'],['Membre Forge','Forge member'],['Whey','Whey'],
+ ['Le fichier est trop complexe.','The file is too complex.'],['Un nombre est invalide.','A number is invalid.'],['Un objet est invalide.','An object is invalid.'],['Une propriété est interdite.','A property is forbidden.'],
+ ['doit être un texte valide.','must be valid text.'],['contient un nombre invalide.','contains an invalid number.'],['doit être vrai ou faux.','must be true or false.'],['contient un identifiant invalide.','contains an invalid identifier.'],
+ ['contient une date invalide.','contains an invalid date.'],['doit être un objet.','must be an object.'],['doit être une liste valide.','must be a valid list.'],['contient des identifiants en double.','contains duplicate identifiers.'],
+ ['doit être une image JPEG, PNG, WebP ou GIF intégrée.','must be an embedded JPEG, PNG, WebP or GIF image.'],['contient une image illisible.','contains an unreadable image.'],
+ ['ne correspond pas au format d’image annoncé.','does not match the declared image format.'],['contient une adresse d’image invalide.','contains an invalid image address.'],
+ ['contient un avatar illisible.','contains an unreadable avatar.'],['contient un SVG non pris en charge.','contains an unsupported SVG.'],['doit être un avatar local ou une adresse HTTP(S) valide.','must be a local avatar or a valid HTTP(S) address.'],
+ ['contient une série invalide.','contains an invalid set.'],['contient une série validée incorrecte.','contains an invalid completed set.'],['La racine doit être un carnet.','The root must be a log.'],['Le profil est absent ou invalide.','The profile is missing or invalid.'],
+ ['La version est inconnue.','The version is unknown.'],['Cette sauvegarde provient d’une version plus récente de Forge.','This backup comes from a newer version of Forge.'],['Date d’export','Export date'],
+ ['Réglages','Settings'],['doit être clair ou sombre.','must be light or dark.'],['est incomplet.','is incomplete.'],['Activité','Activity'],['Activité contient trop de journées.','Activity contains too many days.'],
+ ['Un relevé d’activité ne peut pas être daté dans le futur.','An activity record cannot be dated in the future.'],['Activité du','Activity on'],['Un relevé d’activité ne contient aucune mesure.','An activity record contains no measurements.'],
+ ['Record de présence','Attendance record'],['Démonstration','Demonstration'],['· jours','· days'],['· exercices','· exercises'],['contient un intervalle de répétitions invalide.','contains an invalid repetition range.'],['ne contient aucun jour.','contains no days.'],
+ ['· séries','· sets'],['contient une catégorie inconnue.','contains an unknown category.'],['est incomplète.','is incomplete.'],['Historique XP','XP history'],['Jours de présence','Days of attendance'],['contient trop d’entrées.','contains too many entries.'],
+ ['La durée de sommeil est absente.','Sleep duration is missing.'],['Le suivi d’habitudes est invalide.','Habit tracking is invalid.'],['Dernières séries','Latest sets'],['est invalide.','is invalid.'],['Prises whey','Whey intakes'],['Une prise de whey est invalide.','A whey intake is invalid.'],
+ ['Prise whey','Whey intake'],['Rappel photo','Photo reminder'],['Réinitialisation de séance','Workout reset'],['Le fichier est trop volumineux.','The file is too large.'],['Le fichier local n’est plus un JSON lisible.','The local file is no longer readable JSON.'],
+ ['Le carnet doit être récupéré avant de pouvoir le modifier.','The log must be recovered before it can be edited.'],['Le compte courant a changé.','The current account has changed.']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),

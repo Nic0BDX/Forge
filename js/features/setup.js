@@ -7,6 +7,6 @@ function setupPage(){return `<div class="setup"><div class="setupbox">
 <p class="sub" style="text-align:center;margin-top:12px">${t("100% local au départ · tes données restent dans ce navigateur.")}</p></div></div>`}
 function finishSetup(){
  const next=JSON.parse(JSON.stringify(DB));next.profile.setup=true;next.profile.name=document.getElementById('setupName').value.trim()||'Champion';next.profile.goal=document.getElementById('setupGoal').value;next.profile.level=document.getElementById('setupLevel').value;next.profile.perWeek=Math.max(1,Math.min(7,Math.round(+document.getElementById('setupFreq').value)||4));
- try{commitUserDB(validateBackup(next))}catch(error){return toast((t("Configuration non enregistrée.")+" ")+error.message.replace('Cette sauvegarde ne correspond pas au format Forge.',t("Vérifie les valeurs saisies.")))}
+ try{commitUserDB(validateBackup(next))}catch(error){return toast((t("Configuration non enregistrée.")+" ")+error.message.replace(t('Cette sauvegarde ne correspond pas au format Forge.'),t("Vérifie les valeurs saisies.")))}
  award(100,'Bienvenue dans FORGE');nav('home');
 }

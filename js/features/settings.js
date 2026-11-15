@@ -7,7 +7,7 @@ function settings(){
 }
 function saveSettings(){
  const next=JSON.parse(JSON.stringify(DB));next.profile.name=document.getElementById('sn').value.trim()||'Champion';next.profile.avatar=document.getElementById('sa').value||'🏋️';next.profile.bio=document.getElementById('sb').value;next.profile.goal=document.getElementById('sg').value;
- try{const validated=validateBackup(next);commitUserDB(validated)}catch(error){return toast(t("Profil non enregistré. ")+t(error.message==='Cette sauvegarde ne correspond pas au format Forge.'?'Vérifie les valeurs saisies.':error.message))}
+ try{const validated=validateBackup(next);commitUserDB(validated)}catch(error){return toast(t("Profil non enregistré. ")+error.message.replace(t('Cette sauvegarde ne correspond pas au format Forge.'),t('Vérifie les valeurs saisies.')))}
  toast(t("Profil enregistré"));render();
 }
 function saveTargets(){
