@@ -151,7 +151,13 @@ const I18N_ENTRIES = [
  ['Ton entraînement, ton journal nutritionnel et tes souvenirs restent accessibles dans cette version.','Your training, nutrition journal and memories remain available in this version.'],
  ['Des programmes plus riches','Richer programmes'],['Une piste pour la suite','An idea for the future'],['Des bilans plus lisibles','Clearer summaries'],
  ['Un accompagnement connecté','Connected support'],['Le coach IA n’est pas encore connecté','The AI coach is not connected yet'],
- ['Aucun abonnement actif · Aucun paiement disponible','No active subscription · No payment available'],['Retrouver mon profil','Return to my profile']
+ ['Aucun abonnement actif · Aucun paiement disponible','No active subscription · No payment available'],['Retrouver mon profil','Return to my profile'],
+ ['OBJECTIFS','GOALS'],['OBJECTIF','GOAL'],['Définis ce que tu veux suivre et garde une vue claire de ta progression.','Decide what you want to track and keep a clear view of your progress.'],
+ ['Aucun objectif pour le moment. Ajoute ton premier objectif.','No goals yet. Add your first goal.'],['Nouvel objectif','New goal'],
+ ['Ex. 100 kg au développé couché','E.g. 100 kg bench press'],['Type','Type'],['Performance','Performance'],['Poids','Weight'],['Habitude','Habit'],
+ ['Valeur actuelle','Current value'],['Cible','Target'],['Créer','Create'],
+ ['Donne un nom à cet objectif (1 à 1 000 caractères).','Give this goal a name (1 to 1,000 characters).'],
+ ['La valeur actuelle doit être positive ou nulle et la cible supérieure à 0.','The current value must be zero or greater and the target greater than 0.']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
