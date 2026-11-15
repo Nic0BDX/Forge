@@ -39,55 +39,55 @@ function shell(content){
  const me=DB.profile.name||AUTH[currentEmail()]?.name||'Champion';
  return `<div class="app ${fresh?'fresh':''} ${view==='session'?'is-session':''}">
   <header class="mobile-topbar">
-   <button class="mobile-brand" onclick="nav('home')" aria-label="Forge, accueil"><span class="logo-f">F</span> FORGE</button>
-   <div class="mobile-topbar-actions"><button class="es-round sm" onclick="toggleTheme()" aria-label="${DB.settings.theme==='light'?'Activer le mode sombre':'Activer le mode clair'}">${ico(DB.settings.theme==='light'?'moon':'sun')}</button><button class="es-round sm" onclick="openAppMenu()" aria-label="Toutes les rubriques">${ico('menu')}</button></div>
+   <button class="mobile-brand" onclick="nav('home')" aria-label="${t("Forge, accueil")}"><span class="logo-f">F</span> FORGE</button>
+   <div class="mobile-topbar-actions"><button class="es-round sm" onclick="toggleTheme()" aria-label="${DB.settings.theme==='light'?t("Activer le mode sombre"):t("Activer le mode clair")}">${ico(DB.settings.theme==='light'?'moon':'sun')}</button><button class="es-round sm" onclick="openAppMenu()" aria-label="${t("Toutes les rubriques")}">${ico('menu')}</button></div>
   </header>
   <div class="shell">
    <aside class="side">
-    <div class="brand-lockup"><div class="brand-word"><span class="logo-f">F</span>FORGE</div><div class="brand-sub">Plus qu’une app, une discipline.</div></div>
+    <div class="brand-lockup"><div class="brand-word"><span class="logo-f">F</span>FORGE</div><div class="brand-sub">${t("Plus qu’une app, une discipline.")}</div></div>
     <nav class="nav">
-     ${navBtn('home','home','Aperçu')}
-     ${navBtn('program','train','Entraînements')}
-     ${navBtn('exercises','book','Exercices')}
-     ${navBtn('nutrition','food','Nutrition')}
-     ${navBtn('habits','habit','Habitudes')}
-     ${navBtn('progress','stats','Progression')}
-     ${navBtn('goals','goals','Objectifs')}
-     ${navBtn('calendar','calendar','Calendrier')}
-     ${navBtn('memories','photo','Souvenirs')}
-     ${navBtn('coach','bolt','Coach IA')}
-     ${navBtn('community','community','Communauté')}
-     ${navBtn('profile','profile','Mon profil')}
-     ${navBtn('settings','settings','Paramètres')}
+     ${navBtn('home','home',t("Aperçu"))}
+     ${navBtn('program','train',t("Entraînements"))}
+     ${navBtn('exercises','book',t("Exercices"))}
+     ${navBtn('nutrition','food',t("Nutrition"))}
+     ${navBtn('habits','habit',t("Habitudes"))}
+     ${navBtn('progress','stats',t("Progression"))}
+     ${navBtn('goals','goals',t("Objectifs"))}
+     ${navBtn('calendar','calendar',t("Calendrier"))}
+     ${navBtn('memories','photo',t("Souvenirs"))}
+     ${navBtn('coach','bolt',t("Coach IA"))}
+     ${navBtn('community','community',t("Communauté"))}
+     ${navBtn('profile','profile',t("Mon profil"))}
+     ${navBtn('settings','settings',t("Paramètres"))}
     </nav>
     <div class="side-spacer"></div>
     <div class="side-level">
       <div class="side-level-head">
-        <div><small>NIVEAU</small><div style="font-size:10px;margin-top:3px">Progression</div></div>
+        <div><small>${t("NIVEAU")}</small><div style="font-size:10px;margin-top:3px">${t("Progression")}</div></div>
         <div class="side-level-ring" style="--value:${xpPct}"><b>${lvl.level}</b></div>
       </div>
-      <div style="margin-top:9px"><b style="font-size:12px">Niveau ${lvl.level}</b><div class="xp-mini">${lvl.left.toLocaleString('fr-FR')} / ${lvl.need.toLocaleString('fr-FR')} XP</div></div>
+      <div style="margin-top:9px"><b style="font-size:12px">${t("Niveau")} ${lvl.level}</b><div class="xp-mini">${lvl.left.toLocaleString('fr-FR')} / ${lvl.need.toLocaleString('fr-FR')} XP</div></div>
       <div class="progress green" style="height:5px;margin-top:8px"><i style="width:${xpPct}%"></i></div>
     </div>
-    <div class="side-streak"><div class="fire">${flame()}</div><div><small>JOURS DE PRÉSENCE</small><b>${st} jours</b></div></div>
-    <button class="side-account" onclick="nav('profile')"><div class="account-avatar" style="${avatarStyle(DB.profile.avatar||AUTH[currentEmail()]?.avatar||AVATARS[0])}"></div><div><b>${esc(me)}</b><small>Voir le profil</small></div></button>
+    <div class="side-streak"><div class="fire">${flame()}</div><div><small>${t("JOURS DE PRÉSENCE")}</small><b>${st} ${t("jours")}</b></div></div>
+    <button class="side-account" onclick="nav('profile')"><div class="account-avatar" style="${avatarStyle(DB.profile.avatar||AUTH[currentEmail()]?.avatar||AVATARS[0])}"></div><div><b>${esc(me)}</b><small>${t("Voir le profil")}</small></div></button>
    </aside>
    <main class="main" id="main-content">${workoutResumeCard()}${content}</main>
   </div>
-  <nav class="mobile-nav" aria-label="Navigation principale">${mobileBtn('home','home','Accueil')}${mobileBtn('program','train','Séances')}${mobileBtn('nutrition','food','Nutrition')}${mobileBtn('memories','photo','Souvenirs')}${mobileBtn('profile','profile','Profil')}</nav>
+  <nav class="mobile-nav" aria-label="${t("Navigation principale")}">${mobileBtn('home','home',t("Accueil"))}${mobileBtn('program','train',t("Séances"))}${mobileBtn('nutrition','food',t("Nutrition"))}${mobileBtn('memories','photo',t("Souvenirs"))}${mobileBtn('profile','profile',t("Profil"))}</nav>
  </div>`;
 }
 const NAV_ALIAS={coach:'profile',nutriai:'nutrition',beforeafter:'memories',weekly:'memories',preview:'program',session:'program',summary:'program',workouts:'program',exercises:'program',progress:'profile',goals:'profile',habits:'profile',routine:'profile',calendar:'profile',community:'profile',settings:'profile',premium:'profile',history:'profile',streak:'profile',meals:'nutrition'};
 function navView(){return NAV_ALIAS[view]||view}
-function navBtn(v,i,l){return `<button class="${view===v?'active':''}" onclick="nav('${v}')">${ico(i)}<span>${l}</span></button>`}
-function mobileBtn(v,i,l){return `<button class="${navView()===v?'active':''}" onclick="nav('${v}')" aria-label="${l}">${ico(i)}<span>${l}</span></button>`}
+function navBtn(v,i,l){return `<button class="${view===v?'active':''}" onclick="nav('${v}')">${ico(i)}<span>${t(l)}</span></button>`}
+function mobileBtn(v,i,l){return `<button class="${navView()===v?'active':''}" onclick="nav('${v}')" aria-label="${t(l)}">${ico(i)}<span>${t(l)}</span></button>`}
 function toggleTheme(){DB.settings.theme=DB.settings.theme==='light'?'dark':'light';save();applyTheme();render()}
 function applyTheme(){const light=DB.settings.theme!=='dark';document.documentElement.classList.toggle('light',light);document.documentElement.style.colorScheme=light?'light':'dark';document.querySelector('meta[name="theme-color"]')?.setAttribute('content',light?'#F5F3EC':'#142B24')}
 function render(){applyTheme();if(!isLogged()){document.getElementById('root').innerHTML=authPage();return}document.getElementById('root').innerHTML=view==='setup'?setupPage():shell(pages[view]?pages[view]():home())}
 
 /* Toutes les rubriques restent accessibles sur téléphone. */
 function openAppMenu(){
- const links=[['home','home','Accueil'],['program','train','Programmes'],['exercises','book','Exercices'],['nutrition','food','Nutrition'],['memories','photo','Souvenirs'],['progress','stats','Progression'],['calendar','calendar','Calendrier'],['coach','bolt','Coach IA'],['habits','habit','Habitudes'],['routine','check','Ma routine'],['goals','goals','Objectifs'],['community','community','Communauté'],['history','clock','Historique'],['profile','profile','Mon profil'],['premium','trophy','Forge Premium'],['settings','settings','Paramètres']];
- document.getElementById('modalbox').innerHTML=`<div class="row"><div><div class="eyebrow">À TON RYTHME</div><h2>Ton espace Forge</h2></div><button class="es-round" onclick="closeModal()" aria-label="Fermer le menu">×</button></div><nav class="app-menu-grid" aria-label="Toutes les rubriques">${links.map(([v,i,l])=>`<button class="app-menu-item ${view===v?'active':''}" onclick="nav('${v}')">${ico(i)}<span>${l}</span>${ico('chev')}</button>`).join('')}</nav>`;
+ const links=[['home','home',t("Accueil")],['program','train',t("Programmes")],['exercises','book',t("Exercices")],['nutrition','food',t("Nutrition")],['memories','photo',t("Souvenirs")],['progress','stats',t("Progression")],['calendar','calendar',t("Calendrier")],['coach','bolt',t("Coach IA")],['habits','habit',t("Habitudes")],['routine','check',t("Ma routine")],['goals','goals',t("Objectifs")],['community','community',t("Communauté")],['history','clock',t("Historique")],['profile','profile',t("Mon profil")],['premium','trophy',t("Forge Premium")],['settings','settings',t("Paramètres")]];
+ document.getElementById('modalbox').innerHTML=`<div class="row"><div><div class="eyebrow">${t("À TON RYTHME")}</div><h2>${t("Ton espace Forge")}</h2></div><button class="es-round" onclick="closeModal()" aria-label="${t("Fermer le menu")}">×</button></div><nav class="app-menu-grid" aria-label="${t("Toutes les rubriques")}">${links.map(([v,i,l])=>`<button class="app-menu-item ${view===v?'active':''}" onclick="nav('${v}')">${ico(i)}<span>${l}</span>${ico('chev')}</button>`).join('')}</nav>`;
  openModal();
 }
