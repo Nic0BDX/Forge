@@ -1,0 +1,5 @@
+/* Development helper: add missing FR/EN entries with a targeted git patch. JSON pairs on stdin. */
+const fs=require('node:fs'),vm=require('node:vm'),cp=require('node:child_process');
+const file='js/core/i18n.js',source=fs.readFileSync(file,'utf8'),context={document:{documentElement:{},addEventListener(){}},localStorage:{getItem(){return null}}};vm.createContext(context);vm.runInContext(source+';globalThis.dictionary=I18N.fr',context);
+const pairs=JSON.parse(fs.readFileSync(0,'utf8')).filter(([key])=>!Object.hasOwn(context.dictionary,key));if(!pairs.length)process.exit(0);if(new Set(pairs.map(([key])=>key)).size!==pairs.length)throw Error('Duplicate input key');
+const line=source.split(/\r?\n/).findIndex(row=>row==='const I18N_ENTRIES = [')+1;if(!line)throw Error('Dictionary anchor missing');const patch=`--- a/${file}\n+++ b/${file}\n@@ -${line},1 +${line},${pairs.length+1} @@\n const I18N_ENTRIES = [\n${pairs.map(pair=>'+ '+JSON.stringify(pair)+',').join('\n')}\n`;const result=cp.spawnSync('git',['apply','--unidiff-zero','-'],{input:patch,encoding:'utf8'});if(result.status)throw Error(result.stderr);console.log('Added '+pairs.length+' translation pairs');

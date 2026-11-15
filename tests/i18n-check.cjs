@@ -12,6 +12,7 @@ for(const dir of ['js/core','js/features'])for(const file of fs.readdirSync(dir)
  for(const match of code.matchAll(/data-i18n(?:-placeholder)?="([^"]+)"/g))assert.ok(Object.hasOwn(context.translations.fr,match[1]),file+': '+match[1]);
 }
 console.log(`PASS: ${keys.length} unique keys, FR/EN parity, ${count} translated expressions`);
+for(const recipe of JSON.parse(fs.readFileSync('assets/recipes.json','utf8')))assert.ok(Object.hasOwn(context.translations.fr,recipe.name),'Recipe title '+recipe.name);
 for(const [file,name,labels]of [
  ['js/features/video-forge.js','FORGE_LINKS',rows=>rows.map(row=>row[2])],
  ['js/features/video-forge.js','FORGE_ACCENTS',rows=>Object.values(rows).map(row=>row[0])],
@@ -21,6 +22,9 @@ for(const [file,name,labels]of [
  ['js/data/catalog.js','mealPlans',rows=>rows.flatMap(row=>[row.name,row.note,...row.items])],
  ['js/features/food-library.js','FOOD_GROUPS',rows=>Object.values(rows)],
  ['js/features/food-library.js','FOOD_METRICS',rows=>Object.values(rows)],
+ ['js/features/meal-recommendations.js','RECIPE_MOMENTS',rows=>Object.values(rows)],
+ ['js/features/meal-recommendations.js','RECIPE_GOALS',rows=>Object.values(rows)],
+ ['js/features/meal-recommendations.js','RECIPE_DIETS',rows=>Object.values(rows)],
  ['js/core/streak.js','STREAK_LABELS',rows=>Object.values(rows)]
 ]){
  const code=fs.readFileSync(file,'utf8'),match=code.match(new RegExp('const '+name+'\\s*=\\s*([\\s\\S]*?);'));

@@ -1,7 +1,7 @@
 # FORGE — suivi des cinq phases
 
 - [x] Phase 1 : base CIQUAL officielle et journal nutrition (recherche, groupes, favoris, récents, grammes, aliments personnels).
-- [ ] Phase 2 : repas recommandés calculés et estimation calorique indicative.
+- [x] Phase 2 : repas recommandés calculés et estimation calorique indicative.
 - [ ] Phase 3 : programmes référencés dans Atlas et validation des séances.
 - [ ] Phase 4 : sprite SVG original et icônes des aliments et séances.
 - [ ] Phase 5 : Coach IA local, repli calculé et documentation de test mobile.
@@ -11,7 +11,7 @@ Ne jamais effacer les données utilisateur ; conserver la compatibilité des sau
 
 ## Reprise
 
-Arrêt après la phase 1 pour limiter le contexte. **Prochaine étape : phase 2**, sans refaire la phase 1.
+L'utilisateur demande désormais toutes les phases restantes sans arrêt volontaire. **Prochaine étape : phase 3**, sans refaire les phases validées.
 Règles de travail : `rg` avant lecture, extraits seulement, patchs ciblés, tous les textes FR/EN dans le système existant, un commit et `git push origin main` par phase. Ne jamais effacer `forge_data_*` ni réinitialiser la session par migration. Résumé de phase en trois lignes maximum ; indiquer les tests impossibles.
 
 ## Phase 1 livrée et vérifiée
@@ -26,6 +26,8 @@ Règles de travail : `rg` avant lecture, extraits seulement, patchs ciblés, tou
 ## Exigences restantes
 
 ### Phase 2
+
+Livrée : 48 propositions CIQUAL (`assets/recipes.json`, génération `tools/build-recipes.cjs`), filtres moment/objectif/régime, ajout d'une recette au journal avec ingrédients conservés, propagation des valeurs inconnues. `meal-recommendations.js` ajoute l'estimation Mifflin-St Jeor à partir de données explicitement saisies et conserve les objectifs existants jusqu'à validation explicite. Sources de la formule/PAL dans `assets/SOURCES-NUTRITION.md`. Tests : i18n-check, static-paths, nutrition-smoke (somme des ingrédients des 48 repas, filtres, ajout, données manquantes, calcul sans écrasement d'objectif), i18n-smoke ; Chromium 390×844 et 1920×1080 sans erreur console. Non testés : appareil physique/Safari.
 
 40–60 repas composés d'identifiants de `foods.json` et de grammages ; totaux calculés exclusivement à partir des ingrédients (propager les valeurs inconnues). Filtres moment (dont avant/après séance), objectif (masse/perte/maintien), omnivore/végétarien ; ajout au journal. Estimation Mifflin-St Jeor à partir de données explicites du profil, demander les données manquantes sans les déduire de `bodyType`. Vérifier la formule dans une source fiable actuelle ; mention traduite « estimation indicative, pas un avis médical », aucun déficit extrême. Ajouter le test de somme des ingrédients.
 
