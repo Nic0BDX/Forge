@@ -20,8 +20,11 @@ const accountCheck=require('node:child_process').spawnSync(process.execPath,['te
   assert.equal(await page.locator('html').getAttribute('lang'),'fr');
   assert.equal(await page.locator('.ea img').count(),0);
   await page.evaluate(()=>goAuth('login'));
+  async function languageLayout(id,adjacent,label){for(const width of [390,1920]){await page.setViewportSize({width,height:width===390?844:1080});const button=page.locator('#'+id),rect=await button.boundingBox(),other=await page.locator(adjacent).boundingBox();assert.ok(rect.width>=44&&rect.height>=44);assert.ok(rect.x>=0&&rect.x+rect.width<=width);if(other)assert.ok(rect.x+rect.width<=other.x||other.x+other.width<=rect.x||rect.y+rect.height<=other.y||other.y+other.height<=rect.y,label+' overlap');assert.equal(await page.locator('#'+id+' .forge-language-icon').evaluate(el=>getComputedStyle(el).width),'26px');await button.click();assert.equal(await button.getAttribute('aria-expanded'),'true');await page.keyboard.press('Escape');assert.equal(await button.getAttribute('aria-expanded'),'false');await page.screenshot({path:path.join(require('node:os').tmpdir(),`forge-${label}-${width}.png`)});}await page.setViewportSize({width:390,height:844})}
+  await languageLayout('authLanguage','.ea-form-brand','language-auth');
+  await page.locator('#authLanguage').click();await page.keyboard.press('ArrowDown');assert.equal(await page.locator(':focus').getAttribute('data-forge-language'),'en');await page.keyboard.press('Enter');assert.equal(await page.locator('html').getAttribute('lang'),'en');await page.evaluate(()=>setLanguage('fr'));await page.locator('#authLanguage').click();await page.mouse.click(2,2);assert.equal(await page.locator('#authLanguage').getAttribute('aria-expanded'),'false');
   await page.locator('#authEmail').fill('i18n-test@forge.example');await page.locator('#authPass').fill('ForgeTest123');
-  await page.locator('#authLanguage').selectOption('en');
+  await page.locator('#authLanguage').click();await page.locator('[data-forge-language="en"]').click();
   assert.equal(await page.locator('#authEmail').inputValue(),'i18n-test@forge.example');
   assert.equal(await page.locator('#authPass').inputValue(),'ForgeTest123');
   assert.equal(await page.locator('#authSubmit').innerText(),'Log in');
@@ -37,13 +40,14 @@ const accountCheck=require('node:child_process').spawnSync(process.execPath,['te
   assert.equal(await page.locator('.vf-nav button').first().innerText(),'Home');
   assert.match(await page.locator('.vf-hero h1').innerText(),/Overview/);
   assert.equal(await page.locator('.vf-sleep h2').innerText(),'Sleep tracking');
+  await languageLayout('appLanguage','#vf-avatar-button','language-app');
   const name=await page.evaluate(()=>DB.profile.name);
   await page.evaluate(()=>nav('settings'));
-  if(await page.locator('#settingsLanguage').count()){
+  if(await page.locator('#appLanguage').count()){
    assert.equal(await page.locator('h1').innerText(),'Settings');
-   await page.locator('#sn').fill('Brouillon conservé');await page.locator('#settingsLanguage').selectOption('fr');
+   await page.locator('#sn').fill('Brouillon conservé');await page.locator('#appLanguage').click();await page.locator('#appLanguage-menu [data-forge-language="fr"]').click();
    assert.equal(await page.locator('#sn').inputValue(),'Brouillon conservé');assert.equal(await page.locator('h1').innerText(),'Paramètres');
-   assert.equal(await page.evaluate(()=>DB.profile.name),name);await page.locator('#settingsLanguage').selectOption('en');
+   assert.equal(await page.evaluate(()=>DB.profile.name),name);await page.locator('#appLanguage').click();await page.locator('#appLanguage-menu [data-forge-language="en"]').click();
   }
   for(const route of ['home','program','nutrition','sleep','health','progress','memories','beforeafter','coach','calendar','profile','premium','settings','exercises','habits','goals','history','routine','community','workouts','meals','nutriai','weekly']){
    await page.evaluate(route=>nav(route),route);assert.equal(await page.locator('#main-content').count(),1,route);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),route+' overflow');

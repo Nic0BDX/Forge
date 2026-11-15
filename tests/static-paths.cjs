@@ -13,6 +13,7 @@ for(const name of fs.readdirSync('css').filter(name=>name.endsWith('.css'))){con
 for(const dir of ['js/core','js/features'])for(const name of fs.readdirSync(dir).filter(name=>name.endsWith('.js'))){const file=dir+'/'+name;for(const match of fs.readFileSync(file,'utf8').matchAll(/\bphoto\(['"]([^'"]+)['"]\)/g))asset('index.html','assets/images/'+match[1]+'.svg')}
 const config=JSON.parse(fs.readFileSync('vercel.json','utf8'));assert.equal(config.framework,null);assert.equal(config.buildCommand,'');assert.equal(config.outputDirectory,'.');assert.ok(fs.existsSync('index.html'));
 asset('index.html','assets/forge_welcome_clean.mp4');
+asset('index.html','assets/icons/lang.png');
 for(const [file,width,height]of [
  ['assets/icons/icon-192.png',192,192],['assets/icons/icon-512.png',512,512],['assets/icons/icon-maskable-512.png',512,512],
  ['assets/icons/apple-touch-icon.png',180,180],['assets/icons/favicon-32.png',32,32],['assets/icons/favicon-48.png',48,48],['assets/og-image.png',1200,630],

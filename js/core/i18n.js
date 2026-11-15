@@ -1,6 +1,7 @@
 /* French source labels are stable keys; exercise names and user data stay untouched. */
 const I18N_ENTRIES = [
  ['Langue','Language'],
+ ['Changer de langue','Change language'],
  ['Ajouter ma photo','Add my photo'],
  ['LE RYTHME QUI TE RESSEMBLE','A RHYTHM THAT FITS YOU'],
  ['Trouve ton','Find your'],['rythme.','rhythm.'],
@@ -421,9 +422,16 @@ function setLanguage(lang){
  forgeLang=lang;document.documentElement.lang=lang;try{localStorage.setItem('forge_lang',lang)}catch{}
  if(typeof render==='function')render();applyI18n();
  for(const field of fields){const el=document.getElementById(field.id);if(el&&el.type!=='file'){el.value=field.value;el.checked=field.checked}}
+ if(typeof refreshSignupPhoto==='function')refreshSignupPhoto();
  document.querySelectorAll('[data-language-selector]').forEach(el=>el.value=lang);
 }
-function languageSelector(id){return `<label class="forge-language" for="${id}"><span data-i18n="Langue">${t('Langue')}</span><select id="${id}" data-language-selector onchange="setLanguage(this.value)"><option value="fr" ${forgeLang==='fr'?'selected':''}>Français</option><option value="en" ${forgeLang==='en'?'selected':''}>English</option></select></label>`}
+const FORGE_LANGUAGES=[{code:'fr',name:'Français'},{code:'en',name:'English'}];
+function languageSelector(id){return `<div class="forge-language"><button id="${id}" type="button" class="forge-language-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="${id}-menu" aria-label="${t('Changer de langue')}" onclick="toggleLanguageMenu(this)"><span class="forge-language-icon" aria-hidden="true"></span><span class="forge-language-code" aria-hidden="true">${forgeLang.toUpperCase()}</span></button><div id="${id}-menu" class="forge-language-menu" role="menu" aria-label="${t('Changer de langue')}" hidden>${FORGE_LANGUAGES.filter(({code})=>Object.hasOwn(I18N,code)).map(({code,name})=>`<button type="button" role="menuitemradio" aria-checked="${code===forgeLang}" lang="${code}" data-forge-language="${code}" tabindex="-1" onclick="chooseLanguage(this)"><span>${name}</span><span aria-hidden="true">${code===forgeLang?'✓':''}</span></button>`).join('')}</div></div>`}
+function closeLanguageMenus(focus=false){document.querySelectorAll('.forge-language-trigger[aria-expanded="true"]').forEach(button=>{button.setAttribute('aria-expanded','false');document.getElementById(button.getAttribute('aria-controls')).hidden=true;if(focus)button.focus()})}
+function toggleLanguageMenu(button){const open=button.getAttribute('aria-expanded')==='true';closeLanguageMenus();if(open)return;const menu=document.getElementById(button.getAttribute('aria-controls'));menu.hidden=false;button.setAttribute('aria-expanded','true');menu.querySelector('[aria-checked="true"]')?.focus()}
+function chooseLanguage(button){const trigger=button.closest('.forge-language').querySelector('.forge-language-trigger').id;setLanguage(button.dataset.forgeLanguage);document.getElementById(trigger)?.focus()}
+document.addEventListener('click',event=>{if(!event.target.closest('.forge-language'))closeLanguageMenus()});
+document.addEventListener('keydown',event=>{const owner=event.target.closest?.('.forge-language');if(event.key==='Escape'){closeLanguageMenus(true);return}if(!owner)return;const trigger=owner.querySelector('.forge-language-trigger'),menu=owner.querySelector('[role="menu"]');if(event.key==='Tab'){closeLanguageMenus();return}if(!['ArrowDown','ArrowUp','Home','End'].includes(event.key))return;event.preventDefault();if(menu.hidden)toggleLanguageMenu(trigger);const items=[...menu.querySelectorAll('[role="menuitemradio"]')],index=items.indexOf(document.activeElement),next=event.key==='Home'?0:event.key==='End'?items.length-1:(index+(event.key==='ArrowUp'?-1:1)+items.length)%items.length;items[next]?.focus()});
 document.addEventListener('DOMContentLoaded',()=>{
  applyI18n();
  new MutationObserver(records=>{for(const record of records)for(const node of record.addedNodes)if(node.nodeType===1)applyI18n(node)}).observe(document.body,{childList:true,subtree:true});
