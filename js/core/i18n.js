@@ -223,7 +223,14 @@ const I18N_ENTRIES = [
  ['250–500 ml selon soif et activité','250–500 ml depending on thirst and activity'],['Déjeuner','Lunch'],['Repas complet · légumes + source de protéines','Complete meal · vegetables + protein source'],
  ['Pré-séance','Before training'],['Snack si besoin · 60–120 min avant l’entraînement','Snack if needed · 60–120 min before training'],
  ['Échauffement → séries de travail → retour au calme','Warm-up → working sets → cool-down'],['Dîner','Dinner'],['Repas de récupération · hydratation','Recovery meal · hydration'],
- ['Réduire les écrans · viser une durée de sommeil régulière','Reduce screen time · aim for a consistent sleep duration']
+ ['Réduire les écrans · viser une durée de sommeil régulière','Reduce screen time · aim for a consistent sleep duration'],
+ ['Des nuits qui comptent.','Nights that matter.'],['Ton sommeil','Your sleep'],['Un regard sur tes nuits, à partir de tes propres relevés.','A look at your nights, based on your own records.'],
+ ['Sur 7 jours','Over 7 days'],['Déclarée','Self-reported'],['Nuits','Nights'],['Enregistrées','Recorded'],['Mes nuits','My nights'],
+ ['Nuit la plus longue','Longest night'],['Nuits enregistrées','Recorded nights'],['Ta routine du soir','Your evening routine'],
+ ['Retrouve les habitudes que tu as choisies et avance à ton rythme.','Find the habits you have chosen and move at your own pace.'],
+ ['Durée et qualité saisies manuellement. Aucun capteur connecté.','Duration and quality entered manually. No sensor connected.'],
+ ['Mon dernier relevé','My latest reading'],['Saisie manuelle du pouls.','Manually entered pulse.'],['Aucun score de santé calculé.','No calculated health score.'],
+ ['Mon sommeil','My sleep'],['Manger et s’hydrater','Eat and hydrate'],['Rester en mouvement','Keep moving'],['Des habitudes','Habits'],['qui te font','that help you'],['avancer.','move forward.']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
