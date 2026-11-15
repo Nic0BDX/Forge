@@ -250,7 +250,17 @@ const I18N_ENTRIES = [
  ['Déjeuner · Performance','Lunch · Performance'],['Poulet grillé','Grilled chicken'],['Riz basmati','Basmati rice'],['Légumes verts','Green vegetables'],['Huile d’olive','Olive oil'],
  ['Idéal avant une séance l’après-midi.','Ideal before an afternoon workout.'],['Pré-workout','Pre-workout'],['Skyr ou yaourt','Skyr or yoghurt'],['Café si tu en consommes','Coffee if you drink it'],
  ['Simple et digeste, environ 60–120 min avant.','Simple and easy to digest, about 60–120 min beforehand.'],['Dîner · Récupération','Dinner · Recovery'],
- ['Saumon ou œufs','Salmon or eggs'],['Pommes de terre','Potatoes'],['Légumes','Vegetables'],['Fruit','Fruit'],['Repas complet, à adapter à tes objectifs.','A complete meal to adapt to your goals.']
+ ['Saumon ou œufs','Salmon or eggs'],['Pommes de terre','Potatoes'],['Légumes','Vegetables'],['Fruit','Fruit'],['Repas complet, à adapter à tes objectifs.','A complete meal to adapt to your goals.'],
+ ['Rappel whey','Whey reminder'],['La whey est facultative : adapte la portion à tes besoins et aux indications du produit.','Whey is optional: adapt the portion to your needs and the product instructions.'],
+ ['Les valeurs nutritionnelles utilisent une estimation générique. Vérifie l’étiquette de ton produit.','Nutritional values use a generic estimate. Check your product’s label.'],
+ ['Activer les rappels','Enable reminders'],['Portion prévue (g)','Planned portion (g)'],['Heures (2 max, séparées par une virgule)','Times (2 maximum, separated by a comma)'],
+ ['Autoriser les notifications','Allow notifications'],['J’ai pris ma whey','I have taken my whey'],
+ ['Les rappels automatiques nécessitent que FORGE soit ouvert (ou actif en arrière-plan) et que le navigateur autorise les notifications.','Automatic reminders require FORGE to be open (or active in the background) and browser notifications to be allowed.'],
+ ['Rappels whey enregistrés','Whey reminders saved'],['Prise ajoutée au journal nutritionnel','Intake added to the food journal'],
+ ['Notifications non prises en charge','Notifications not supported'],['Notifications autorisées','Notifications allowed'],
+ ['Notifications bloquées dans ce navigateur','Notifications blocked in this browser'],['Autorisation non accordée pour le moment','Permission not granted yet'],
+ ['FORGE · Rappel whey','FORGE · Whey reminder'],['Portion prévue :','Planned portion:'],['g. À adapter à tes besoins et à l’étiquette.','g. Adapt to your needs and the label.'],
+ ['FORGE · Photo de progression','FORGE · Progress photo'],['Ton rappel hebdomadaire photo est arrivé.','Your weekly photo reminder is due.']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
