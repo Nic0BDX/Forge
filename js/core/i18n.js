@@ -167,7 +167,14 @@ const I18N_ENTRIES = [
  ['Ex. Marche 8 000 pas','E.g. Walk 8,000 steps'],['Donne un nom à cette habitude (1 à 1 000 caractères).','Give this habit a name (1 to 1,000 characters).'],
  ['Les XP doivent être un entier entre 0 et 1 000 000.','XP must be a whole number between 0 and 1,000,000.'],
  ['Durée (heures)','Duration (hours)'],['Qualité / 5','Quality / 5'],
- ['Indique une durée de 0 à 24 heures et une qualité de 1 à 5.','Enter a duration from 0 to 24 hours and a quality from 1 to 5.'],['Sommeil enregistré','Sleep recorded']
+ ['Indique une durée de 0 à 24 heures et une qualité de 1 à 5.','Enter a duration from 0 to 24 hours and a quality from 1 to 5.'],['Sommeil enregistré','Sleep recorded'],
+ ['Choisis un mois valide.','Choose a valid month.'],['Choisis une date valide.','Choose a valid date.'],['Semaine','Week'],
+ [' · séance enregistrée',' · workout recorded'],['Voir mes programmes','View my programmes'],['Mois affiché','Displayed month'],['Jour à consulter','Day to view'],
+ ['Tout le mois','Whole month'],['Mois actuel','Current month'],['Mois précédent','Previous month'],['Mois suivant','Next month'],['Numéro de semaine','Week number'],
+ ['Les jours entourés contiennent une séance. Le jour actuel est rempli.','Circled days contain a workout. The current day is filled in.'],
+ [' Le jour choisi est encadré.',' The selected day is outlined.'],['Séances enregistrées','Recorded workouts'],['séance','workout'],['séances','workouts'],
+ ['Aucune séance enregistrée le ','No workout recorded on '],['Aucune séance enregistrée en ','No workout recorded in '],
+ ['PLANNIFICATION','PLANNING'],['Lun','Mon'],['Mar','Tue'],['Mer','Wed'],['Jeu','Thu'],['Ven','Fri'],['Sam','Sat'],['Dim','Sun'],['17 mai','17 May'],['19 mai','19 May']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
@@ -177,6 +184,7 @@ let forgeLang='fr';
 try{const saved=localStorage.getItem('forge_lang');if(Object.hasOwn(I18N,saved))forgeLang=saved}catch{}
 document.documentElement.lang=forgeLang;
 function t(key){return I18N[forgeLang][key]??I18N.fr[key]??key}
+function forgeLocale(){return forgeLang==='en'?'en-GB':'fr-FR'}
 function applyI18n(root=document){
  const nodes=[...(root.matches?.('[data-i18n],[data-i18n-placeholder]')?[root]:[]),...root.querySelectorAll('[data-i18n],[data-i18n-placeholder]')];
  for(const node of nodes){if(node.dataset.i18n)node.textContent=t(node.dataset.i18n);if(node.dataset.i18nPlaceholder)node.setAttribute('placeholder',t(node.dataset.i18nPlaceholder))}

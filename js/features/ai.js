@@ -13,7 +13,7 @@ const AI_PLACEHOLDER={
  tips:['Compose tes repas selon tes besoins, tes goûts et ta faim.','Utilise ton journal pour observer tes habitudes, sans viser la perfection.','Pour un accompagnement adapté à ta santé, demande conseil à un professionnel.']
 };
 function aiNote(){return AI_CONNECTED?'':'<p class="ai-note">Aperçu du coach · IA non connectée</p>'}
-function backBtn(to){return `<button class="es-round" onclick="nav('${to}')" aria-label="Retour">${ico('back')}</button>`}
+function backBtn(to){return `<button class="es-round" onclick="nav('${to}')" aria-label="${t("Retour")}">${ico('back')}</button>`}
 function subHead(title,to,right){return `<div class="r-sub rise" style="--i:0">${backBtn(to)}<h1>${title}</h1>${right||''}</div>`}
 
 /* 9. Mon IA Coach */
@@ -49,18 +49,18 @@ function validCalendarDay(value){
 }
 function calendarRef(offset=calOff){const ref=new Date();ref.setHours(12,0,0,0);ref.setDate(1);ref.setMonth(ref.getMonth()+offset);return ref}
 function calendarMonthKey(ref){return String(ref.getFullYear()).padStart(4,'0')+'-'+String(ref.getMonth()+1).padStart(2,'0')}
-function fullDateLabel(day){return new Date(day+'T12:00:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}
+function fullDateLabel(day){return new Date(day+'T12:00:00').toLocaleDateString(forgeLocale(),{day:'numeric',month:'long',year:'numeric'})}
 function calMove(n){
  const next=calendarRef(calOff+n);if(!Number.isInteger(n)||next.getFullYear()<1||next.getFullYear()>9999)return;
  calOff+=n;calSelectedDay='';render();
 }
 function selectCalendarMonth(value){
- if(typeof value!=='string'||!/^\d{4}-\d{2}$/.test(value)||!validCalendarDay(value+'-01')){toast('Choisis un mois valide.');render();return}
+ if(typeof value!=='string'||!/^\d{4}-\d{2}$/.test(value)||!validCalendarDay(value+'-01')){toast(t("Choisis un mois valide."));render();return}
  const now=new Date();calOff=(Number(value.slice(0,4))-now.getFullYear())*12+Number(value.slice(5,7))-1-now.getMonth();calSelectedDay='';render();
 }
 function selectCalendarDay(value){
  if(!value){calSelectedDay='';render();return}
- if(!validCalendarDay(value)){toast('Choisis une date valide.');render();return}
+ if(!validCalendarDay(value)){toast(t("Choisis une date valide."));render();return}
  const now=new Date();calOff=(Number(value.slice(0,4))-now.getFullYear())*12+Number(value.slice(5,7))-1-now.getMonth();calSelectedDay=value;render();
 }
 function showCalendarMonth(){calSelectedDay='';render()}
@@ -74,16 +74,16 @@ function calendarPage(){
  const cells=[];for(let i=0;i<lead;i++)cells.push(null);for(let d=1;d<=days;d++)cells.push(d);while(cells.length%7)cells.push(null);
  let rows='';for(let r=0;r<cells.length/7;r++){
   const week=cells.slice(r*7,r*7+7),first=week.find(Boolean),weekDate=new Date(ref);weekDate.setDate(first||1);
-  rows+=`<span class="cl-w" title="Semaine ${isoWeek(weekDate)}">${isoWeek(weekDate)}</span>`+week.map(d=>d?`<span class="cl-d ${key(d)===tk?'today':''} ${done.has(key(d))?'done':''} ${key(d)===calSelectedDay?'selected':''}"${key(d)===tk?' aria-current="date"':''}${key(d)===calSelectedDay?' style="outline:2px solid var(--text);outline-offset:2px"':''} title="${esc(fullDateLabel(key(d)))}${done.has(key(d))?' · séance enregistrée':''}">${d}</span>`:'<span></span>').join('');
+  rows+=`<span class="cl-w" title="${t("Semaine")} ${isoWeek(weekDate)}">${isoWeek(weekDate)}</span>`+week.map(d=>d?`<span class="cl-d ${key(d)===tk?'today':''} ${done.has(key(d))?'done':''} ${key(d)===calSelectedDay?'selected':''}"${key(d)===tk?' aria-current="date"':''}${key(d)===calSelectedDay?' style="outline:2px solid var(--text);outline-offset:2px"':''} title="${esc(fullDateLabel(key(d)))}${done.has(key(d))?t(" · séance enregistrée"):''}">${d}</span>`:'<span></span>').join('');
  }
  const list=(calSelectedDay?monthSessions.filter(s=>s.date===calSelectedDay):monthSessions).sort((a,b)=>b.date.localeCompare(a.date)||(Date.parse(b.iso)||0)-(Date.parse(a.iso)||0));
- const label=ref.toLocaleDateString('fr-FR',{month:'long',year:'numeric'}),period=calSelectedDay?fullDateLabel(calSelectedDay):label;
- return `<div class="r-page">${subHead('Calendrier','home',`<button class="es-round" onclick="nav('program')" aria-label="Voir mes programmes" style="margin-left:auto">${ico('plus')}</button>`)}
- <section class="eh-card cl-period rise" style="--i:1"><div class="grid g2"><div><label for="calendarMonth">Mois affiché</label><input id="calendarMonth" type="month" min="0001-01" max="9999-12" value="${month}" onchange="selectCalendarMonth(this.value)"></div><div><label for="calendarDay">Jour à consulter</label><input id="calendarDay" type="date" min="0001-01-01" max="9999-12-31" value="${calSelectedDay}" onchange="selectCalendarDay(this.value)"></div></div><div class="row gap wrap"><button class="btn" onclick="showCalendarMonth()">Tout le mois</button><button class="btn" onclick="showCurrentCalendarMonth()">Mois actuel</button></div></section>
- <section class="eh-card rise" style="--i:2"><div class="cl-nav"><button onclick="calMove(-1)" aria-label="Mois précédent">${ico('back')}</button><b style="text-transform:capitalize">${label}</b><button onclick="calMove(1)" aria-label="Mois suivant" style="transform:scaleX(-1)">${ico('back')}</button></div>
-  <div class="cl-grid"><span aria-label="Numéro de semaine"></span>${['L','M','M','J','V','S','D'].map(x=>`<span class="cl-h">${x}</span>`).join('')}${rows}</div><p class="sub" style="margin:14px 0 0">Les jours entourés contiennent une séance. Le jour actuel est rempli.${calSelectedDay?' Le jour choisi est encadré.':''}</p></section>
- <div class="eh-card-h rise" style="--i:3;margin-top:6px"><div><b>Séances enregistrées</b><p class="sub" style="margin:4px 0 0">${esc(period)}</p></div><small aria-live="polite">${list.length} séance${list.length===1?'':'s'}</small></div>
- <div class="r-list calendar-sessions rise" style="--i:4">${list.map(s=>`<div class="r-row" data-session-id="${esc(s.id)}"><span class="cl-ic">${ico('bolt')}</span><div><b>${esc(s.day)}</b><small><time datetime="${s.date}">${fullDateLabel(s.date)}</time></small></div><span class="cl-t">${fmtSec(s.duration)}</span></div>`).join('')||`<div class="eh-card eh-empty">${calSelectedDay?'Aucune séance enregistrée le '+fullDateLabel(calSelectedDay)+'.':'Aucune séance enregistrée en '+label+'.'}</div>`}</div></div>`;
+ const label=ref.toLocaleDateString(forgeLocale(),{month:'long',year:'numeric'}),period=calSelectedDay?fullDateLabel(calSelectedDay):label;
+ return `<div class="r-page">${subHead(t("Calendrier"),'home',`<button class="es-round" onclick="nav('program')" aria-label="${t("Voir mes programmes")}" style="margin-left:auto">${ico('plus')}</button>`)}
+ <section class="eh-card cl-period rise" style="--i:1"><div class="grid g2"><div><label for="calendarMonth">${t("Mois affiché")}</label><input id="calendarMonth" type="month" min="0001-01" max="9999-12" value="${month}" onchange="selectCalendarMonth(this.value)"></div><div><label for="calendarDay">${t("Jour à consulter")}</label><input id="calendarDay" type="date" min="0001-01-01" max="9999-12-31" value="${calSelectedDay}" onchange="selectCalendarDay(this.value)"></div></div><div class="row gap wrap"><button class="btn" onclick="showCalendarMonth()">${t("Tout le mois")}</button><button class="btn" onclick="showCurrentCalendarMonth()">${t("Mois actuel")}</button></div></section>
+ <section class="eh-card rise" style="--i:2"><div class="cl-nav"><button onclick="calMove(-1)" aria-label="${t("Mois précédent")}">${ico('back')}</button><b style="text-transform:capitalize">${label}</b><button onclick="calMove(1)" aria-label="${t("Mois suivant")}" style="transform:scaleX(-1)">${ico('back')}</button></div>
+  <div class="cl-grid"><span aria-label="${t("Numéro de semaine")}"></span>${['L','M','M','J','V','S','D'].map(x=>`<span class="cl-h">${x}</span>`).join('')}${rows}</div><p class="sub" style="margin:14px 0 0">${t("Les jours entourés contiennent une séance. Le jour actuel est rempli.")}${calSelectedDay?t(" Le jour choisi est encadré."):''}</p></section>
+ <div class="eh-card-h rise" style="--i:3;margin-top:6px"><div><b>${t("Séances enregistrées")}</b><p class="sub" style="margin:4px 0 0">${esc(period)}</p></div><small aria-live="polite">${list.length} ${t("séance")}${list.length===1?'':'s'}</small></div>
+ <div class="r-list calendar-sessions rise" style="--i:4">${list.map(s=>`<div class="r-row" data-session-id="${esc(s.id)}"><span class="cl-ic">${ico('bolt')}</span><div><b>${esc(s.day)}</b><small><time datetime="${s.date}">${fullDateLabel(s.date)}</time></small></div><span class="cl-t">${fmtSec(s.duration)}</span></div>`).join('')||`<div class="eh-card eh-empty">${calSelectedDay?t("Aucune séance enregistrée le ")+fullDateLabel(calSelectedDay)+'.':t("Aucune séance enregistrée en ")+label+'.'}</div>`}</div></div>`;
 }
 
 /* 7. Photo hebdo */
