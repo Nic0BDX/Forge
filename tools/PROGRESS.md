@@ -2,7 +2,7 @@
 
 - [x] Phase 1 : base CIQUAL officielle et journal nutrition (recherche, groupes, favoris, récents, grammes, aliments personnels).
 - [x] Phase 2 : repas recommandés calculés et estimation calorique indicative.
-- [ ] Phase 3 : programmes référencés dans Atlas et validation des séances.
+- [x] Phase 3 : programmes référencés dans Atlas et validation des séances.
 - [ ] Phase 4 : sprite SVG original et icônes des aliments et séances.
 - [ ] Phase 5 : Coach IA local, repli calculé et documentation de test mobile.
 
@@ -11,7 +11,7 @@ Ne jamais effacer les données utilisateur ; conserver la compatibilité des sau
 
 ## Reprise
 
-L'utilisateur demande désormais toutes les phases restantes sans arrêt volontaire. **Prochaine étape : phase 3**, sans refaire les phases validées.
+L'utilisateur demande désormais toutes les phases restantes sans arrêt volontaire. **Prochaine étape : phase 4**, sans refaire les phases validées.
 Règles de travail : `rg` avant lecture, extraits seulement, patchs ciblés, tous les textes FR/EN dans le système existant, un commit et `git push origin main` par phase. Ne jamais effacer `forge_data_*` ni réinitialiser la session par migration. Résumé de phase en trois lignes maximum ; indiquer les tests impossibles.
 
 ## Phase 1 livrée et vérifiée
@@ -32,6 +32,8 @@ Livrée : 48 propositions CIQUAL (`assets/recipes.json`, génération `tools/bui
 40–60 repas composés d'identifiants de `foods.json` et de grammages ; totaux calculés exclusivement à partir des ingrédients (propager les valeurs inconnues). Filtres moment (dont avant/après séance), objectif (masse/perte/maintien), omnivore/végétarien ; ajout au journal. Estimation Mifflin-St Jeor à partir de données explicites du profil, demander les données manquantes sans les déduire de `bodyType`. Vérifier la formule dans une source fiable actuelle ; mention traduite « estimation indicative, pas un avis médical », aucun déficit extrême. Ajouter le test de somme des ingrédients.
 
 ### Phase 3
+
+Livrée : 27 programmes / 90 séances (3 structures × 3 équipements × 3 niveaux), six exercices par séance, 45–70 min estimées, références Atlas réelles et noms FR/EN issus d'Atlas. `training-templates.js`, `training-recommendations.js`, `tools/check-templates.cjs` : présence Atlas, unicité, ordre polyarticulaires, matériel, prescriptions et durée vérifiés. Sans matériel : uniquement fiches ne nécessitant pas de banc/barre, limitation du tirage explicitée. Filtres, conseil de double progression, suggestions CIQUAL avant/après séance. L'installation historique est conservée ; aucun programme existant n'est migré. Tests training-smoke : ancien programme conservé, installation/démarrage/reprise, noms Atlas après changement de langue, suggestions repas, 390×844 et 1920×1080 ; i18n-check, static-paths et i18n-smoke validés. Non testés : exécution physique des séances, appareil réel/Safari.
 
 Créer `tools/check-templates.cjs` : échec si un exercice est absent d'`atlasRecords` (`js/features/exercise-atlas.js`) ou dupliqué dans une séance. Références par identifiant Atlas, noms affichés depuis Atlas FR/EN. Full body 3 jours, haut/bas 4 jours, push/pull/legs ; chaque programme en variantes sans matériel/haltères/salle. 5–8 exercices, 45–70 min, polyarticulaires d'abord, séries/répétitions/repos par niveau, filtres niveau/matériel/durée/jours. Conseil de double progression et suggestion avant/après séance issue de phase 2. Conserver `installTemplate`, `startWorkout` et tous les programmes existants.
 
