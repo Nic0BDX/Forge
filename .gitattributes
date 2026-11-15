@@ -1,0 +1,2 @@
+# Preserve upstream vendor bytes and their integrity hashes on every platform.
+assets/vendor/** -text

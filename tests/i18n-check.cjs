@@ -29,6 +29,7 @@ for(const [file,name,labels]of [
  ['js/data/training-templates.js','TRAINING_EQUIPMENT',rows=>Object.values(rows)],
  ['js/data/training-templates.js','TRAINING_TYPES',rows=>Object.values(rows)],
  ['js/data/training-templates.js','TRAINING_DAY_LABELS',rows=>Object.values(rows)],
+ ['js/features/local-coach.js','COACH_QUICK_QUESTIONS',rows=>rows],
  ['js/core/streak.js','STREAK_LABELS',rows=>Object.values(rows)]
 ]){
  const code=fs.readFileSync(file,'utf8'),match=code.match(new RegExp('const '+name+'\\s*=\\s*([\\s\\S]*?);'));

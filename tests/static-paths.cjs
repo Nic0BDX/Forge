@@ -17,6 +17,8 @@ asset('index.html','assets/icons/lang.png');
 asset('index.html','assets/foods.json');asset('index.html','assets/SOURCES-NUTRITION.md');
 asset('index.html','assets/recipes.json');
 asset('index.html','assets/icons/sprite.svg');
+for(const file of ['assets/vendor/webllm-0.2.88/webllm.js','assets/vendor/webllm-0.2.88/LICENSE','assets/vendor/webllm-0.2.88/forge-vendor.json','assets/vendor/webllm-0.2.88/Qwen2-1.5B-Instruct-q4f16_1_cs1k-webgpu.wasm','js/core/coach-worker.js'])asset('index.html',file);
+const vendor=JSON.parse(fs.readFileSync('assets/vendor/webllm-0.2.88/forge-vendor.json','utf8'));assert.equal(vendor.version,'0.2.88');for(const entry of vendor.vendorFiles)assert.equal(require('node:crypto').createHash('sha256').update(fs.readFileSync('assets/vendor/webllm-0.2.88/'+entry.file)).digest('hex'),entry.sha256,'Vendor integrity '+entry.file);
 const sprite=fs.readFileSync('assets/icons/sprite.svg','utf8'),symbolIds=[...sprite.matchAll(/<symbol id="([^"]+)"/g)].map(match=>match[1]);assert.equal(new Set(symbolIds).size,symbolIds.length);assert.ok(symbolIds.length>=40);for(const html of ['index.html','preview/demo.html']){const content=fs.readFileSync(html,'utf8');for(const id of symbolIds)assert.ok(content.includes('id="'+id+'"'),html+' inline symbol '+id)}
 const foods=JSON.parse(fs.readFileSync('assets/foods.json','utf8'));assert.ok(foods.length>=400&&foods.length<=600);assert.ok(fs.statSync('assets/foods.json').size<500000);assert.equal(new Set(foods.map(food=>food.id)).size,foods.length);
 for(const [file,width,height]of [
