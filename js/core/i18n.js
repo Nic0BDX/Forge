@@ -195,7 +195,10 @@ const I18N_ENTRIES = [
  ['Vérifie les mesures et le stockage disponible.','Check the measurements and available storage.'],['Activité enregistrée pour le ','Activity saved for '],
  ['Les nuits que tu as enregistrées dans Forge.','The nights you have recorded in Forge.'],['Enregistrer une nuit','Record a night'],
  ['Mes dernières nuits','My recent nights'],['Qualité','Quality'],['Enregistre ta première nuit pour voir ton historique.','Record your first night to see your history.'],
- ['Un rythme qui te ressemble','A rhythm that fits you'],['Observe la durée et la qualité de tes nuits, sans score de santé inventé.','Observe your sleep duration and quality, without an invented health score.'],['Voir ma routine','View my routine']
+ ['Un rythme qui te ressemble','A rhythm that fits you'],['Observe la durée et la qualité de tes nuits, sans score de santé inventé.','Observe your sleep duration and quality, without an invented health score.'],['Voir ma routine','View my routine'],
+ ['Santé & repères','Health & milestones'],['Tes relevés personnels, au même endroit.','Your personal records, all in one place.'],
+ ['Les essentiels du quotidien','Everyday essentials'],['Nutrition et hydratation','Nutrition and hydration'],['Mon entraînement','My training'],['Poids et progression','Weight and progress'],
+ ['Les relevés sont saisis manuellement. Aucun capteur n’est connecté.','Records are entered manually. No sensor is connected.']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),

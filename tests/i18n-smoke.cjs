@@ -33,6 +33,8 @@ const workspace=process.cwd();
   assert.match(recovery,/^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/);
   await page.waitForTimeout(800);await page.evaluate(()=>{closeModal();DB.profile.setup=true;save();nav('home')});
   assert.equal(await page.locator('.vf-nav button').first().innerText(),'Home');
+  assert.match(await page.locator('.vf-hero h1').innerText(),/Overview/);
+  assert.equal(await page.locator('.vf-sleep h2').innerText(),'Sleep tracking');
   const name=await page.evaluate(()=>DB.profile.name);
   await page.evaluate(()=>nav('settings'));
   if(await page.locator('#settingsLanguage').count()){
