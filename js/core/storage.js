@@ -155,6 +155,7 @@ function validateBackup(data){
  backupObject(result.whey.lastTaken,t("Prises whey"));for(const [key,value] of Object.entries(result.whey.lastTaken)){if(!/^\d{4}-\d{2}-\d{2}_(?:\d{2}:\d{2}|prise)$/.test(key))throw backupError(t("Une prise de whey est invalide."));backupDay(key.slice(0,10),t("Prise whey"));backupTimestamp(value,t("Prise whey"))}
  if(result.photoNotice!==undefined)backupDay(result.photoNotice,t("Rappel photo"));
  if(result.workoutDraftResetAt!==undefined)backupNumber(result.workoutDraftResetAt,t("Réinitialisation de séance"));
+ result.life=validateLife(data.life);
  return result;
 }
 function mergeDB(data){
