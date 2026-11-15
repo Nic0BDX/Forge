@@ -1,6 +1,7 @@
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const {chromium}=require(process.env.FORGE_PLAYWRIGHT||'playwright');
 const workspace=process.cwd();
+const accountCheck=require('node:child_process').spawnSync(process.execPath,['tests/account-storage-smoke.cjs'],{stdio:'inherit',env:process.env});assert.equal(accountCheck.status,0,'Account edits, reloads and legacy account regression');
 (async()=>{
  const server=http.createServer((req,res)=>{
   const pathname=decodeURIComponent(req.url.split('?')[0]),file=path.resolve(workspace,'.'+(pathname==='/'?'/index.html':pathname));

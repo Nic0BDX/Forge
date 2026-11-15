@@ -392,7 +392,12 @@ const I18N_ENTRIES = [
  ['Aperçu du recadrage','Crop preview'],['Zoom','Zoom'],['Position horizontale','Horizontal position'],['Position verticale','Vertical position'],
  ['Recentrer','Re-centre'],['Utiliser cette photo','Use this photo'],
  ['Homme','Man'],['Femme','Woman'],['Choisis ton espace','Choose your space'],
- ['Choisis un espace valide.','Choose a valid space.'],['Choix non enregistré. Vérifie le stockage disponible.','Choice not saved. Check the available storage.']
+ ['Choisis un espace valide.','Choose a valid space.'],['Choix non enregistré. Vérifie le stockage disponible.','Choice not saved. Check the available storage.'],
+ ['Les comptes locaux ne peuvent pas être lus. Aucune donnée n’a été remplacée.','Local accounts cannot be read. No data has been replaced.'],
+ ['Un carnet existe déjà pour cet email. Aucune donnée n’a été remplacée.','A log already exists for this email. No data has been replaced.'],
+ ['Le carnet est présent, mais les identifiants locaux sont introuvables. Aucune donnée n’a été remplacée.','The log is present, but local sign-in details are missing. No data has been replaced.'],
+ ['La session a changé dans un autre onglet. Reconnecte-toi pour continuer.','The session changed in another tab. Sign in again to continue.'],
+ ['Enregistrement impossible : stockage insuffisant. Les données existantes sont conservées.','Unable to save: storage is full. Existing data is preserved.']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([key,,source])=>[key,source??key])),

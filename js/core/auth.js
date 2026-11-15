@@ -1,8 +1,25 @@
 /* FORGE — Comptes locaux, connexion et indicateur de préparation (sans biométrie). */
-function loadAuth(){try{return JSON.parse(localStorage.getItem('forge_accounts_v1')||'{}')}catch{return {}}}
-function saveAuth(){localStorage.setItem('forge_accounts_v1',JSON.stringify(AUTH))}
-function currentEmail(){return localStorage.getItem('forge_session_v1')||''}
-function isLogged(){return !!currentEmail() && !!AUTH[currentEmail()] }
+let authReadIssue=false,authSessionChanged=false;
+function loadAuth(){try{const accounts=JSON.parse(localStorage.getItem('forge_accounts_v1')||'{}');if(!plainRecord(accounts))throw new Error('accounts');authReadIssue=false;return accounts}catch{authReadIssue=true;return {}}}
+function authFailure(key){const error=new Error(t(key));error.forgeAuth=true;return error}
+function resolveAuthKey(value,accounts=AUTH){const raw=String(value||'').trim();if(Object.hasOwn(accounts,raw))return raw;const normalized=raw.toLowerCase(),matches=Object.keys(accounts).filter(key=>key.trim().toLowerCase()===normalized||String(accounts[key]?.email||'').trim().toLowerCase()===normalized);return matches.length===1?matches[0]:''}
+function storedAccountData(value){const normalized=String(value||'').trim().toLowerCase();for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(key?.startsWith('forge_data_')&&key.slice(11).trim().toLowerCase()===normalized)return key}return ''}
+async function saveAuth(key,change=AUTH[key],initialDB=null){
+ const write=()=>{const accounts=loadAuth();if(authReadIssue)throw authFailure('Les comptes locaux ne peuvent pas être lus. Aucune donnée n’a été remplacée.');
+  if(initialDB){if(resolveAuthKey(key,accounts))throw authFailure('Un compte existe déjà avec cet email. Connecte-toi.');if(storedAccountData(key))throw authFailure('Un carnet existe déjà pour cet email. Aucune donnée n’a été remplacée.');localStorage.setItem('forge_data_'+key,JSON.stringify(initialDB))}
+  const merged={...accounts,[key]:{...accounts[key],...change}};localStorage.setItem('forge_accounts_v1',JSON.stringify(merged));AUTH=merged;
+ };
+ return navigator.locks?.request?navigator.locks.request('forge-accounts-v1',write):write();
+}
+function currentEmail(){const value=localStorage.getItem('forge_session_v1')||'';return resolveAuthKey(value)||value.trim()}
+function isLogged(){const key=currentEmail();return !authReadIssue&&!authSessionChanged&&!!key&&Object.hasOwn(AUTH,key)&&(!storageDBOwner||storageDBOwner===key)}
+window.addEventListener('storage',event=>{
+ if(event.key!=='forge_accounts_v1'&&event.key!=='forge_session_v1')return;
+ AUTH=loadAuth();
+ if(authReadIssue||(event.key==='forge_session_v1'&&currentEmail()!==storageDBOwner)||(storageDBOwner&&!Object.hasOwn(AUTH,storageDBOwner))){
+  authSessionChanged=true;if(typeof stopWorkoutRuntime==='function')stopWorkoutRuntime();authMode='login';authStep='form';render();setAuthError(t(authReadIssue?'Les comptes locaux ne peuvent pas être lus. Aucune donnée n’a été remplacée.':'La session a changé dans un autre onglet. Reconnecte-toi pour continuer.'));
+ }
+});
 function hashPassword(password,salt){return crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+'::'+password)).then(b=>Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join(''))}
 function makeSalt(){return Array.from(crypto.getRandomValues(new Uint8Array(16))).map(x=>x.toString(16).padStart(2,'0')).join('')}
 function setAuthError(msg){const el=document.getElementById('authError');if(el)el.textContent=msg||''}
@@ -38,17 +55,20 @@ async function registerAccount(){
  if(!/^\S+@\S+\.\S+$/.test(email))return setAuthError(t("Entre une adresse email valide."));
  if(pass.length<8)return setAuthError(t("Le mot de passe doit contenir au moins 8 caractères."));
  if(name.length>150)return setAuthError(t("Le prénom ou pseudo doit contenir au maximum 150 caractères."));
- if(AUTH[email])return setAuthError(t("Un compte existe déjà avec cet email. Connecte-toi."));
+ AUTH=loadAuth();if(authReadIssue)return setAuthError(t('Les comptes locaux ne peuvent pas être lus. Aucune donnée n’a été remplacée.'));
+ if(resolveAuthKey(email))return setAuthError(t("Un compte existe déjà avec cet email. Connecte-toi."));
+ if(storedAccountData(email))return setAuthError(t('Un carnet existe déjà pour cet email. Aucune donnée n’a été remplacée.'));
  const salt=makeSalt(),hash=await hashPassword(pass,salt);
  const rec=makeRecoveryCode(),recSalt=makeSalt(),recHash=await hashPassword(rec,recSalt);
- AUTH[email]={email,name:name||'Champion',salt,hash,recSalt,recHash,avatar:AVATARS[selectedAvatar],createdAt:new Date().toISOString()};saveAuth();localStorage.setItem('forge_session_v1',email);
- DB=defaultDB();DB.profile.setup=false;DB.profile.bodyType=forgeSignupBodyType==='female'?'female':'male';DB.profile.name=name||'Champion';DB.profile.avatar=AVATARS[selectedAvatar];localStorage.setItem('forge_data_'+email,JSON.stringify(DB));showFaceUnlock('register');showRecoveryCode(rec);
+ const account={email,name:name||'Champion',salt,hash,recSalt,recHash,avatar:AVATARS[selectedAvatar],createdAt:new Date().toISOString()},next=defaultDB();next.profile.setup=false;next.profile.bodyType=forgeSignupBodyType==='female'?'female':'male';next.profile.name=name||'Champion';next.profile.avatar=AVATARS[selectedAvatar];
+ await saveAuth(email,account,validateBackup(next));localStorage.setItem('forge_session_v1',email);DB=next;storageDBOwner=email;storageReadIssue=null;authSessionChanged=false;showFaceUnlock('register');showRecoveryCode(rec);
 }
 async function loginAccount(){
- const email=(document.getElementById('authEmail')?.value||'').trim().toLowerCase(),pass=document.getElementById('authPass')?.value||'';
- const account=AUTH[email];if(!account)return setAuthError(t("Compte introuvable. Vérifie ton email ou crée un compte."));
+ const input=(document.getElementById('authEmail')?.value||'').trim(),pass=document.getElementById('authPass')?.value||'';
+ AUTH=loadAuth();if(authReadIssue)return setAuthError(t('Les comptes locaux ne peuvent pas être lus. Aucune donnée n’a été remplacée.'));
+ const email=resolveAuthKey(input),account=email?AUTH[email]:null;if(!account)return setAuthError(t(storedAccountData(input)?'Le carnet est présent, mais les identifiants locaux sont introuvables. Aucune donnée n’a été remplacée.':'Compte introuvable. Vérifie ton email ou crée un compte.'));
  const hash=await hashPassword(pass,account.salt);if(hash!==account.hash)return setAuthError(t("Mot de passe incorrect."));
- localStorage.setItem('forge_session_v1',email);DB=loadUserDB(email);if(!currentStorageIssue()){if(DB.profile.avatar==null)DB.profile.avatar=account.avatar;save()}showFaceUnlock('login');
+ localStorage.setItem('forge_session_v1',email);authSessionChanged=false;DB=loadUserDB(email);if(!currentStorageIssue()){if(DB.profile.avatar==null)DB.profile.avatar=account.avatar;save()}showFaceUnlock('login');
 }
 function loadUserDB(email){return readStoredDB('forge_data_'+email,email)}
 function saveUserDB(){ensureWritableDB();const e=currentEmail();if(e)return commitUserDB(DB,e)}
@@ -70,19 +90,20 @@ function forgotPage(){
   <div id="authError" class="auth-error" role="alert"></div><button id="authSubmit" class="ea-btn red" onclick="resetPassword()">${t("Réinitialiser le mot de passe")}</button>
   <div class="security-note">${t("Les comptes sont stockés dans ce navigateur : sans code de récupération, un mot de passe oublié ne peut pas être réinitialisé pour les comptes créés avant cette version.")}</div></div></section></div>`}
 async function resetPassword(){
- const email=(document.getElementById('authEmail')?.value||'').trim().toLowerCase(),code=(document.getElementById('recCode')?.value||'').trim().toUpperCase(),pass=document.getElementById('authPass')?.value||'';
+ const input=(document.getElementById('authEmail')?.value||'').trim(),code=(document.getElementById('recCode')?.value||'').trim().toUpperCase(),pass=document.getElementById('authPass')?.value||'';
+ AUTH=loadAuth();if(authReadIssue)return setAuthError(t('Les comptes locaux ne peuvent pas être lus. Aucune donnée n’a été remplacée.'));const email=resolveAuthKey(input);
  const a=AUTH[email];
- if(!/^\S+@\S+\.\S+$/.test(email))return setAuthError(t("Entre une adresse email valide."));
+ if(!/^\S+@\S+\.\S+$/.test(input))return setAuthError(t("Entre une adresse email valide."));
  if(!a)return setAuthError(t("Compte introuvable. Vérifie ton email."));
  if(!a.recHash)return setAuthError(t("Ce compte n’a pas de code de récupération. Connecte-toi avec ton mot de passe actuel."));
  if(pass.length<8)return setAuthError(t("Le nouveau mot de passe doit contenir au moins 8 caractères."));
  setAuthBusy(true,t("Vérification…"));
  const h=await hashPassword(code,a.recSalt);
  if(h!==a.recHash){setAuthBusy(false);return setAuthError(t("Code de récupération incorrect."))}
- a.salt=makeSalt();a.hash=await hashPassword(pass,a.salt);saveAuth();setAuthBusy(false);
+ const salt=makeSalt(),hash=await hashPassword(pass,salt);await saveAuth(email,{salt,hash});setAuthBusy(false);
  authMode='login';authStep='form';render();toast(t("Mot de passe mis à jour. Connecte-toi."));
 }
 function setAuthBusy(on,label){const b=document.getElementById('authSubmit');if(!b)return;if(on){b.dataset.label=b.textContent;b.textContent=label||t("Chargement…");b.disabled=true;b.classList.add('busy')}else{b.textContent=b.dataset.label||b.textContent;b.disabled=false;b.classList.remove('busy')}}
 const _loginAccount=loginAccount,_registerAccount=registerAccount;
 loginAccount=async function(){setAuthBusy(true,t("Connexion…"));try{await _loginAccount()}catch{setAuthError(t("Connexion impossible dans ce navigateur. Réessaie depuis une adresse HTTPS ou un serveur local."))}finally{setAuthBusy(false)}};
-registerAccount=async function(){setAuthBusy(true,t("Création…"));try{await _registerAccount()}catch{setAuthError(t("Création impossible. Vérifie que le stockage est disponible et utilise HTTPS ou un serveur local."))}finally{setAuthBusy(false)}};
+registerAccount=async function(){setAuthBusy(true,t("Création…"));try{await _registerAccount()}catch(error){setAuthError(error.forgeAuth?error.message:t(error.name==='QuotaExceededError'?'Enregistrement impossible : stockage insuffisant. Les données existantes sont conservées.':'Création impossible. Vérifie que le stockage est disponible et utilise HTTPS ou un serveur local.'))}finally{setAuthBusy(false)}};

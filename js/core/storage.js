@@ -2,6 +2,7 @@
 const FORGE_BACKUP_VERSION=1;
 const FORGE_BACKUP_MAX_BYTES=16*1024*1024;
 let storageReadIssue=null;
+let storageDBOwner='';
 function backupError(detail){return new Error(t("Cette sauvegarde ne correspond pas au format Forge.")+(detail?' '+detail:''))}
 function plainRecord(value){return !!value&&typeof value==='object'&&!Array.isArray(value)&&(Object.getPrototypeOf(value)===Object.prototype||Object.getPrototypeOf(value)===null)}
 function inspectBackupTree(root){
@@ -160,19 +161,20 @@ function mergeDB(data){
  if(!['light','dark'].includes(merged.settings.theme))merged.settings.theme='light';return merged;
 }
 function readStoredDB(key,owner){
- storageReadIssue=null;
+ storageReadIssue=null;storageDBOwner=owner;
  try{const raw=localStorage.getItem(key);if(raw===null)return defaultDB();if(raw.length>FORGE_BACKUP_MAX_BYTES)throw backupError(t("Le fichier est trop volumineux."));return validateBackup(JSON.parse(raw))}
  catch(error){storageReadIssue={key,owner,message:error instanceof SyntaxError?t("Le fichier local n’est plus un JSON lisible."):error.message};return defaultDB()}
 }
 function load(){return readStoredDB(KEY,'')}
 function currentStorageIssue(){return storageReadIssue&&storageReadIssue.owner===currentEmail()?storageReadIssue:null}
 function ensureWritableDB(){if(currentStorageIssue())throw new Error(t("Le carnet doit être récupéré avant de pouvoir le modifier."))}
-function save(){ensureWritableDB();const email=currentEmail();if(email&&AUTH[email])return commitUserDB(DB,email);localStorage.setItem(KEY,JSON.stringify(DB));return true}
+function save(){ensureWritableDB();const email=currentEmail();if(email)return commitUserDB(DB,email);localStorage.setItem(KEY,JSON.stringify(DB));return true}
 /* Une seule écriture fait foi. Un échec ne remplace ni DB ni le carnet enregistré. */
 function commitUserDB(next,email=currentEmail()){
- if(!email||email!==currentEmail()||!AUTH[email])throw new Error(t("Le compte courant a changé."));
+ const accounts=loadAuth();if(authReadIssue)throw authFailure('Les comptes locaux ne peuvent pas être lus. Aucune donnée n’a été remplacée.');
+ if(authSessionChanged||!email||email!==currentEmail()||(storageDBOwner&&storageDBOwner!==email)||!Object.hasOwn(accounts,email))throw new Error(t("Le compte courant a changé."));
  const serialized=JSON.stringify(next);localStorage.setItem('forge_data_'+email,serialized);
- DB=next;storageReadIssue=null;
+ DB=next;storageReadIssue=null;storageDBOwner=email;AUTH=accounts;
  try{localStorage.setItem(KEY,serialized)}catch{}
  return true;
 }
