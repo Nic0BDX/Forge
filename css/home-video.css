@@ -14,11 +14,16 @@
 .vf-body-mount{position:absolute;width:65%;aspect-ratio:2/3;right:-2%;bottom:-31%;z-index:1;pointer-events:none;isolation:isolate;transform-origin:50% 30%}
 .vf-body-image{width:100%;height:100%;display:block;object-fit:contain;filter:brightness(.74) contrast(1.12)}
 .vf-body-glow{position:absolute;inset:0;width:100%;height:100%;overflow:visible;color:var(--accent);mix-blend-mode:screen}
-.vf-pec-glow{animation:forge-pec-light 3.6s ease-in-out infinite;transform-origin:50% 22%;will-change:opacity}
-.vf-pec-outline{animation:forge-pec-trace 3.6s ease-in-out infinite;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;fill:none;will-change:opacity}
-.vf-pec-outline:nth-of-type(even),.vf-pec-glow:nth-of-type(even){animation-delay:.12s}
+.vf-pec-glow{opacity:.26;animation:forge-pec-heartbeat 1.2s ease-in-out infinite;will-change:opacity}
+.vf-pec-outline{opacity:.25;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.vf-pec-veins{fill:none;filter:drop-shadow(0 0 1px currentColor)}
+.vf-vein-track{stroke:currentColor;stroke-width:1.25;opacity:.24}
+.vf-vein-pulse{stroke-width:1.8;animation:forge-vein-flow var(--flow-time,3s) linear var(--flow-delay,0s) infinite}
+.vf-vein-tail{opacity:.16;stroke-width:2.4;stroke-dasharray:18 82;--flow-offset:0px}
+.vf-vein-mid{opacity:.45;stroke-dasharray:8 92;--flow-offset:-10px}
+.vf-vein-head{opacity:.95;stroke-dasharray:3 97;--flow-offset:-18px}
 .vf-body-contour{stroke:currentColor;fill:none;opacity:.32;stroke-width:3;stroke-linecap:round}
-.vf-body-mount.is-paused .vf-pec-glow,.vf-body-mount.is-paused .vf-pec-outline{animation-play-state:paused}
+.vf-body-mount.is-paused .vf-pec-glow,.vf-body-mount.is-paused .vf-vein-pulse{animation-play-state:paused}
 .vf-motion-toggle,.vf-hero-edit{position:absolute;display:grid;place-items:center;z-index:7;bottom:14px;right:14px;width:32px;height:32px;border-radius:50%;border:1px solid #ffffff24;background:#0c0c0d99;color:#bdbdc1;backdrop-filter:blur(12px);font-size:12px}
 .vf-motion-toggle:hover,.vf-hero-edit:hover{border-color:var(--accent);color:var(--accent)}
 .vf-hero-edit{right:52px}.vf-hero-edit .ic{width:14px;height:14px}
@@ -42,11 +47,11 @@
 .vf-steps-entry{font-size:10px;margin:7px 0 -6px}
 .vf-dashboard .vf-motivation{min-height:264px;isolation:isolate}
 .vf-body-motivation{width:42%;right:-1%;bottom:-28%;opacity:.65;transform:none}
-.vf-body-motivation .vf-pec-glow,.vf-body-motivation .vf-pec-outline{opacity:.25;animation:none}
+.vf-body-motivation .vf-pec-outline,.vf-body-motivation .vf-pec-veins{opacity:.25}
 .vf-dashboard .vf-motivation>div:first-child{z-index:3}
 .vf-dashboard .vf-motivation:after{content:'';position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,var(--panel) 30%,transparent 80%);pointer-events:none}
-@keyframes forge-pec-light{0%,100%{opacity:.32}36%,52%{opacity:.93}72%{opacity:.45}}
-@keyframes forge-pec-trace{0%,100%{opacity:.38;stroke-dashoffset:0}42%{opacity:1;stroke-dashoffset:-.15}75%{opacity:.5;stroke-dashoffset:-.3}}
+@keyframes forge-pec-heartbeat{0%,100%{opacity:.24}45%{opacity:.29}}
+@keyframes forge-vein-flow{from{stroke-dashoffset:var(--flow-offset,0px)}to{stroke-dashoffset:calc(var(--flow-offset,0px) - 100px)}}
 @media(min-width:1151px) and (max-width:1499px){
  .vf-dashboard .vf-top-grid>.vf-card{height:352px;min-height:352px}
  .vf-dashboard .vf-activity .vf-rings{width:169px;margin:0 auto 7px}
@@ -97,7 +102,7 @@
  .vf-dashboard .vf-motivation{min-height:285px}
  .vf-body-motivation{width:70%;bottom:-29%;right:-1%;opacity:.6}
 }
-@media(prefers-reduced-motion:reduce){.vf-pec-glow,.vf-pec-outline{animation:none!important}.vf-pec-glow{opacity:.65}.vf-pec-outline{opacity:.75}}
+@media(prefers-reduced-motion:reduce){.vf-pec-glow,.vf-vein-pulse{animation:none!important}.vf-pec-glow{opacity:.26}.vf-pec-outline{opacity:.25}.vf-vein-head{stroke-dasharray:none;opacity:.65}.vf-vein-tail,.vf-vein-mid{display:none}}
 
 .vf-volume-details b [data-vf-count]{display:inline;font-size:inherit;color:inherit}.vf-volume-details b small{display:inline}.vf-motion-toggle>.ic{width:13px;height:13px}.vf-workout-thumb{overflow:hidden}.vf-workout-thumb img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:brightness(.7);border-radius:inherit}.vf-workout-list>button:nth-child(2n) .vf-workout-thumb img{object-position:50% 40%}.vf-home-jumps{grid-column:1/-1}.vf-home-jumps>a{scroll-behavior:smooth}
 @media(max-width:900px){.vf-home-jumps{margin:0}.vf-motion-toggle>.ic{width:16px;height:16px}}
