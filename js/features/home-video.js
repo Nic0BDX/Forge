@@ -20,56 +20,10 @@ function forgeApplyBodyMotion(observe=true){
  document.querySelectorAll('.vf-motion-toggle').forEach(el=>{el.setAttribute('aria-pressed',String(on));el.setAttribute('aria-label',on?t("Mettre en pause l’animation du corps"):t("Animer le corps"));el.innerHTML=on?ico('pause'):ico('play')});
 }
 function forgeBody(kind='hero'){
- const src=window.__forgePreviewImages?.['forge-body']||'assets/images/forge-body.png';
- return `<div class="vf-body-mount ${DB.settings.bodyMotion===false?'is-paused':''} vf-body-${kind}" aria-hidden="true"><img class="vf-body-image" src="${src}" alt="" width="1024" height="1536" decoding="async" ${kind==='hero'?'fetchpriority="high"':'loading="lazy"'}>${forgeBodyOverlay(kind)}</div>`;
+ const src=forgeBodySource();
+ return `<div class="vf-body-mount ${DB.settings.bodyMotion===false?'is-paused':''} vf-body-${kind}" data-body-kind="${kind}" data-body-type="${forgeBodyType()}" aria-hidden="true"><img class="vf-body-image" src="${src}" onerror="forgeBodyFallback(this)" onload="forgeBodyLoaded(this)" alt="" width="1024" height="1536" decoding="async" ${kind==='hero'?'fetchpriority="high"':'loading="lazy"'}>${forgeBodyOverlay()}</div>`;
 }
-const FORGE_PEC_VEINS=[
- ['left-main','M588 262C558 287 543 317 509 339S432 378 358 397',3.1,-.8],
- ['left-upper','M554 294C515 277 469 263 418 277S361 304 330 333',3.7,-2.1],
- ['left-middle','M510 339C473 321 433 317 390 336S347 355 316 363',2.8,-1.4],
- ['left-lower','M470 359C466 390 436 416 399 433',3.4,-2.8],
- ['left-inner','M548 305C561 351 547 391 514 420S475 440 456 444',4,-.3],
- ['left-branch','M396 334C392 311 381 302 365 300',2.5,-1.8],
- ['right-main','M642 268C667 296 675 324 701 352S758 404 801 432',3.3,-1.3],
- ['right-upper','M664 294C706 281 739 290 769 319S793 349 806 363',3.9,-2.6],
- ['right-middle','M690 337C724 329 757 342 777 364S795 388 808 398',2.7,-.5],
- ['right-lower','M716 367C704 398 715 423 745 446',3.6,-2.2],
- ['right-inner','M673 306C647 336 646 373 666 411S697 446 713 455',3,-1.7],
- ['right-branch','M754 344C758 323 749 311 737 304',2.6,-.9]
-];
-function forgePecVeins(){return FORGE_PEC_VEINS.map(([id,d,duration,delay])=>`<g style="--flow-time:${duration}s;--flow-delay:${delay}s"><path id="__BODY_ID__-vein-${id}" class="vf-vein-track" d="${d}" pathLength="100"/>${['tail','mid','head'].map(part=>`<path class="vf-vein-pulse vf-vein-${part}" d="${d}" pathLength="100"/>`).join('')}</g>`).join('')}
-const FORGE_BODY_OVERLAY=`<svg class="vf-body-glow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1536" fill="none" aria-hidden="true">
-  <defs>
-    <radialGradient id="__BODY_ID__-pec-halo-left" gradientUnits="userSpaceOnUse" cx="469" cy="319" r="191" gradientTransform="translate(0 76) scale(1 .76)">
-      <stop offset="0" stop-color="currentColor" stop-opacity=".61"/>
-      <stop offset=".5" stop-color="currentColor" stop-opacity=".35"/>
-      <stop offset="1" stop-color="currentColor" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="__BODY_ID__-pec-halo-right" gradientUnits="userSpaceOnUse" cx="724" cy="346" r="151" gradientTransform="translate(0 -28) scale(1 1.08)">
-      <stop offset="0" stop-color="currentColor" stop-opacity=".6"/>
-      <stop offset=".5" stop-color="currentColor" stop-opacity=".32"/>
-      <stop offset="1" stop-color="currentColor" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="__BODY_ID__-pec-soft-glow" x="-25%" y="-30%" width="150%" height="160%" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="6"/>
-    </filter>
-    <linearGradient id="__BODY_ID__-vein-flow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".25"/><stop offset=".55" stop-color="currentColor" stop-opacity=".65"/><stop offset="1" stop-color="currentColor"/></linearGradient>
-    <clipPath id="__BODY_ID__-pec-clip"><path fill="currentColor" d="M288 348C304 292 356 244 421 222C479 203 537 215 574 251C597 277 606 313 614 355C623 394 608 430 571 449C527 468 455 467 399 454C345 441 304 408 290 372C286 363 286 356 288 348ZM611 249C649 218 702 225 749 254C792 281 820 319 829 362C840 407 826 451 798 472C777 486 741 481 705 467C660 451 636 425 629 389C620 342 630 300 611 249Z"/></clipPath>
-  </defs>
-  <g class="vf-body-anatomy" stroke-linecap="round" stroke-linejoin="round">
-    <g class="vf-pec-veins" clip-path="url(#__BODY_ID__-pec-clip)" stroke="url(#__BODY_ID__-vein-flow)">${forgePecVeins()}</g>
-    <path id="__BODY_ID__-pec-left-glow" class="vf-pec-glow" d="M288 348C304 292 356 244 421 222C479 203 537 215 574 251C597 277 606 313 614 355C623 394 608 430 571 449C527 468 455 467 399 454C345 441 304 408 290 372C286 363 286 356 288 348Z" fill="url(#__BODY_ID__-pec-halo-left)" filter="url(#__BODY_ID__-pec-soft-glow)"/>
-    <path id="__BODY_ID__-pec-right-glow" class="vf-pec-glow" d="M611 249C649 218 702 225 749 254C792 281 820 319 829 362C840 407 826 451 798 472C777 486 741 481 705 467C660 451 636 425 629 389C620 342 630 300 611 249Z" fill="url(#__BODY_ID__-pec-halo-right)" filter="url(#__BODY_ID__-pec-soft-glow)"/>
-    <path id="__BODY_ID__-pec-left" class="vf-pec-outline" d="M288 348C304 292 356 244 421 222C479 203 537 215 574 251C597 277 606 313 614 355C623 394 608 430 571 449C527 468 455 467 399 454C345 441 304 408 290 372C286 363 286 356 288 348Z" stroke="currentColor" stroke-width="3.5" opacity=".74"/>
-    <path id="__BODY_ID__-pec-right" class="vf-pec-outline" d="M611 249C649 218 702 225 749 254C792 281 820 319 829 362C840 407 826 451 798 472C777 486 741 481 705 467C660 451 636 425 629 389C620 342 630 300 611 249Z" stroke="currentColor" stroke-width="3.5" opacity=".74"/>
-    <path id="__BODY_ID__-shoulder-left" class="vf-body-contour" d="M410 207C357 170 279 168 223 187C159 207 115 248 104 306C96 341 100 375 113 400" stroke="currentColor" stroke-width="4" opacity=".54"/>
-    <path id="__BODY_ID__-shoulder-right" class="vf-body-contour" d="M707 220C767 202 829 232 873 279C908 320 922 365 913 413C908 442 900 462 886 480" stroke="currentColor" stroke-width="4" opacity=".54"/>
-    <path id="__BODY_ID__-arm-left" class="vf-body-contour" d="M111 396C79 442 58 493 53 551C49 591 50 619 43 650M244 425C238 483 224 540 202 586C186 621 171 646 159 667" stroke="currentColor" stroke-width="3.5" opacity=".38"/>
-    <path id="__BODY_ID__-arm-right" class="vf-body-contour" d="M895 478C916 520 924 569 930 611C936 645 946 668 956 697M815 488C805 534 803 586 812 633C819 667 834 696 852 719" stroke="currentColor" stroke-width="3.5" opacity=".38"/>
-  </g>
-</svg>
-`;
-function forgeBodyOverlay(kind){return FORGE_BODY_OVERLAY.replaceAll('__BODY_ID__','forge-body-'+kind)}
+function forgeBodyOverlay(){const mask=new URL('assets/veins-'+forgeBodyType()+'.png',document.baseURI).href;return `<div class="vf-body-glow vf-vein-map" style="--vein-mask:url('${mask}')"><span class="vf-vein-base"></span><span class="vf-vein-pulse vf-vein-a"></span><span class="vf-vein-pulse vf-vein-b"></span><span class="vf-vein-pulse vf-vein-c"></span></div>`}
 function forgeActivityMetric(label,value,unit,goal,icon){
  return `<div class="vf-stat">${vfIcon(icon)}<span>${label}</span><b>${value===null?'—':vfCount(value,value%1?1:0)}<small>${unit}</small></b><em>/ ${vfNumber(goal)}</em></div>`;
 }
@@ -111,4 +65,4 @@ matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',()=>vfA
 document.addEventListener('visibilitychange',()=>forgeApplyBodyMotion());
 
 const forgeOriginalUpcoming=vfUpcoming;
-vfUpcoming=function(){const src=window.__forgePreviewImages?.['forge-body']||'assets/images/forge-body.png';return forgeOriginalUpcoming().replaceAll('<span class="vf-workout-thumb">'+ico('train')+'</span>','<span class="vf-workout-thumb"><img src="'+src+'" alt="" loading="lazy" width="45" height="45"></span>')};
+vfUpcoming=function(){const src=forgeBodySource();return forgeOriginalUpcoming().replaceAll('<span class="vf-workout-thumb">'+ico('train')+'</span>','<span class="vf-workout-thumb"><img src="'+src+'" onerror="forgeBodyFallback(this)" onload="forgeBodyLoaded(this)" alt="" loading="lazy" width="45" height="45"></span>')};

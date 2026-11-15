@@ -13,17 +13,17 @@
 .vf-overview .vf-stat>em{font-size:9px;white-space:nowrap}
 .vf-body-mount{position:absolute;width:65%;aspect-ratio:2/3;right:-2%;bottom:-31%;z-index:1;pointer-events:none;isolation:isolate;transform-origin:50% 30%}
 .vf-body-image{width:100%;height:100%;display:block;object-fit:contain;filter:brightness(.74) contrast(1.12)}
+.vf-body-mount[data-body-type=female]{mix-blend-mode:screen}
 .vf-body-glow{position:absolute;inset:0;width:100%;height:100%;overflow:visible;color:var(--accent);mix-blend-mode:screen}
-.vf-pec-glow{opacity:.26;animation:forge-pec-heartbeat 1.2s ease-in-out infinite;will-change:opacity}
-.vf-pec-outline{opacity:.25;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;fill:none}
-.vf-pec-veins{fill:none;filter:drop-shadow(0 0 1px currentColor)}
-.vf-vein-track{stroke:currentColor;stroke-width:1.25;opacity:.24}
-.vf-vein-pulse{stroke-width:1.8;animation:forge-vein-flow var(--flow-time,3s) linear var(--flow-delay,0s) infinite}
-.vf-vein-tail{opacity:.16;stroke-width:2.4;stroke-dasharray:18 82;--flow-offset:0px}
-.vf-vein-mid{opacity:.45;stroke-dasharray:8 92;--flow-offset:-10px}
-.vf-vein-head{opacity:.95;stroke-dasharray:3 97;--flow-offset:-18px}
-.vf-body-contour{stroke:currentColor;fill:none;opacity:.32;stroke-width:3;stroke-linecap:round}
-.vf-body-mount.is-paused .vf-pec-glow,.vf-body-mount.is-paused .vf-vein-pulse{animation-play-state:paused}
+.vf-vein-map{animation:forge-body-breath 1.2s ease-in-out infinite}
+.vf-vein-base,.vf-vein-pulse{position:absolute;inset:0;-webkit-mask-image:var(--vein-mask);mask-image:var(--vein-mask);-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.vf-vein-base{background:currentColor;opacity:.2}
+.vf-vein-pulse{background-image:linear-gradient(115deg,transparent 34%,color-mix(in srgb,currentColor 18%,transparent) 42%,currentColor 48%,transparent 52%);background-size:300% 300%;opacity:.85;animation:forge-vein-flow var(--flow-time,3s) linear var(--flow-delay,0s) infinite}
+.vf-vein-a{--flow-time:2.7s;--flow-delay:-.8s}
+.vf-vein-b{--flow-time:3.35s;--flow-delay:-2.2s}
+.vf-vein-c{--flow-time:3.9s;--flow-delay:-1.5s}
+.vf-body-mount.is-paused .vf-vein-map,.vf-body-mount.is-paused .vf-vein-pulse{animation-play-state:paused}
+.vf-body-mount.is-neutral .vf-vein-map{display:none}
 .vf-motion-toggle,.vf-hero-edit{position:absolute;display:grid;place-items:center;z-index:7;bottom:14px;right:14px;width:32px;height:32px;border-radius:50%;border:1px solid #ffffff24;background:#0c0c0d99;color:#bdbdc1;backdrop-filter:blur(12px);font-size:12px}
 .vf-motion-toggle:hover,.vf-hero-edit:hover{border-color:var(--accent);color:var(--accent)}
 .vf-hero-edit{right:52px}.vf-hero-edit .ic{width:14px;height:14px}
@@ -47,11 +47,11 @@
 .vf-steps-entry{font-size:10px;margin:7px 0 -6px}
 .vf-dashboard .vf-motivation{min-height:264px;isolation:isolate}
 .vf-body-motivation{width:42%;right:-1%;bottom:-28%;opacity:.65;transform:none}
-.vf-body-motivation .vf-pec-outline,.vf-body-motivation .vf-pec-veins{opacity:.25}
+.vf-body-motivation .vf-vein-pulse{opacity:.45}
 .vf-dashboard .vf-motivation>div:first-child{z-index:3}
 .vf-dashboard .vf-motivation:after{content:'';position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,var(--panel) 30%,transparent 80%);pointer-events:none}
-@keyframes forge-pec-heartbeat{0%,100%{opacity:.24}45%{opacity:.29}}
-@keyframes forge-vein-flow{from{stroke-dashoffset:var(--flow-offset,0px)}to{stroke-dashoffset:calc(var(--flow-offset,0px) - 100px)}}
+@keyframes forge-body-breath{0%,100%{opacity:.74}45%{opacity:.8}}
+@keyframes forge-vein-flow{from{background-position:0% 100%}to{background-position:100% 0%}}
 @media(min-width:1151px) and (max-width:1499px){
  .vf-dashboard .vf-top-grid>.vf-card{height:352px;min-height:352px}
  .vf-dashboard .vf-activity .vf-rings{width:169px;margin:0 auto 7px}
@@ -102,7 +102,7 @@
  .vf-dashboard .vf-motivation{min-height:285px}
  .vf-body-motivation{width:70%;bottom:-29%;right:-1%;opacity:.6}
 }
-@media(prefers-reduced-motion:reduce){.vf-pec-glow,.vf-vein-pulse{animation:none!important}.vf-pec-glow{opacity:.26}.vf-pec-outline{opacity:.25}.vf-vein-head{stroke-dasharray:none;opacity:.65}.vf-vein-tail,.vf-vein-mid{display:none}}
+@media(prefers-reduced-motion:reduce){.vf-vein-map,.vf-vein-pulse{animation:none!important}.vf-vein-pulse{display:none}.vf-vein-base{opacity:.55}}
 
 .vf-volume-details b [data-vf-count]{display:inline;font-size:inherit;color:inherit}.vf-volume-details b small{display:inline}.vf-motion-toggle>.ic{width:13px;height:13px}.vf-workout-thumb{overflow:hidden}.vf-workout-thumb img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:brightness(.7);border-radius:inherit}.vf-workout-list>button:nth-child(2n) .vf-workout-thumb img{object-position:50% 40%}.vf-home-jumps{grid-column:1/-1}.vf-home-jumps>a{scroll-behavior:smooth}
 @media(max-width:900px){.vf-home-jumps{margin:0}.vf-motion-toggle>.ic{width:16px;height:16px}}

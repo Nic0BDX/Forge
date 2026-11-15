@@ -15,15 +15,18 @@ const config=JSON.parse(fs.readFileSync('vercel.json','utf8'));assert.equal(conf
 asset('index.html','assets/forge_welcome_clean.mp4');
 for(const [file,width,height]of [
  ['assets/icons/icon-192.png',192,192],['assets/icons/icon-512.png',512,512],['assets/icons/icon-maskable-512.png',512,512],
- ['assets/icons/apple-touch-icon.png',180,180],['assets/icons/favicon-32.png',32,32],['assets/icons/favicon-48.png',48,48],['assets/og-image.png',1200,630]
+ ['assets/icons/apple-touch-icon.png',180,180],['assets/icons/favicon-32.png',32,32],['assets/icons/favicon-48.png',48,48],['assets/og-image.png',1200,630],
+ ['assets/images/forge-body.png',1024,1536],['assets/body-female.png',1024,1536],['assets/veins-male.png',1024,1536],['assets/veins-female.png',1024,1536]
 ]){
  asset('index.html','/'+file);const fd=fs.openSync(file,'r'),header=Buffer.alloc(24);try{assert.equal(fs.readSync(fd,header,0,24,0),24)}finally{fs.closeSync(fd)}
  assert.equal(header.subarray(0,8).toString('hex'),'89504e470d0a1a0a',file+' PNG signature');assert.equal(header.readUInt32BE(16),width,file+' width');assert.equal(header.readUInt32BE(20),height,file+' height');
 }
 asset('index.html','/favicon.ico');asset('index.html','/manifest.webmanifest');
+asset('index.html','assets/body-neutral.svg');
 const manifest=JSON.parse(fs.readFileSync('manifest.webmanifest','utf8')),origin='https://forge-livid-nine.vercel.app';
 for(const ref of [manifest.start_url,manifest.scope,...manifest.icons.map(icon=>icon.src)]){assert.ok(typeof ref==='string'&&ref.length);const url=new URL(ref,origin+'/manifest.webmanifest');assert.equal(url.origin,origin);asset('manifest.webmanifest',decodeURIComponent(url.pathname)==='/'?'/index.html':decodeURIComponent(url.pathname))}
 for(const [file,size,purpose]of [['icon-192.png','192x192','any'],['icon-512.png','512x512','any'],['icon-maskable-512.png','512x512','maskable']])assert.ok(manifest.icons.some(icon=>icon.src==='/assets/icons/'+file&&icon.sizes===size&&icon.type==='image/png'&&icon.purpose.split(/\s+/).includes(purpose)),file+' manifest entry');
-assert.ok(!config.routes&&!config.rewrites,'Static assets must stay directly accessible');
+assert.ok(!config.routes,'Static assets must stay directly accessible');
+assert.deepEqual(config.rewrites,[{source:'/assets/body-female.png',destination:'/assets/body-neutral.svg'}],'Only the missing female image may fall back to the neutral silhouette');
 assert.ok(config.headers?.some(rule=>rule.source==='/manifest.webmanifest'&&rule.headers.some(header=>header.key.toLowerCase()==='content-type'&&/^application\/manifest\+json(?:;|$)/.test(header.value))),'Manifest MIME header');
 console.log(`PASS: ${checked} local assets and manifest paths exist; PNG dimensions and manifest MIME valid; static root, no build`);
