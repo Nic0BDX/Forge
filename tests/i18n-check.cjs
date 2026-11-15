@@ -12,3 +12,17 @@ for(const dir of ['js/core','js/features'])for(const file of fs.readdirSync(dir)
  for(const match of code.matchAll(/data-i18n(?:-placeholder)?="([^"]+)"/g))assert.ok(Object.hasOwn(context.translations.fr,match[1]),file+': '+match[1]);
 }
 console.log(`PASS: ${keys.length} unique keys, FR/EN parity, ${count} translated expressions`);
+for(const [file,name,labels]of [
+ ['js/features/video-forge.js','FORGE_LINKS',rows=>rows.map(row=>row[2])],
+ ['js/features/video-forge.js','FORGE_ACCENTS',rows=>Object.values(rows).map(row=>row[0])],
+ ['js/features/profile.js','badgeData',rows=>rows.flatMap(row=>[row.name,row.desc])],
+ ['js/features/activity.js','FORGE_ACTIVITY_FIELDS',rows=>rows.map(row=>row.label)],
+ ['js/data/catalog.js','routineBlocks',rows=>rows.flatMap(row=>[row[1],row[3]])],
+ ['js/data/catalog.js','mealPlans',rows=>rows.flatMap(row=>[row.name,row.note,...row.items])],
+ ['js/core/streak.js','STREAK_LABELS',rows=>Object.values(rows)]
+]){
+ const code=fs.readFileSync(file,'utf8'),match=code.match(new RegExp('const '+name+'\\s*=\\s*([\\s\\S]*?);'));
+ assert.ok(match,name+' not found');for(const key of labels(vm.runInNewContext('('+match[1]+')')))assert.ok(Object.hasOwn(context.translations.fr,key),name+': '+key);
+}
+for(const file of ['index.html','preview/demo.html'])for(const match of fs.readFileSync(file,'utf8').matchAll(/data-i18n(?:-placeholder|-content)?="([^"]+)"/g))assert.ok(Object.hasOwn(context.translations.fr,match[1]),file+': '+match[1]);
+console.log('PASS: dynamic navigation, accents, badges, activity, routine, meals, streaks and HTML keys');

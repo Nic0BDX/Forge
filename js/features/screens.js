@@ -31,7 +31,7 @@ function volBuckets(range){
  const sum=(a,b)=>S.filter(s=>{const t=new Date(s.date+'T12:00:00');return t>=a&&t<b}).reduce((x,s)=>x+Number(s.volume),0);
  const add=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
  let labels=[],vals=[],prev=0;
- if(range==='week'){const mon=add(now,-((now.getDay()+6)%7));labels=['L','M','M','J','V','S','D'];vals=labels.map((_,i)=>sum(add(mon,i),add(mon,i+1)));prev=sum(add(mon,-7),mon)}
+ if(range==='week'){const mon=add(now,-((now.getDay()+6)%7));labels=forgeWeekdays();vals=labels.map((_,i)=>sum(add(mon,i),add(mon,i+1)));prev=sum(add(mon,-7),mon)}
  else if(range==='month'){const start=add(now,-27);for(let i=0;i<4;i++){labels.push('S'+(i+1));vals.push(sum(add(start,i*7),add(start,i*7+7)))}prev=sum(add(start,-28),start)}
  else{for(let i=11;i>=0;i--){const a=new Date(now.getFullYear(),now.getMonth()-i,1),b=new Date(now.getFullYear(),now.getMonth()-i+1,1);labels.push(a.toLocaleDateString(forgeLocale(),{month:'narrow'}).toUpperCase());vals.push(sum(a,b))}const a=new Date(now.getFullYear()-1,now.getMonth()+1,1);prev=sum(new Date(now.getFullYear()-2,now.getMonth()+1,1),a)}
  return {labels,vals,prev,total:vals.reduce((a,b)=>a+b,0)};
@@ -70,11 +70,11 @@ function nutritionPage(){
  const m=todayMeals(),S=DB.settings,pct=Math.min(100,Math.round(m.kcal/Math.max(1,S.calories)*100));
  const mac=[[t("Protéines"),m.p,S.protein],[t("Glucides"),m.c,S.carbs],[t("Lipides"),m.f,S.fat]];
  const list=DB.meals.filter(x=>x.date===today());
- return `<div class="r-page"><div class="r-top rise" style="--i:0"><h1 class="r-title">${t("Journal alimentaire")}</h1><span class="r-top-r"><button class="es-round sm" onclick="nav('nutriai')" aria-label="Analyse IA">${ico('bolt')}</button><span class="eh-chip">${t("Aujourd’hui")} ${ico('chev')}</span></span></div>
+ return `<div class="r-page"><div class="r-top rise" style="--i:0"><h1 class="r-title">${t("Journal alimentaire")}</h1><span class="r-top-r"><button class="es-round sm" onclick="nav('nutriai')" aria-label="Analyse ${t("IA")}">${ico('bolt')}</button><span class="eh-chip">${t("Aujourd’hui")} ${ico('chev')}</span></span></div>
  <div class="r-nut rise" style="--i:1"><div class="r-ring" style="--v:${pct}"><div><b>${m.kcal}</b><small>/ ${S.calories} kcal</small></div></div>
   <div class="r-macros">${mac.map(x=>`<div class="r-macro"><div><small>${x[0]}</small><b>${Math.round(x[1])} / ${x[2]} g</b></div><div class="progress"><i style="width:${Math.min(100,x[1]/Math.max(1,x[2])*100)}%"></i></div></div>`).join('')}</div></div>
  <div class="eh-card-h rise" style="--i:2;margin-top:6px"><b>${t("Repas du jour")}</b><button class="eh-link" onclick="openMealModal()">+ ${t("Ajouter")}</button></div>
- <div class="r-list rise" style="--i:3">${list.map(x=>`<div class="r-row">${thumb(mealIco[x.meal]||'🍴')}<div><b>${esc(x.meal)}</b><small>${esc(x.food)} · ${x.grams} g</small></div><span class="r-kcal"><b>${x.kcal} kcal</b><small>P${x.p} · G${x.c} · L${x.f}</small></span><button class="r-x" onclick="deleteMeal('${x.id}')" aria-label="${t("Supprimer")}">×</button></div>`).join('')||`<div class="eh-empty">${t("Ton journal est prêt. Ajoute ton premier repas de la journée.")}</div>`}</div>
+ <div class="r-list rise" style="--i:3">${list.map(x=>`<div class="r-row">${thumb(mealIco[x.meal]||'🍴')}<div><b>${esc(x.meal)}</b><small>${esc(x.food)} · ${x.grams} g</small></div><span class="r-kcal"><b>${x.kcal} kcal</b><small>P${x.p} · ${t("macro.carbs.short")}${x.c} · ${t("macro.fat.short")}${x.f}</small></span><button class="r-x" onclick="deleteMeal('${x.id}')" aria-label="${t("Supprimer")}">×</button></div>`).join('')||`<div class="eh-empty">${t("Ton journal est prêt. Ajoute ton premier repas de la journée.")}</div>`}</div>
  <button class="r-link-card rise" style="--i:4;margin-top:6px" onclick="nav('nutriai')"><span>${ico('bolt')} ${t("Analyse nutritionnelle IA")}</span>${ico('chev')}</button>
  <div class="eh-card-h rise" style="--i:4;margin-top:14px"><b>${t("Ajout rapide")}</b></div>
  <div class="r-chips rise" style="--i:5;flex-wrap:wrap">${DB.foods.map(f=>`<button onclick="quickFood('${f.id}')">${esc(f.name)}</button>`).join('')}</div>

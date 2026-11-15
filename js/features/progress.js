@@ -23,7 +23,7 @@ function drawHomeChart(){
  const pad=30;x.strokeStyle=line;x.lineWidth=1;
  for(let i=0;i<4;i++){const y=pad+i*(h-pad*2)/3;x.beginPath();x.moveTo(pad,y);x.lineTo(w-pad,y);x.stroke()}
  x.fillStyle=muted;x.font='10px system-ui';
- if(!rows.length){x.textAlign='center';x.fillText('Aucune séance validée pour le moment',w/2,h/2);x.textAlign='left';return}
+ if(!rows.length){x.textAlign='center';x.fillText(t("Aucune séance validée pour le moment"),w/2,h/2);x.textAlign='left';return}
  let cumulative=0;const vals=rows.map(([date,v])=>(cumulative+=v,cumulative));
  const min=0,max=Math.max(...vals)||1;
  x.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#315648';x.lineWidth=2.5;x.beginPath();
@@ -33,5 +33,5 @@ function drawHomeChart(){
  rows.forEach(([date],i)=>{if(i===0||i===rows.length-1||rows.length<=6){const xx=pad+i*(w-pad*2)/Math.max(1,rows.length-1);const d=new Date(date+'T12:00:00');x.fillText(d.toLocaleDateString(forgeLocale(),{day:'2-digit',month:'short'}),xx,h-4)}});x.textAlign='left';
 }
 
-function drawLine(id,data,color){const c=document.getElementById(id);if(!c)return;const dpr=devicePixelRatio||1,w=c.clientWidth,h=220;c.width=w*dpr;c.height=h*dpr;const x=c.getContext('2d');x.scale(dpr,dpr);x.clearRect(0,0,w,h);if(data.length<2){x.fillStyle=getComputedStyle(document.body).getPropertyValue('--muted');x.fillText('Pas assez de données pour un graphique.',20,110);return}const min=Math.min(...data),max=Math.max(...data),pad=25;x.strokeStyle=getComputedStyle(document.body).getPropertyValue('--line');x.lineWidth=1;for(let i=0;i<4;i++){let y=pad+i*(h-pad*2)/3;x.beginPath();x.moveTo(pad,y);x.lineTo(w-pad,y);x.stroke()}x.strokeStyle=color;x.lineWidth=3;x.beginPath();data.forEach((v,i)=>{const xx=pad+i*(w-pad*2)/(data.length-1),yy=h-pad-(v-min)/(max-min||1)*(h-pad*2);i?x.lineTo(xx,yy):x.moveTo(xx,yy)});x.stroke()}
+function drawLine(id,data,color){const c=document.getElementById(id);if(!c)return;const dpr=devicePixelRatio||1,w=c.clientWidth,h=220;c.width=w*dpr;c.height=h*dpr;const x=c.getContext('2d');x.scale(dpr,dpr);x.clearRect(0,0,w,h);if(data.length<2){x.fillStyle=getComputedStyle(document.body).getPropertyValue('--muted');x.fillText(t("Pas assez de données pour un graphique."),20,110);return}const min=Math.min(...data),max=Math.max(...data),pad=25;x.strokeStyle=getComputedStyle(document.body).getPropertyValue('--line');x.lineWidth=1;for(let i=0;i<4;i++){let y=pad+i*(h-pad*2)/3;x.beginPath();x.moveTo(pad,y);x.lineTo(w-pad,y);x.stroke()}x.strokeStyle=color;x.lineWidth=3;x.beginPath();data.forEach((v,i)=>{const xx=pad+i*(w-pad*2)/(data.length-1),yy=h-pad-(v-min)/(max-min||1)*(h-pad*2);i?x.lineTo(xx,yy):x.moveTo(xx,yy)});x.stroke()}
 window.addEventListener('resize',()=>{if(view==='progress')drawCharts(); if(view==='home')setTimeout(drawHomeChart,50)});

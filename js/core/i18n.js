@@ -375,10 +375,17 @@ const I18N_ENTRIES = [
  ['Ta première séance validée apparaîtra ici.','Your first completed workout will appear here.'],['Tes records personnels s’afficheront après ta première séance.','Your personal records will appear after your first workout.'],
  ['kg soulevés au total','kg lifted in total'],['Raccourcis','Shortcuts'],['Forge','Forge'],['DISCIPLINE.','DISCIPLINE.'],['PROGRESSION.','PROGRESS.'],['LIBERTÉ.','FREEDOM.'],['Plus qu’une app,','More than an app,'],['une discipline.','a discipline.'],
  ['Forge — Plus qu’une app, une discipline.','Forge — More than an app, a discipline.'],
- ['Forge — Plus qu’une app, une discipline. Entraînement, nutrition et progression, à ton rythme.','Forge — More than an app, a discipline. Training, nutrition and progress, at your own pace.']
+ ['Forge — Plus qu’une app, une discipline. Entraînement, nutrition et progression, à ton rythme.','Forge — More than an app, a discipline. Training, nutrition and progress, at your own pace.'],
+ ['jour','day'],['de présence d’affilée','consecutive days of attendance'],['Nouveau record de régularité','New consistency record'],['Palier de','Milestone of'],
+ ['jours débloqué. Le badge est dans ton tableau de bord.','days unlocked. The badge is on your dashboard.'],['Ton meilleur score de régularité passe à','Your best consistency score is now'],['jours.','days.'],
+ ['Prochain palier :','Next milestone:'],['Tous les paliers sont débloqués','All milestones are unlocked'],['Jours consécutifs où tu ouvres Forge.','Consecutive days on which you open Forge.'],['Record :','Record:'],
+ ['Présence enregistrée','Attendance recorded'],['Jours de présence ce mois-ci :','Days of attendance this month:'],['Rien de nouveau pour l’instant.','Nothing new yet.'],
+ ['Premier élan','First momentum'],['Une semaine de feu','A week on fire'],['Deux semaines solides','Two solid weeks'],['Régularité exceptionnelle','Exceptional consistency'],['Discipline de fer','Iron discipline'],['Légende FORGE','FORGE legend'],
+ ['Aucune séance validée pour le moment','No completed workouts yet'],['Pas assez de données pour un graphique.','Not enough data for a chart.'],['Séance ajoutée à ton programme ⚡','Workout added to your programme ⚡'],
+ ['macro.carbs.short','C','G'],['macro.fat.short','F','L']
 ];
 const I18N = {
- fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
+ fr:Object.fromEntries(I18N_ENTRIES.map(([key,,source])=>[key,source??key])),
  en:Object.fromEntries(I18N_ENTRIES)
 };
 let forgeLang='fr';
@@ -386,6 +393,7 @@ try{const saved=localStorage.getItem('forge_lang');if(Object.hasOwn(I18N,saved))
 document.documentElement.lang=forgeLang;
 function t(key){return Object.hasOwn(I18N[forgeLang],key)?I18N[forgeLang][key]:Object.hasOwn(I18N.fr,key)?I18N.fr[key]:key}
 function forgeLocale(){return forgeLang==='en'?'en-GB':'fr-FR'}
+function forgeWeekdays(){return forgeLang==='en'?['M','T','W','T','F','S','S']:['L','M','M','J','V','S','D']}
 function applyI18n(root=document){
  const selector='[data-i18n],[data-i18n-placeholder],[data-i18n-content]';
  const nodes=[...(root.matches?.(selector)?[root]:[]),...root.querySelectorAll(selector)];

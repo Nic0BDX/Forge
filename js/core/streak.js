@@ -22,28 +22,28 @@ function recordVisit(){
  setTimeout(()=>celebrateStreak(n,fresh.at(-1),record),700);
 }
 function celebrateStreak(n,step,record){
- if(!step&&!record){toast(`${n} jour${n>1?'s':''} de présence d’affilée`);return}
- const title=step?STREAK_LABELS[step]:'Nouveau record de régularité';
- document.getElementById('modalbox').innerHTML=`<div class="cele"><div class="cele-flame">${flame(3)}</div><div class="cele-n">${n}</div><div class="cele-u">jour${n>1?'s':''} de présence d’affilée</div><h2>${esc(title)}</h2><p class="sub">${step?`Palier de ${step} jours débloqué. Le badge est dans ton tableau de bord.`:`Ton meilleur score de régularité passe à ${n} jours.`}</p><button class="ea-btn red" onclick="closeModal()">Continuer</button></div>`;
+ if(!step&&!record){toast(`${n} ${t("jour")}${n>1?'s':''} ${t("de présence d’affilée")}`);return}
+ const title=step?STREAK_LABELS[step]:t("Nouveau record de régularité");
+ document.getElementById('modalbox').innerHTML=`<div class="cele"><div class="cele-flame">${flame(3)}</div><div class="cele-n">${n}</div><div class="cele-u">${t("jour")}${n>1?'s':''} ${t("de présence d’affilée")}</div><h2>${esc(t(title))}</h2><p class="sub">${step?`${t("Palier de")} ${step} ${t("jours débloqué. Le badge est dans ton tableau de bord.")}`:`${t("Ton meilleur score de régularité passe à")} ${n} ${t("jours.")}`}</p><button class="ea-btn red" onclick="closeModal()">${t("Continuer")}</button></div>`;
  openModal();
 }
 function streakCalendar(){
  const set=new Set(DB.visits||[]),now=new Date(),y=now.getFullYear(),m=now.getMonth();
  const first=new Date(y,m,1),lead=(first.getDay()+6)%7,days=new Date(y,m+1,0).getDate(),tk=today();
- let cells=['L','M','M','J','V','S','D'].map(x=>`<span class="sc-h">${x}</span>`).join('')+'<span></span>'.repeat(lead);
+ let cells=forgeWeekdays().map(x=>`<span class="sc-h">${x}</span>`).join('')+'<span></span>'.repeat(lead);
  for(let d=1;d<=days;d++){const k=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;cells+=`<span class="sc-d ${set.has(k)?'on':''} ${k===tk?'today':''}" ${set.has(k)?'title="Présence enregistrée"':''}>${d}</span>`}
- return `<div class="sc-grid" role="img" aria-label="Jours de présence ce mois-ci : ${[...set].filter(k=>k.startsWith(`${y}-${String(m+1).padStart(2,'0')}`)).length}">${cells}</div>`;
+ return `<div class="sc-grid" role="img" aria-label="${t("Jours de présence ce mois-ci :")} ${[...set].filter(k=>k.startsWith(`${y}-${String(m+1).padStart(2,'0')}`)).length}">${cells}</div>`;
 }
 function streakCard(){
  const n=loginStreak(),best=Math.max(DB.visitBest||0,n),next=STREAK_STEPS.find(s=>s>n),prevStep=[...STREAK_STEPS].reverse().find(s=>s<=n)||0;
  const pct=next?Math.round((n-prevStep)/(next-prevStep)*100):100;
- const month=new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
- return `<section class="eh-card eh-streakcard rise" style="--i:3"><div class="eh-card-h"><b>Jours de présence</b></div><p class="sub">Jours consécutifs où tu ouvres Forge.</p>
-  <div class="sk-main"><div class="sk-count">${flame(2)}<b>${n}</b><span>jour${n>1?'s':''}<br><small>Record : ${best}</small></span></div>
-   <div class="sk-next"><small>${next?`Prochain palier : ${next} jours`:'Tous les paliers sont débloqués'}</small><div class="progress"><i style="width:${pct}%"></i></div></div>
-   <div class="sk-badges">${STREAK_STEPS.map(s=>`<div class="sk-badge ${(DB.visitMilestones||[]).includes(s)?'on':''}" title="${esc(STREAK_LABELS[s])}"><span>${ico('flame')}</span><b>${s}</b></div>`).join('')}</div></div>
+ const month=new Date().toLocaleDateString(forgeLocale(),{month:'long',year:'numeric'});
+ return `<section class="eh-card eh-streakcard rise" style="--i:3"><div class="eh-card-h"><b>${t("Jours de présence")}</b></div><p class="sub">${t("Jours consécutifs où tu ouvres Forge.")}</p>
+  <div class="sk-main"><div class="sk-count">${flame(2)}<b>${n}</b><span>${t("jour")}${n>1?'s':''}<br><small>${t("Record :")} ${best}</small></span></div>
+   <div class="sk-next"><small>${next?`${t("Prochain palier :")} ${next} ${t("jours")}`:t("Tous les paliers sont débloqués")}</small><div class="progress"><i style="width:${pct}%"></i></div></div>
+   <div class="sk-badges">${STREAK_STEPS.map(s=>`<div class="sk-badge ${(DB.visitMilestones||[]).includes(s)?'on':''}" title="${esc(t(STREAK_LABELS[s]))}"><span>${ico('flame')}</span><b>${s}</b></div>`).join('')}</div></div>
   <div class="sk-cal"><small>${month}</small>${streakCalendar()}</div>
  </section>`;
 }
 
-function showNotifs(){const n=(DB.notifications||[]).slice(0,8);document.getElementById('modalbox').innerHTML=`<div class="cele"><h2>Notifications</h2>${n.length?`<div class="eh-list" style="text-align:left;margin:14px 0">${n.map(x=>`<div class="eh-row"><div><b>${esc(x.title||x.text||String(x))}</b></div></div>`).join('')}</div>`:'<p class="sub">Rien de nouveau pour l’instant.</p>'}<button class="ea-btn red" onclick="closeModal()">Fermer</button></div>`;openModal()}
+function showNotifs(){const n=(DB.notifications||[]).slice(0,8);document.getElementById('modalbox').innerHTML=`<div class="cele"><h2>${t("Notifications")}</h2>${n.length?`<div class="eh-list" style="text-align:left;margin:14px 0">${n.map(x=>`<div class="eh-row"><div><b>${esc(x.title||x.text||String(x))}</b></div></div>`).join('')}</div>`:`<p class="sub">${t("Rien de nouveau pour l’instant.")}</p>`}<button class="ea-btn red" onclick="closeModal()">${t("Fermer")}</button></div>`;openModal()}
