@@ -219,6 +219,7 @@ function finishWorkout(){
  running.exercises.forEach((e,i)=>{const done=completed[i].sets;if(!done.length)return;next.lastSets[e.name]=e.sets.map(s=>({weight:s.weight,reps:s.reps,rpe:s.rpe}));const best=Math.max(...done.map(s=>Number(s.weight)));if(next.prs[e.name]===undefined||best>next.prs[e.name]){next.prs[e.name]=best;prs.push(`${e.name} · ${best} kg`)}});
  const program=next.programs.find(x=>x.id===running.pid);if(program?.days.length)program.next=(running.di+1)%program.days.length;
  next.sessions.unshift({id:running.id,date:today(),iso:new Date().toISOString(),program:running.program,day:running.day,duration:dur,volume,sets,exercises:completed});
+ if(running.planId&&next.life){const plan=next.life.plans.find(item=>item.id===running.planId);if(plan){plan.status='done';plan.sessionId=running.id}}
  const rewards=[{n:100,reason:'Séance terminée'},...(prs.length?[{n:100,reason:'Nouveau record personnel'}]:[])];
  for(const reward of rewards){next.xp+=reward.n;next.xpLog.unshift({id:uid(),date:new Date().toISOString(),...reward});if(next.xpLog.length>250)next.xpLog.pop();next.notifications.unshift({id:uid(),date:new Date().toISOString(),text:`+${reward.n} XP — ${reward.reason}`})}
  try{commitUserDB(next,email)}catch{toast(workoutDraftSaved?t("La séance n’a pas pu être enregistrée. Ton brouillon reste disponible ; libère de l’espace puis réessaie."):t("La séance n’a pas pu être enregistrée. Garde cette page ouverte pour conserver ta saisie."));return}
