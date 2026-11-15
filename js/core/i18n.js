@@ -208,7 +208,16 @@ const I18N_ENTRIES = [
  ['Cet espace accueillera les conseils de ton coach. Pour le moment, consulte ton programme et note ton ressenti après chaque séance.','This space will host your coach’s advice. For now, view your programme and record how you feel after each workout.'],
  ['Aperçu du coach · IA non connectée','Coach preview · AI not connected'],['Tes repères','Your milestones'],['Ton objectif','Your goal'],
  ['séances par semaine','workouts per week'],['Les recommandations personnalisées seront disponibles lorsque le coach sera connecté.','Personalised recommendations will be available when the coach is connected.'],
- ['Retrouver mon programme','Return to my programme']
+ ['Retrouver mon programme','Return to my programme'],
+ ['COMMUNAUTÉ','COMMUNITY'],['Cet espace communautaire est en préparation. Rien n’est publié depuis cette version.','This community space is in preparation. Nothing is published from this version.'],
+ ['Idées pour la communauté','Ideas for the community'],['Défi de la semaine','Challenge of the week'],['Un futur espace pour échanger autour des séances et des objectifs.','A future space to discuss workouts and goals.'],
+ ['Exemple','Example'],['Célèbre les petites victoires, série après série.','Celebrate small wins, set after set.'],['Ton profil local','Your local profile'],
+ ['jours d’entraînement consécutifs','consecutive training days'],['Un espace en préparation. Aucun profil ni message n’est publié.','A space in preparation. No profiles or messages are published.'],
+ ['ON AVANCE AUSSI ENSEMBLE','WE ALSO MOVE FORWARD TOGETHER'],['Une communauté qui','A community that'],['partage ta','shares your'],['discipline.','discipline.'],
+ ['Garde tes repères, célèbre tes progrès.','Keep your milestones, celebrate your progress.'],['Force & régularité','Strength & consistency'],
+ ['Équilibre au quotidien','Everyday balance'],['Un peu chaque jour','A little every day'],['Progression personnelle','Personal progress'],
+ ['Retrouve tes repères dans ton carnet.','Find your milestones in your log.'],['Explorer','Explore'],['Le projet communautaire','The community project'],
+ ['Emplacement réservé pour','Space reserved for'],['la silhouette Forge','the Forge silhouette'],['une image Forge','a Forge image'],['Silhouette Forge','Forge silhouette'],['Image Forge','Forge image']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
