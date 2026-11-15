@@ -260,7 +260,22 @@ const I18N_ENTRIES = [
  ['Notifications non prises en charge','Notifications not supported'],['Notifications autorisées','Notifications allowed'],
  ['Notifications bloquées dans ce navigateur','Notifications blocked in this browser'],['Autorisation non accordée pour le moment','Permission not granted yet'],
  ['FORGE · Rappel whey','FORGE · Whey reminder'],['Portion prévue :','Planned portion:'],['g. À adapter à tes besoins et à l’étiquette.','g. Adapt to your needs and the label.'],
- ['FORGE · Photo de progression','FORGE · Progress photo'],['Ton rappel hebdomadaire photo est arrivé.','Your weekly photo reminder is due.']
+ ['FORGE · Photo de progression','FORGE · Progress photo'],['Ton rappel hebdomadaire photo est arrivé.','Your weekly photo reminder is due.'],
+ ['THÈME · ENTRAÎNEMENT','THEME · TRAINING'],['Des séances prêtes à ajouter à ton programme.','Workouts ready to add to your programme.'],
+ ['Ajouter à mon programme','Add to my programme'],['Mon programme →','My programme →'],['ENTRAÎNEMENT','TRAINING'],['Programme','Programme'],
+ ['Crée ton premier programme ou choisis une séance proposée.','Create your first programme or choose a suggested workout.'],['Nouveau','New'],
+ ['Programme actif','Active programme'],['ACTIF','ACTIVE'],['dans ce programme ·','in this programme ·'],['exercice','exercise'],['Activer','Activate'],
+ ['Ajouter un jour','Add a day'],['Reps min','Min reps'],['Reps max','Max reps'],['Repos sec','Rest sec'],
+ ['Indique un nom d’exercice valide.','Enter a valid exercise name.'],['Vérifie les séries, répétitions et secondes de repos.','Check the sets, repetitions and rest seconds.'],
+ ['Ajoute au moins un jour','Add at least one day'],['Ce programme n’existe plus.','This programme no longer exists.'],
+ ['Le programme n’a pas été enregistré.','The programme was not saved.'],['Programme enregistré','Programme saved'],['Supprimer ce programme ?','Delete this programme?'],
+ ['Matériel : ','Equipment: '],['Matériel : —','Equipment: —'],['Intermédiaire','Intermediate'],['Séance','Workout'],['Commencer la séance','Start workout'],
+ ['Aucun exercice dans ce jour.','No exercises on this day.'],['Créer un programme','Create a programme'],['Voir les séances recommandées','View recommended workouts'],
+ ['Recommandés','Recommended'],['Tout','All'],['exo','exercises'],['Un programme, ton rythme.','Your programme, your pace.'],['Programme Forge','Forge programme'],
+ ['Retrouve tes exercices et construis ta régularité.','Find your exercises and build consistency.'],['Sur 30 jours','Over 30 days'],['Enregistrée','Recorded'],['Charges × rép.','Weight × reps'],
+ ['Ma prochaine séance','My next workout'],['Voir la séance','View workout'],['s de repos','s rest'],['Choisis ou crée un programme pour commencer.','Choose or create a programme to get started.'],
+ ['Préparer ma séance','Prepare my workout'],['Volume sur 7 jours','Volume over 7 days'],['Charges × répétitions enregistrées.','Recorded weight × repetitions.'],
+ ['Dernières séances','Recent workouts'],['Ta première séance apparaîtra ici.','Your first workout will appear here.'],['Mes programmes','My programmes'],['Aucun programme actif.','No active programme.']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),

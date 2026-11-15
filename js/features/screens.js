@@ -7,7 +7,7 @@ function thumb(emoji,cls=''){return `<div class="r-thumb ${cls}" aria-hidden="tr
 
 /* 2. Présentation de séance */
 function estDuration(d){const t=d.exercises.reduce((a,e)=>a+(Number(e.sets)||0)*(45+(Number(e.rest)||60)),0),m=Math.round(t/60);return m>=60?`${Math.floor(m/60)}h ${String(m%60).padStart(2,'0')}`:`${m} min`}
-function equipOf(d){const q=[...new Set(d.exercises.map(e=>exMeta(e.name,e.catalogId).equipment).filter(Boolean))];return q.length?'Matériel : '+q.slice(0,2).join(', '):'Matériel : —'}
+function equipOf(d){const q=[...new Set(d.exercises.map(e=>exMeta(e.name,e.catalogId).equipment).filter(Boolean))];return q.length?t("Matériel : ")+q.slice(0,2).join(', '):t("Matériel : —")}
 function doneToday(n){return DB.sessions.some(s=>s.date===today()&&(s.exercises||[]).some(e=>e.name===n))}
 function previewPage(){
  const p=previewSel&&DB.programs.find(x=>x.id===previewSel.pid),d=p?.days[previewSel.di];
@@ -15,14 +15,14 @@ function previewPage(){
  const muscles=[...new Set(d.exercises.map(e=>exMeta(e.name,e.catalogId).muscle).filter(Boolean))];
  const sets=d.exercises.reduce((a,e)=>a+(Number(e.sets)||0),0);
  return `<div class="r-prev">
-  <div class="r-sub rise" style="--i:0"><button class="es-round" onclick="nav('program')" aria-label="Retour">${ico('back')}</button><h1>Séance</h1></div>
+  <div class="r-sub rise" style="--i:0"><button class="es-round" onclick="nav('program')" aria-label="${t("Retour")}">${ico('back')}</button><h1>${t("Séance")}</h1></div>
   <section class="r-prev-hero rise" style="--i:0">${photo('hero-today')}
 
    <div class="r-prev-body"><h1>${esc(d.name).toUpperCase()}</h1><p>${esc(muscles.join(' · ')||p.name)}</p>
-    <div class="r-meta"><span>${ico('clock')}Environ ${estDuration(d)}</span><span>${ico('bolt')}${esc(DB.profile.level||'Intermédiaire')}</span><span>${ico('train')}${esc(equipOf(d))}</span></div>
-    <button class="eh-go" onclick="startWorkout('${p.id}',${previewSel.di})">${ico('play')} Commencer la séance</button></div></section>
-  <h2 class="r-h2 rise" style="--i:1">Exercices</h2>
-  <div class="r-list rise" style="--i:2">${d.exercises.map(e=>`<div class="r-row">${thumb(exMeta(e.name,e.catalogId).ico)}<div><b>${esc(e.name)}</b><small>${e.sets} × ${e.repsMin}–${e.repsMax}</small></div>${doneToday(e.name)?'<span class="r-ok">'+ico('check')+'</span>':''}${ico('chev')}</div>`).join('')||'<div class="eh-empty">Aucun exercice dans ce jour.</div>'}</div>
+    <div class="r-meta"><span>${ico('clock')}${t("Environ")} ${estDuration(d)}</span><span>${ico('bolt')}${esc(DB.profile.level||t("Intermédiaire"))}</span><span>${ico('train')}${esc(equipOf(d))}</span></div>
+    <button class="eh-go" onclick="startWorkout('${p.id}',${previewSel.di})">${ico('play')} ${t("Commencer la séance")}</button></div></section>
+  <h2 class="r-h2 rise" style="--i:1">${t("Exercices")}</h2>
+  <div class="r-list rise" style="--i:2">${d.exercises.map(e=>`<div class="r-row">${thumb(exMeta(e.name,e.catalogId).ico)}<div><b>${esc(e.name)}</b><small>${e.sets} × ${e.repsMin}–${e.repsMax}</small></div>${doneToday(e.name)?'<span class="r-ok">'+ico('check')+'</span>':''}${ico('chev')}</div>`).join('')||`<div class="eh-empty">${t("Aucun exercice dans ce jour.")}</div>`}</div>
  </div>`}
 
 /* 3. Progression */
@@ -56,13 +56,13 @@ function progressPage(){
 
 /* 8. Programmes */
 function programPage(){
- if(!DB.programs.length)return `<div class="r-page"><h1 class="r-title">Programmes</h1><section class="eh-card"><div class="eh-empty">Crée ton premier programme ou choisis une séance proposée.</div><button class="btn primary wide" style="margin-top:14px" onclick="openProgramModal()">+ Créer un programme</button></section><button class="btn wide" style="margin-top:10px" onclick="nav('workouts')">Voir les séances recommandées</button></div>`;
- return `<div class="r-page"><h1 class="r-title rise" style="--i:0">Programmes</h1>
- <div class="r-chips rise" style="--i:1"><button onclick="nav('workouts')">Recommandés</button><button class="on">Tout</button><button onclick="openProgramModal()">Créer</button></div>
+ if(!DB.programs.length)return `<div class="r-page"><h1 class="r-title">${t("Programmes")}</h1><section class="eh-card"><div class="eh-empty">${t("Crée ton premier programme ou choisis une séance proposée.")}</div><button class="btn primary wide" style="margin-top:14px" onclick="openProgramModal()">+ ${t("Créer un programme")}</button></section><button class="btn wide" style="margin-top:10px" onclick="nav('workouts')">${t("Voir les séances recommandées")}</button></div>`;
+ return `<div class="r-page"><h1 class="r-title rise" style="--i:0">${t("Programmes")}</h1>
+ <div class="r-chips rise" style="--i:1"><button onclick="nav('workouts')">${t("Recommandés")}</button><button class="on">${t("Tout")}</button><button onclick="openProgramModal()">${t("Créer")}</button></div>
  ${DB.programs.map((p,k)=>{const act=p.id===DB.activeProgram,ex=p.days.reduce((a,d)=>a+d.exercises.length,0);return `<section class="r-prog rise" style="--i:${k+2}">
-  <div class="r-row">${thumb(exMeta(p.days[0]?.exercises[0]?.name).ico||'🏋️','lg')}<div><b>${esc(p.name)}</b><small>${p.days.length} séance${p.days.length===1?'':'s'} dans ce programme · ${ex} exercice${ex===1?'':'s'}</small></div>${act?'<span class="r-badge">ACTIF</span>':''}</div>
-  <div class="r-days">${p.days.map((d,i)=>`<button class="r-day" onclick="previewWorkout('${p.id}',${i})"><span>${esc(d.name)}</span><small>${d.exercises.length} exo</small>${ico('chev')}</button>`).join('')}</div>
-  <div class="r-acts"><button class="btn small" onclick="openProgramModal('${p.id}')">Modifier</button>${act?'':`<button class="btn small" onclick="activateProgram('${p.id}')">Activer</button>`}<button class="btn small" onclick="deleteProgram('${p.id}')">Supprimer</button></div></section>`}).join('')}</div>`}
+  <div class="r-row">${thumb(exMeta(p.days[0]?.exercises[0]?.name).ico||'🏋️','lg')}<div><b>${esc(p.name)}</b><small>${p.days.length} ${t("séance")}${p.days.length===1?'':'s'} ${t("dans ce programme ·")} ${ex} ${t("exercice")}${ex===1?'':'s'}</small></div>${act?`<span class="r-badge">${t("ACTIF")}</span>`:''}</div>
+  <div class="r-days">${p.days.map((d,i)=>`<button class="r-day" onclick="previewWorkout('${p.id}',${i})"><span>${esc(d.name)}</span><small>${d.exercises.length} ${t("exo")}</small>${ico('chev')}</button>`).join('')}</div>
+  <div class="r-acts"><button class="btn small" onclick="openProgramModal('${p.id}')">${t("Modifier")}</button>${act?'':`<button class="btn small" onclick="activateProgram('${p.id}')">${t("Activer")}</button>`}<button class="btn small" onclick="deleteProgram('${p.id}')">${t("Supprimer")}</button></div></section>`}).join('')}</div>`}
 
 /* 4. Nutrition */
 const mealIco={'Petit-déjeuner':'🍳','Déjeuner':'🍽️','Collation':'🥜','Goûter':'🍎','Dîner':'🥗'};
