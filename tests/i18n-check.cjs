@@ -32,6 +32,8 @@ for(const [file,name,labels]of [
  ['js/features/local-coach.js','COACH_QUICK_QUESTIONS',rows=>rows],
  ['js/features/life-calendar.js','PLAN_STATUS_LABELS',rows=>Object.values(rows)],
  ['js/data/daily-challenges.js','DAILY_CHALLENGE_CATEGORIES',rows=>Object.values(rows)],
+ ['js/features/durable-progress.js','RANK_TIERS',rows=>rows.map(row=>row.name)],
+ ['js/features/durable-progress.js','DURABLE_BADGES',rows=>rows.flatMap(row=>[row.name,row.unit])],
  ['js/core/streak.js','STREAK_LABELS',rows=>Object.values(rows)]
 ]){
  const code=fs.readFileSync(file,'utf8'),match=code.match(new RegExp('const '+name+'\\s*=\\s*([\\s\\S]*?);'));

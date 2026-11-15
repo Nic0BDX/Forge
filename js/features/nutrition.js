@@ -3,7 +3,7 @@ function meals(){const ms=todayMeals();return `<div class="row wrap"><div><div c
 
 function macroBar(name,val,target,c){return `<div style="margin:12px 0"><div class="row"><span>${name}</span><b>${Math.round(val)} / ${target}</b></div><div class="progress ${c==='green'?'green':c==='blue'?'blue':''}"><i style="width:${Math.min(100,val/target*100)}%"></i></div></div>`}
 function todayMeals(){return DB.meals.filter(m=>m.date===today()).reduce((a,m)=>({kcal:a.kcal+m.kcal,p:a.p+m.p,c:a.c+m.c,f:a.f+m.f}),{kcal:0,p:0,c:0,f:0})}
-function addWater(n){DB.water[today()]=(DB.water[today()]||0)+n;save();if(DB.water[today()]>=DB.settings.water && (DB.water[today()]-n)<DB.settings.water)award(20,t("Objectif hydratation"));render()}
+function addWater(n){DB.water[today()]=(DB.water[today()]||0)+n;save();if(DB.water[today()]>=DB.settings.water && (DB.water[today()]-n)<DB.settings.water)award(20,t("Objectif hydratation"),{key:'water:'+lifeDay()});render()}
 
 function nutrition(){
  const m=todayMeals();

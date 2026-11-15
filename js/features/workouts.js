@@ -221,7 +221,7 @@ function finishWorkout(){
  next.sessions.unshift({id:running.id,date:today(),iso:new Date().toISOString(),program:running.program,day:running.day,duration:dur,volume,sets,exercises:completed});
  if(running.planId&&next.life){const plan=next.life.plans.find(item=>item.id===running.planId);if(plan){plan.status='done';plan.sessionId=running.id}}
  const rewards=[{n:100,reason:'Séance terminée'},...(prs.length?[{n:100,reason:'Nouveau record personnel'}]:[])];
- for(const reward of rewards){next.xp+=reward.n;next.xpLog.unshift({id:uid(),date:new Date().toISOString(),...reward});if(next.xpLog.length>250)next.xpLog.pop();next.notifications.unshift({id:uid(),date:new Date().toISOString(),text:`+${reward.n} XP — ${reward.reason}`})}
+ rewards.forEach((reward,index)=>reward.n=lifeGrantXP(next,reward.n,reward.reason,'session:'+running.id+':'+index));
  try{commitUserDB(next,email)}catch{toast(workoutDraftSaved?t("La séance n’a pas pu être enregistrée. Ton brouillon reste disponible ; libère de l’espace puis réessaie."):t("La séance n’a pas pu être enregistrée. Garde cette page ouverte pour conserver ta saisie."));return}
  clearWorkoutDraft(email);stopWorkoutRuntime();
  window.lastSummary={dur,volume,sets,prs,day:running.day,program:running.program,exN:completed.filter(e=>e.sets.length).length};
