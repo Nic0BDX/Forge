@@ -387,7 +387,10 @@ const I18N_ENTRIES = [
  ['Choisis un fichier image valide.','Choose a valid image file.'],['Photo trop volumineuse (8 Mo maximum).','Photo is too large (8 MB maximum).'],
  ['Photo non enregistrée. Vérifie le stockage disponible.','Photo not saved. Check the available storage.'],
  ['Photo de profil enregistrée.','Profile photo saved.'],['Photo de profil supprimée.','Profile photo removed.'],
- ['Passer','Skip'],['Vidéo d’accueil','Welcome video']
+ ['Passer','Skip'],['Vidéo d’accueil','Welcome video'],
+ ['Recadrer la photo','Crop photo'],['Fais glisser la photo pour la centrer, puis ajuste le zoom.','Drag the photo to centre it, then adjust the zoom.'],
+ ['Aperçu du recadrage','Crop preview'],['Zoom','Zoom'],['Position horizontale','Horizontal position'],['Position verticale','Vertical position'],
+ ['Recentrer','Re-centre'],['Utiliser cette photo','Use this photo']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([key,,source])=>[key,source??key])),

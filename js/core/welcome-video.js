@@ -18,8 +18,8 @@ function playWelcomeVideo(onDone){
  for(const span of [prefix,person,suffix])span.setAttribute('aria-hidden','true');
  title.append(prefix,person,suffix);
  const subtitle=document.createElement('p');subtitle.className='forge-welcome-subtitle';
- const skip=document.createElement('button');skip.type='button';skip.className='forge-welcome-skip';skip.textContent=t('Passer');
- frame.append(video,title,subtitle,skip);overlay.append(frame);document.body.append(overlay);
+ overlay.tabIndex=-1;
+ frame.append(video,title,subtitle);overlay.append(frame);document.body.append(overlay);
  const inertStates=[document.getElementById('root'),document.getElementById('modal')].filter(Boolean).map(el=>({el,inert:el.inert}));
  inertStates.forEach(({el})=>el.inert=true);const overflow=document.body.style.overflow;document.body.style.overflow='hidden';
  let closed=false,cleaned=false,frameId=0,watchdog=0,fadeTimer=0,lastScene=null,lastCount=-1;
@@ -33,7 +33,7 @@ function playWelcomeVideo(onDone){
   if(closed)return;closed=true;clearTimeout(watchdog);cancelAnimationFrame(frameId);video.pause();
   if(fade&&!motion.matches){overlay.classList.add('is-leaving');overlay.addEventListener('transitionend',cleanup,{once:true});fadeTimer=setTimeout(cleanup,320)}else cleanup();
  }
- function keyboard(event){if(event.key==='Escape'){event.preventDefault();finish()}else if(event.key==='Tab'){event.preventDefault();skip.focus()}}
+ function keyboard(event){if(event.key==='Tab'){event.preventDefault();overlay.focus()}}
  function reduceMotion(){if(motion.matches)finish()}
  function fitText(){
   const ctx=document.createElement('canvas').getContext('2d');
@@ -52,10 +52,10 @@ function playWelcomeVideo(onDone){
   subtitle.textContent=Array.from(scene.subtitle).slice(0,Math.max(0,count-a.length-b.length-c.length)).join('');
  }
  function tick(){if(closed)return;update();frameId=requestAnimationFrame(tick)}
- skip.addEventListener('click',()=>finish());video.addEventListener('ended',()=>finish(true));video.addEventListener('error',()=>finish());
+ video.addEventListener('ended',()=>finish(true));video.addEventListener('error',()=>finish());
  video.addEventListener('playing',()=>{clearTimeout(watchdog);if(!frameId&&!closed)tick()});video.addEventListener('timeupdate',update);
  video.addEventListener('volumechange',()=>{if(!video.muted||video.volume!==0){video.muted=true;video.volume=0}});
  window.addEventListener('keydown',keyboard,true);window.addEventListener('resize',fitText);motion.addEventListener?.('change',reduceMotion);
- fitText();skip.focus();watchdog=setTimeout(()=>finish(),2000);video.src='assets/forge_welcome_clean.mp4';
+ fitText();overlay.focus();watchdog=setTimeout(()=>finish(),2000);video.src='assets/forge_welcome_clean.mp4';
  try{video.play()?.catch(()=>finish())}catch{finish()}
 }
