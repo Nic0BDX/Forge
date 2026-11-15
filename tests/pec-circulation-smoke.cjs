@@ -8,6 +8,8 @@ const {chromium}=require(process.env.FORGE_PLAYWRIGHT||'playwright');
   for(const viewport of [{width:390,height:844},{width:1920,height:1080}]){
    const page=await browser.newPage({viewport,reducedMotion:'no-preference'}),errors=[];page.on('pageerror',error=>errors.push(error.message));page.on('console',message=>{if(message.type()==='error')errors.push(message.text())});
    await page.goto('http://127.0.0.1:'+server.address().port);
+   assert.equal(await page.locator('link[rel="icon"][sizes="any"]').getAttribute('href'),'/favicon.ico');assert.equal(await page.locator('link[rel="apple-touch-icon"]').getAttribute('href'),'/assets/icons/apple-touch-icon.png');
+   const response=await page.request.get('http://127.0.0.1:'+server.address().port+'/manifest.webmanifest');assert.ok(response.ok());assert.match(response.headers()['content-type'],/^application\/manifest\+json/);assert.equal((await response.json()).name,'FORGE');
    await page.evaluate(()=>{const email='pec-test@forge.example';AUTH[email]={email,name:'Test'};localStorage.setItem('forge_accounts_v1',JSON.stringify(AUTH));localStorage.setItem('forge_session_v1',email);DB=defaultDB();DB.profile.setup=true;DB.profile.name='Test';save();nav('home')});
    await page.waitForFunction(()=>{const el=document.querySelector('.vf-body-hero');return el&&!el.classList.contains('is-paused')});
    assert.equal(await page.locator('.vf-body-hero .vf-vein-track').count(),12);

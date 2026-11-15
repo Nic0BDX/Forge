@@ -7,7 +7,7 @@ const workspace=process.cwd();
   if(!file.startsWith(workspace+path.sep)){res.writeHead(403).end();return}
   fs.stat(file,(error,stat)=>{
    if(error||!stat.isFile()){res.writeHead(404).end();return}
-   const type=({'.html':'text/html','.js':'application/javascript','.css':'text/css','.svg':'image/svg+xml','.mp4':'video/mp4'})[path.extname(file)]||'application/octet-stream';
+   const type=({'.html':'text/html','.js':'application/javascript','.css':'text/css','.svg':'image/svg+xml','.png':'image/png','.ico':'image/x-icon','.webmanifest':'application/manifest+json','.mp4':'video/mp4'})[path.extname(file)]||'application/octet-stream';
    const range=req.headers.range?.match(/^bytes=(\d+)-(\d*)$/),start=range?Number(range[1]):0,end=range&&range[2]?Math.min(Number(range[2]),stat.size-1):stat.size-1;
    res.writeHead(range?206:200,{'Content-Type':type,'Content-Length':end-start+1,'Accept-Ranges':'bytes',...(range?{'Content-Range':`bytes ${start}-${end}/${stat.size}`}:{})});fs.createReadStream(file,{start,end}).pipe(res);
   });

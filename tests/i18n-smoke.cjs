@@ -5,7 +5,7 @@ const workspace=process.cwd();
  const server=http.createServer((req,res)=>{
   const pathname=decodeURIComponent(req.url.split('?')[0]),file=path.resolve(workspace,'.'+(pathname==='/'?'/index.html':pathname));
   if(!file.startsWith(workspace+path.sep)){res.writeHead(403).end();return}
-  fs.readFile(file,(err,data)=>{res.statusCode=err?404:200;res.setHeader('Content-Type',({'.html':'text/html','.js':'application/javascript','.css':'text/css','.svg':'image/svg+xml'})[path.extname(file)]||'application/octet-stream');res.end(err?'missing':data)});
+  fs.readFile(file,(err,data)=>{res.statusCode=err?404:200;res.setHeader('Content-Type',({'.html':'text/html','.js':'application/javascript','.css':'text/css','.svg':'image/svg+xml','.png':'image/png','.ico':'image/x-icon','.webmanifest':'application/manifest+json'})[path.extname(file)]||'application/octet-stream');res.end(err?'missing':data)});
  }).listen(0,'127.0.0.1');
  await new Promise(resolve=>server.on('listening',resolve));
  let browser;
