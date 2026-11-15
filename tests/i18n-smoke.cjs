@@ -43,12 +43,20 @@ const workspace=process.cwd();
    assert.equal(await page.locator('#sn').inputValue(),'Brouillon conservé');assert.equal(await page.locator('h1').innerText(),'Paramètres');
    assert.equal(await page.evaluate(()=>DB.profile.name),name);await page.locator('#settingsLanguage').selectOption('en');
   }
-  for(const route of ['home','program','nutrition','sleep','health','progress','memories','beforeafter','coach','calendar','profile','premium','settings','exercises','habits','goals','history','routine','community']){
+  for(const route of ['home','program','nutrition','sleep','health','progress','memories','beforeafter','coach','calendar','profile','premium','settings','exercises','habits','goals','history','routine','community','workouts','meals','nutriai','weekly']){
    await page.evaluate(route=>nav(route),route);assert.equal(await page.locator('#main-content').count(),1,route);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),route+' overflow');
   }
   for(const open of ['openActivityModal','openSleepModal','openWeightModal','openGoalModal','openHabitModal','openMealModal','vfOpenSteps','vfOpenPulse','openProgramModal']){
    await page.evaluate(name=>window[name](),open);assert.ok(await page.locator('#modalbox').innerText(),open);await page.evaluate(()=>closeModal());
   }
+  await page.evaluate(()=>{installTemplate('push');const p=DB.programs.at(-1);startWorkout(p.id,0)});
+  assert.equal(await page.locator('.es-ex-h b').first().innerText(),'Développé couché');
+  await page.evaluate(()=>{updateWorkoutField(0,0,'weight','30');updateWorkoutField(0,0,'reps','8');toggleSet(0,0)});
+  await page.reload();await page.evaluate(()=>resumeWorkout());
+  assert.equal(await page.locator('.es-ex-h b').first().innerText(),'Développé couché');
+  await page.evaluate(()=>finishWorkout());assert.equal(await page.evaluate(()=>view),'summary');
+  assert.equal(await page.evaluate(()=>DB.sessions[0].exercises[0].name),'Développé couché');
+  assert.equal(await page.evaluate(()=>DB.sessions[0].volume),240);
   await page.evaluate(()=>logout());await page.evaluate(()=>goAuth('login'));
   await page.locator('#authEmail').fill('i18n-test@forge.example');await page.locator('#authPass').fill('ForgeTest123');await page.evaluate(()=>loginAccount());await page.waitForTimeout(800);
   assert.equal(await page.evaluate(()=>isLogged()),true);
@@ -58,6 +66,6 @@ const workspace=process.cwd();
   await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.locator('.ea-bar').evaluate(e=>getComputedStyle(e).animationName),'none');
   await page.setViewportSize({width:1280,height:805});assert.ok(await page.locator('#authEmail').isVisible());
   await page.goto(base+'/preview/demo.html');await page.locator('.vf-dashboard').waitFor();
-  assert.deepEqual(errors,[]);console.log('PASS: FR/EN, persistence, fields, registration/login/recovery, 19 routes, mobile/desktop, reduced motion, preview; no console errors');
+  assert.deepEqual(errors,[]);console.log('PASS: FR/EN, persistence, fields, auth/recovery, 23 routes, 9 modals, workout/resume/save, Atlas names preserved, mobile/desktop, reduced motion, preview; no console errors');
  }finally{await browser?.close();await new Promise(resolve=>server.close(resolve))}
 })().catch(error=>{console.error(error);process.exitCode=1});

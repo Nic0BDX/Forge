@@ -1,5 +1,5 @@
 /* FORGE — Programmes et séance en cours */
-function workouts(){return `<div class="row wrap"><div><div class="eyebrow">${t("THÈME · ENTRAÎNEMENT")}</div><h1>${t("Séances")}</h1><div class="sub">${t("Des séances prêtes à ajouter à ton programme.")}</div></div><button class="btn" onclick="nav('program')">${t("Mon programme →")}</button></div><div class="template-grid" style="margin-top:16px">${workoutTemplates.map(t=>`<div class="template-card"><div class="template-glow">${t.tag}</div><div class="row"><span class="pill orange">${t("Environ")} ${t.duration}</span><span class="sub">${t.ex.length} ${t("exercice")}${t.ex.length===1?'':'s'}</span></div><h2>${esc(t.name)}</h2><div class="template-list">${t.ex.map(e=>`<div><span>${esc(e[0])}</span><b>${e[1]} × ${e[2]}–${e[3]}</b></div>`).join('')}</div><button class="btn primary wide" onclick="installTemplate('${t.id}')">${t("Ajouter à mon programme")}</button></div>`).join('')}</div></div>`}
+function workouts(){return `<div class="row wrap"><div><div class="eyebrow">${t("THÈME · ENTRAÎNEMENT")}</div><h1>${t("Séances")}</h1><div class="sub">${t("Des séances prêtes à ajouter à ton programme.")}</div></div><button class="btn" onclick="nav('program')">${t("Mon programme →")}</button></div><div class="template-grid" style="margin-top:16px">${workoutTemplates.map(template=>`<div class="template-card"><div class="template-glow">${template.tag}</div><div class="row"><span class="pill orange">${t("Environ")} ${template.duration}</span><span class="sub">${template.ex.length} ${t("exercice")}${template.ex.length===1?'':'s'}</span></div><h2>${esc(template.name)}</h2><div class="template-list">${template.ex.map(e=>`<div><span>${esc(e[0])}</span><b>${e[1]} × ${e[2]}–${e[3]}</b></div>`).join('')}</div><button class="btn primary wide" onclick="installTemplate('${template.id}')">${t("Ajouter à mon programme")}</button></div>`).join('')}</div></div>`}
 
 function program(){
  if(!DB.programs.length)return `<div class="row"><div><div class="eyebrow">${t("ENTRAÎNEMENT")}</div><h1>${t("Programme")}</h1></div><button class="btn primary" onclick="openProgramModal()">+ ${t("Nouveau")}</button></div><div class="card empty">${t("Crée ton premier programme ou choisis une séance proposée.")}</div>`;
@@ -39,9 +39,9 @@ const WORKOUT_DRAFT_PREFIX='forge_workout_draft_v1:';
 let restPaused=false,restOpen=false,restDeadline=0,restRemainingMs=0,workoutDraftSaved=true;
 function workoutDraftKey(email=currentEmail()){return WORKOUT_DRAFT_PREFIX+encodeURIComponent(email)}
 function workoutSetError(s){
- if(s.weight===''||!Number.isFinite(Number(s.weight))||Number(s.weight)<0)return 'Indique une charge de 0 kg ou plus.';
- if(s.reps===''||!Number.isInteger(Number(s.reps))||Number(s.reps)<=0)return 'Indique un nombre entier de répétitions supérieur à 0.';
- if(s.rpe!==''&&(!Number.isFinite(Number(s.rpe))||Number(s.rpe)<0||Number(s.rpe)>10))return 'Le RPE doit être compris entre 0 et 10, ou laissé vide.';
+ if(s.weight===''||!Number.isFinite(Number(s.weight))||Number(s.weight)<0)return t("Indique une charge de 0 kg ou plus.");
+ if(s.reps===''||!Number.isInteger(Number(s.reps))||Number(s.reps)<=0)return t("Indique un nombre entier de répétitions supérieur à 0.");
+ if(s.rpe!==''&&(!Number.isFinite(Number(s.rpe))||Number(s.rpe)<0||Number(s.rpe)>10))return t("Le RPE doit être compris entre 0 et 10, ou laissé vide.");
  return '';
 }
 function readWorkoutDraft(email=currentEmail()){
@@ -69,7 +69,7 @@ function readWorkoutDraft(email=currentEmail()){
 function remainingRestMs(){return restPaused?restRemainingMs:Math.max(0,restDeadline-Date.now())}
 function showWorkoutSaveState(){
  const el=document.getElementById('workoutDraftStatus');
- if(el){el.textContent=workoutDraftSaved?'Saisie conservée dans ce navigateur.':'La sauvegarde locale a échoué. Garde cette page ouverte pour conserver ta saisie.';el.setAttribute('role',workoutDraftSaved?'status':'alert')}
+ if(el){el.textContent=workoutDraftSaved?t("Saisie conservée dans ce navigateur."):t("La sauvegarde locale a échoué. Garde cette page ouverte pour conserver ta saisie.");el.setAttribute('role',workoutDraftSaved?'status':'alert')}
 }
 function persistWorkoutDraft(){
  if(!session)return true;
@@ -80,13 +80,13 @@ function persistWorkoutDraft(){
  catch{workoutDraftSaved=false;showWorkoutSaveState();return false}
 }
 function clearWorkoutDraft(email=currentEmail()){
- try{localStorage.removeItem(workoutDraftKey(email));return true}catch{toast('Le brouillon n’a pas pu être supprimé. Réessaie lorsque le stockage est disponible.');return false}
+ try{localStorage.removeItem(workoutDraftKey(email));return true}catch{toast(t("Le brouillon n’a pas pu être supprimé. Réessaie lorsque le stockage est disponible."));return false}
 }
 function stopWorkoutRuntime(){
  clearInterval(sessionTick);clearInterval(restTick);sessionTick=null;restTick=null;
  session=null;rest=0;restPaused=false;restOpen=false;restDeadline=0;restRemainingMs=0;
 }
-function suspendWorkout(){if(session&&!persistWorkoutDraft()){toast('La sauvegarde locale a échoué. Garde cette page ouverte pour conserver ta saisie.');return false}stopWorkoutRuntime();return true}
+function suspendWorkout(){if(session&&!persistWorkoutDraft()){toast(t("La sauvegarde locale a échoué. Garde cette page ouverte pour conserver ta saisie."));return false}stopWorkoutRuntime();return true}
 function startWorkoutClock(){
  clearInterval(sessionTick);
  const runningId=session.id,owner=session.owner;
@@ -96,22 +96,22 @@ function workoutResumeCard(){
  if(view==='session'||view==='summary')return '';
  const d=session?{session}:readWorkoutDraft();if(!d)return '';
  const s=d.session,total=s.exercises.reduce((n,e)=>n+e.sets.length,0),done=s.exercises.reduce((n,e)=>n+e.sets.filter(x=>x.done).length,0);
- return `<section class="eh-card workout-resume-card" aria-labelledby="workout-resume-title" style="margin-bottom:20px"><div class="eyebrow">${session&&!workoutDraftSaved?'SÉANCE EN COURS':'SÉANCE ENREGISTRÉE'}</div><h2 id="workout-resume-title" style="margin:10px 0">Une séance t’attend</h2><p class="sub">${esc(s.day)} · ${done}/${total} séries validées</p><p class="sub">${session&&!workoutDraftSaved?'La sauvegarde locale a échoué. Garde cette page ouverte pour conserver ta saisie.':'Tes séries saisies sont conservées dans ce navigateur. Reprends quand tu es prêt.'}</p><div class="row gap wrap" style="margin-top:14px"><button class="btn primary" onclick="resumeWorkout()">${ico('play')} Reprendre la séance</button><button class="btn ghost" onclick="discardWorkoutDraft()">Abandonner la séance</button></div></section>`;
+ return `<section class="eh-card workout-resume-card" aria-labelledby="workout-resume-title" style="margin-bottom:20px"><div class="eyebrow">${session&&!workoutDraftSaved?t("SÉANCE EN COURS"):t("SÉANCE ENREGISTRÉE")}</div><h2 id="workout-resume-title" style="margin:10px 0">${t("Une séance t’attend")}</h2><p class="sub">${esc(s.day)} · ${done}/${total} ${t("séries validées")}</p><p class="sub">${session&&!workoutDraftSaved?t("La sauvegarde locale a échoué. Garde cette page ouverte pour conserver ta saisie."):t("Tes séries saisies sont conservées dans ce navigateur. Reprends quand tu es prêt.")}</p><div class="row gap wrap" style="margin-top:14px"><button class="btn primary" onclick="resumeWorkout()">${ico('play')} ${t("Reprendre la séance")}</button><button class="btn ghost" onclick="discardWorkoutDraft()">${t("Abandonner la séance")}</button></div></section>`;
 }
 function existingWorkoutChoice(){
- document.getElementById('modalbox').innerHTML=`<h2>Une séance t’attend</h2><p class="sub">Reprends ta séance en cours, ou abandonne-la avant d’en commencer une autre.</p><div class="row gap wrap" style="margin-top:18px"><button class="btn primary" onclick="resumeWorkout()">Reprendre la séance</button><button class="btn" onclick="discardWorkoutDraft()">Abandonner la séance</button><button class="btn ghost" onclick="closeModal()">Fermer</button></div>`;openModal();
+ document.getElementById('modalbox').innerHTML=`<h2>${t("Une séance t’attend")}</h2><p class="sub">${t("Reprends ta séance en cours, ou abandonne-la avant d’en commencer une autre.")}</p><div class="row gap wrap" style="margin-top:18px"><button class="btn primary" onclick="resumeWorkout()">${t("Reprendre la séance")}</button><button class="btn" onclick="discardWorkoutDraft()">${t("Abandonner la séance")}</button><button class="btn ghost" onclick="closeModal()">${t("Fermer")}</button></div>`;openModal();
 }
 function startWorkout(pid,di){
  if(session||readWorkoutDraft())return existingWorkoutChoice();
  const p=DB.programs.find(x=>x.id===pid),d=p?.days[di];if(!d)return;
- if(!d.exercises?.length)return toast('Ajoute au moins un exercice à cette séance.');
+ if(!d.exercises?.length)return toast(t("Ajoute au moins un exercice à cette séance."));
  session={id:uid(),owner:currentEmail(),pid,di,program:p.name,day:d.name,started:Date.now(),exercises:d.exercises.map(e=>({name:e.name,...(e.catalogId?{catalogId:e.catalogId}:{}),target:`${e.sets}×${e.repsMin}-${e.repsMax}`,rest:Number(e.rest)||0,sets:Array.from({length:e.sets},(_,j)=>{const last=DB.lastSets[e.name]?.[j]||{};return {weight:last.weight??'',reps:last.reps??'',rpe:last.rpe??'',done:false}})}))};
  rest=0;restDeadline=0;restRemainingMs=0;restPaused=false;restOpen=false;
  view='session';persistWorkoutDraft();startWorkoutClock();render();
 }
 function resumeWorkout(){
  if(session){closeModal();nav('session');return}
- const draft=readWorkoutDraft();if(!draft){toast('Aucune séance à reprendre pour ce compte.');closeModal();render();return}
+ const draft=readWorkoutDraft();if(!draft){toast(t("Aucune séance à reprendre pour ce compte."));closeModal();render();return}
  session=draft.session;restPaused=draft.rest.paused;restOpen=draft.rest.open;
  restDeadline=draft.rest.deadline;restRemainingMs=draft.rest.remainingMs;rest=Math.ceil(remainingRestMs()/1000);
  if(rest===0){restDeadline=0;restRemainingMs=0;restPaused=false}
@@ -121,9 +121,9 @@ function resumeWorkout(){
 }
 function discardWorkoutDraft(){
  const email=session?.owner||currentEmail();
- if(!confirm('Abandonner cette séance ? Ses séries ne seront pas ajoutées à l’historique.'))return false;
+ if(!confirm(t("Abandonner cette séance ? Ses séries ne seront pas ajoutées à l’historique.")))return false;
  if(!clearWorkoutDraft(email))return false;
- stopWorkoutRuntime();closeModal();nav('home');toast('Séance abandonnée.');return true;
+ stopWorkoutRuntime();closeModal();nav('home');toast(t("Séance abandonnée."));return true;
 }
 function updateWorkoutField(i,j,field,value){
  if(!session||session.owner!==currentEmail()||!['weight','reps','rpe'].includes(field))return;
@@ -147,23 +147,23 @@ function sessionPage(){
  const el=Math.floor((Date.now()-session.started)/1000);
  return `<div class="es">
  <div class="es-top"><div class="es-title">
-  <button class="es-round" onclick="cancelWorkout()" aria-label="Annuler la séance">${ico('back')}</button>
+  <button class="es-round" onclick="cancelWorkout()" aria-label="${t("Annuler la séance")}">${ico('back')}</button>
   <div><h1>${esc(session.day)}</h1><small><span id="workTimer">${fmtSec(el)}</span> · <span id="workPct">${c.pct}</span>%</small></div>
-  <button class="es-round light" onclick="finishWorkout()" aria-label="Terminer la séance">${ico('flag')}</button></div>
+  <button class="es-round light" onclick="finishWorkout()" aria-label="${t("Terminer la séance")}">${ico('flag')}</button></div>
   <div class="es-seg" aria-hidden="true">${session.exercises.map(e=>`<i style="--f:${e.sets.length?e.sets.filter(x=>x.done).length/e.sets.length:0}"></i>`).join('')}</div></div>
- <p id="workoutDraftStatus" class="sub" role="status">${workoutDraftSaved?'Saisie conservée dans ce navigateur.':'La sauvegarde locale a échoué. Garde cette page ouverte pour conserver ta saisie.'}</p><p class="sub">RPE : effort ressenti de 0 à 10. Facultatif.</p>
+ <p id="workoutDraftStatus" class="sub" role="status">${workoutDraftSaved?t("Saisie conservée dans ce navigateur."):t("La sauvegarde locale a échoué. Garde cette page ouverte pour conserver ta saisie.")}</p><p class="sub">${t("RPE : effort ressenti de 0 à 10. Facultatif.")}</p>
  ${session.exercises.map((e,i)=>{const cat=atlasFind(e.catalogId,e.name);const dn=e.sets.filter(x=>x.done).length;return `<section class="es-ex ${i===cur?'cur':''}">
-  ${i===cur?`<span class="es-tag">${ico('bolt')} En cours</span>`:''}
+  ${i===cur?`<span class="es-tag">${ico('bolt')} ${t("En cours")}</span>`:''}
   <div class="es-ex-h"><div class="es-thumb" aria-hidden="true">${cat?.ico||'🏋️'}</div><div><b>${esc(e.name)}</b><small>${esc(cat?.muscle||'')}${cat?' · ':''}${esc(e.target)}</small></div><span class="es-count">${dn}/${e.sets.length}</span></div>
-  <div class="es-sets"><div class="es-lab"><span>SÉRIE</span><span>KG</span><span>REPS</span><span>RPE</span><span></span></div>
-  ${e.sets.map((s,j)=>`<div class="es-set ${s.done?'done':''}"><span class="es-n">${j+1}</span><input type="number" inputmode="decimal" step="any" min="0" value="${esc(s.weight)}" aria-label="Charge série ${j+1}" oninput="updateWorkoutField(${i},${j},'weight',this.value)"><input type="number" inputmode="numeric" min="1" step="1" value="${esc(s.reps)}" aria-label="Répétitions série ${j+1}" oninput="updateWorkoutField(${i},${j},'reps',this.value)"><input type="number" inputmode="decimal" step=".5" min="0" max="10" value="${esc(s.rpe)}" aria-label="RPE série ${j+1}" oninput="updateWorkoutField(${i},${j},'rpe',this.value)"><button class="es-check ${s.done?'on':''}" aria-pressed="${s.done}" aria-label="Valider la série ${j+1}" onclick="toggleSet(${i},${j})">${ico('check')}</button></div>`).join('')}</div>
-  ${cat?`<button class="ax-button ax-session-demo" onclick="openExerciseModal('${cat.id}')">Voir le mouvement</button>`:''}
-  <div class="es-ex-f"><button onclick="addSet(${i})">${ico('plus')} Série</button><button onclick="startRest(${e.rest})">${ico('clock')} Repos ${e.rest}s</button></div></section>`}).join('')}
- <div class="es-end"><button class="btn primary wide" onclick="finishWorkout()">Terminer la séance</button><button class="btn ghost wide" onclick="cancelWorkout()">Annuler sans enregistrer</button></div>
- <div class="es-bar ${rest>0?'resting':''} ${restOpen?'open':''}" id="restBar" role="group" aria-label="Minuteur de repos">
-  <div class="es-bar-main"><button class="es-skip" onclick="stopRest()">Passer le repos</button><span class="es-time" id="restTimer" aria-live="off">${fmtSec(rest)}</span><button class="es-plus" onclick="addRest(15)">+15 s</button>
-   <button class="es-ctl" onclick="toggleRestPause()" aria-label="${restPaused?'Reprendre':'Pause'}">${ico(restPaused?'play':'pause')}</button>
-   <button class="es-ctl es-up" onclick="toggleRestPanel()" aria-label="Durées de repos" aria-expanded="${restOpen}">${ico('up')}</button></div>
+  <div class="es-sets"><div class="es-lab"><span>${t("SÉRIE")}</span><span>KG</span><span>REPS</span><span>RPE</span><span></span></div>
+  ${e.sets.map((s,j)=>`<div class="es-set ${s.done?'done':''}"><span class="es-n">${j+1}</span><input type="number" inputmode="decimal" step="any" min="0" value="${esc(s.weight)}" aria-label="${t("Charge série")} ${j+1}" oninput="updateWorkoutField(${i},${j},'weight',this.value)"><input type="number" inputmode="numeric" min="1" step="1" value="${esc(s.reps)}" aria-label="${t("Répétitions série")} ${j+1}" oninput="updateWorkoutField(${i},${j},'reps',this.value)"><input type="number" inputmode="decimal" step=".5" min="0" max="10" value="${esc(s.rpe)}" aria-label="${t("RPE série")} ${j+1}" oninput="updateWorkoutField(${i},${j},'rpe',this.value)"><button class="es-check ${s.done?'on':''}" aria-pressed="${s.done}" aria-label="${t("Valider la série")} ${j+1}" onclick="toggleSet(${i},${j})">${ico('check')}</button></div>`).join('')}</div>
+  ${cat?`<button class="ax-button ax-session-demo" onclick="openExerciseModal('${cat.id}')">${t("Voir le mouvement")}</button>`:''}
+  <div class="es-ex-f"><button onclick="addSet(${i})">${ico('plus')} ${t("Série")}</button><button onclick="startRest(${e.rest})">${ico('clock')} ${t("Repos")} ${e.rest}s</button></div></section>`}).join('')}
+ <div class="es-end"><button class="btn primary wide" onclick="finishWorkout()">${t("Terminer la séance")}</button><button class="btn ghost wide" onclick="cancelWorkout()">${t("Annuler sans enregistrer")}</button></div>
+ <div class="es-bar ${rest>0?'resting':''} ${restOpen?'open':''}" id="restBar" role="group" aria-label="${t("Minuteur de repos")}">
+  <div class="es-bar-main"><button class="es-skip" onclick="stopRest()">${t("Passer le repos")}</button><span class="es-time" id="restTimer" aria-live="off">${fmtSec(rest)}</span><button class="es-plus" onclick="addRest(15)">+15 s</button>
+   <button class="es-ctl" onclick="toggleRestPause()" aria-label="${restPaused?t("Reprendre"):t("Pause")}">${ico(restPaused?'play':'pause')}</button>
+   <button class="es-ctl es-up" onclick="toggleRestPanel()" aria-label="${t("Durées de repos")}" aria-expanded="${restOpen}">${ico('up')}</button></div>
   <div class="es-panel">${[30,60,90,120,180].map(n=>`<button onclick="startRest(${n})">${n<120?n+'s':(n/60)+' min'}</button>`).join('')}</div></div>
  </div>`;
 }
@@ -174,7 +174,7 @@ function toggleSet(i,j){
  set.done=!set.done;persistWorkoutDraft();keepScroll(render);
  if(set.done&&session.exercises[i].rest)startRest(session.exercises[i].rest);
 }
-function addSet(i){const e=session?.exercises[i];if(!e)return;if(e.sets.length>=100)return toast('Cette séance contient déjà 100 séries pour cet exercice.');const l=e.sets.at(-1);e.sets.push({weight:l?.weight??'',reps:l?.reps??'',rpe:'',done:false});persistWorkoutDraft();keepScroll(render)}
+function addSet(i){const e=session?.exercises[i];if(!e)return;if(e.sets.length>=100)return toast(t("Cette séance contient déjà 100 séries pour cet exercice."));const l=e.sets.at(-1);e.sets.push({weight:l?.weight??'',reps:l?.reps??'',rpe:'',done:false});persistWorkoutDraft();keepScroll(render)}
 function startRest(n){
  if(!session)return;
  const seconds=Number(n);if(!Number.isFinite(seconds)||seconds<=0||seconds>86400)return;
@@ -184,7 +184,7 @@ function startRest(n){
 function restStep(){
  if(!session||session.owner!==currentEmail()||restPaused)return;
  const previous=rest;rest=Math.ceil(remainingRestMs()/1000);
- if(rest<=0){rest=0;restDeadline=0;restRemainingMs=0;clearInterval(restTick);persistWorkoutDraft();if(previous>0){beep();toast('Repos terminé 🔔')}}
+ if(rest<=0){rest=0;restDeadline=0;restRemainingMs=0;clearInterval(restTick);persistWorkoutDraft();if(previous>0){beep();toast(t("Repos terminé 🔔"))}}
  updateRest();
 }
 function stopRest(){clearInterval(restTick);rest=0;restDeadline=0;restRemainingMs=0;restPaused=false;persistWorkoutDraft();updateRest(true)}
@@ -208,42 +208,42 @@ function cancelWorkout(){return discardWorkoutDraft()}
 function finishWorkout(){
  if(!session||session.owner!==currentEmail())return;
  const running=session,email=running.owner;
- let latest;try{const raw=localStorage.getItem('forge_data_'+email);if(raw===null)throw new Error('Carnet absent');const saved=JSON.parse(raw);if(!saved||typeof saved!=='object'||Array.isArray(saved)||!Array.isArray(saved.sessions))throw new Error('Carnet incompatible');latest=validateBackup(saved)}catch{return toast('Le carnet enregistré ne peut pas être lu. Garde cette page ouverte et réessaie.')}
+ let latest;try{const raw=localStorage.getItem('forge_data_'+email);if(raw===null)throw new Error('Carnet absent');const saved=JSON.parse(raw);if(!saved||typeof saved!=='object'||Array.isArray(saved)||!Array.isArray(saved.sessions))throw new Error('Carnet incompatible');latest=validateBackup(saved)}catch{return toast(t("Le carnet enregistré ne peut pas être lu. Garde cette page ouverte et réessaie."))}
  if(latest.sessions.some(x=>x.id===running.id)){DB=latest;clearWorkoutDraft(email);stopWorkoutRuntime();nav('summary');return}
  let sets=0,volume=0,prs=[];
  const completed=running.exercises.map(e=>({name:e.name,...(e.catalogId?{catalogId:e.catalogId}:{}),sets:e.sets.filter(s=>s.done)}));
  for(const e of completed)for(const s of e.sets){const error=workoutSetError(s);if(error)return toast(error);sets++;volume+=Number(s.weight)*Number(s.reps)}
- if(!sets)return toast('Valide au moins une série pour enregistrer ta séance.');
- if(!Number.isFinite(volume))return toast('Le volume calculé est trop élevé. Vérifie tes charges et répétitions.');
+ if(!sets)return toast(t("Valide au moins une série pour enregistrer ta séance."));
+ if(!Number.isFinite(volume))return toast(t("Le volume calculé est trop élevé. Vérifie tes charges et répétitions."));
  const next=JSON.parse(JSON.stringify(latest)),dur=Math.max(0,Math.round((Date.now()-running.started)/1000));
  running.exercises.forEach((e,i)=>{const done=completed[i].sets;if(!done.length)return;next.lastSets[e.name]=e.sets.map(s=>({weight:s.weight,reps:s.reps,rpe:s.rpe}));const best=Math.max(...done.map(s=>Number(s.weight)));if(next.prs[e.name]===undefined||best>next.prs[e.name]){next.prs[e.name]=best;prs.push(`${e.name} · ${best} kg`)}});
  const program=next.programs.find(x=>x.id===running.pid);if(program?.days.length)program.next=(running.di+1)%program.days.length;
  next.sessions.unshift({id:running.id,date:today(),iso:new Date().toISOString(),program:running.program,day:running.day,duration:dur,volume,sets,exercises:completed});
  const rewards=[{n:100,reason:'Séance terminée'},...(prs.length?[{n:100,reason:'Nouveau record personnel'}]:[])];
  for(const reward of rewards){next.xp+=reward.n;next.xpLog.unshift({id:uid(),date:new Date().toISOString(),...reward});if(next.xpLog.length>250)next.xpLog.pop();next.notifications.unshift({id:uid(),date:new Date().toISOString(),text:`+${reward.n} XP — ${reward.reason}`})}
- try{commitUserDB(next,email)}catch{toast(workoutDraftSaved?'La séance n’a pas pu être enregistrée. Ton brouillon reste disponible ; libère de l’espace puis réessaie.':'La séance n’a pas pu être enregistrée. Garde cette page ouverte pour conserver ta saisie.');return}
+ try{commitUserDB(next,email)}catch{toast(workoutDraftSaved?t("La séance n’a pas pu être enregistrée. Ton brouillon reste disponible ; libère de l’espace puis réessaie."):t("La séance n’a pas pu être enregistrée. Garde cette page ouverte pour conserver ta saisie."));return}
  clearWorkoutDraft(email);stopWorkoutRuntime();
  window.lastSummary={dur,volume,sets,prs,day:running.day,program:running.program,exN:completed.filter(e=>e.sets.length).length};
- view='summary';window.__fresh=true;render();toast('Séance enregistrée. '+rewards.reduce((n,r)=>n+r.n,0)+' XP ajoutés.');
+ view='summary';window.__fresh=true;render();toast((t("Séance enregistrée.")+" ")+rewards.reduce((n,r)=>n+r.n,0)+(" "+t("XP ajoutés.")));
 }
 
 function summary(){
  const last=DB.sessions[0],r=window.lastSummary||(last?{dur:last.duration,volume:last.volume,sets:last.sets,prs:[],day:last.day,program:last.program,exN:last.exercises.length,date:last.date}:null);
- if(!r)return `<div class="esum"><div class="eh-card"><div class="eh-empty">Aucune séance terminée pour le moment.</div><button class="btn primary wide" style="margin-top:12px" onclick="nav('home')">Retour à l’accueil</button></div></div>`;
+ if(!r)return `<div class="esum"><div class="eh-card"><div class="eh-empty">${t("Aucune séance terminée pour le moment.")}</div><button class="btn primary wide" style="margin-top:12px" onclick="nav('home')">${t("Retour à l’accueil")}</button></div></div>`;
  const prev=DB.sessions.slice(1).find(x=>x.day===r.day&&Number(x.volume)>0);
  const d=prev?((r.volume-prev.volume)/prev.volume*100):null;
- const when=r.date?fmtDate(r.date):new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'short'});
+ const when=r.date?fmtDate(r.date):new Date().toLocaleDateString(forgeLocale(),{day:'2-digit',month:'short'});
  return `<div class="esum">
-  <section class="esum-hero rise" style="--i:0">${photo('hero-summary')}<button class="es-round esum-back" onclick="nav('home')" aria-label="Retour">${ico('back')}</button>
-   <div class="esum-body"><h1>${esc(r.day||'Séance')}</h1><div class="eh-tags"><span>${ico('bolt')}${r.exN||0} exercice${(r.exN||0)>1?'s':''}</span><span>${ico('clock')}${Math.max(1,Math.round(r.dur/60))} min</span>${r.prs?.length?`<span>${ico('trophy')}${r.prs.length} record${r.prs.length>1?'s':''}</span>`:''}${d!==null?`<span>${ico('trend')}${d>=0?'+':''}${d.toFixed(0)} % volume</span>`:''}</div></div></section>
-  <div class="esum-done rise" style="--i:1">Terminée · ${when}</div>
+  <section class="esum-hero rise" style="--i:0">${photo('hero-summary')}<button class="es-round esum-back" onclick="nav('home')" aria-label="${t("Retour")}">${ico('back')}</button>
+   <div class="esum-body"><h1>${esc(r.day||t("Séance"))}</h1><div class="eh-tags"><span>${ico('bolt')}${r.exN||0} ${t("exercice")}${(r.exN||0)>1?'s':''}</span><span>${ico('clock')}${Math.max(1,Math.round(r.dur/60))} min</span>${r.prs?.length?`<span>${ico('trophy')}${r.prs.length} ${t("record")}${r.prs.length>1?'s':''}</span>`:''}${d!==null?`<span>${ico('trend')}${d>=0?'+':''}${d.toFixed(0)} % volume</span>`:''}</div></div></section>
+  <div class="esum-done rise" style="--i:1">${t("Terminée ·")} ${when}</div>
   <div class="esum-stats">
-   <div class="esum-card rise" style="--i:2"><small>Durée</small><b>${fmtSec(r.dur||0)}</b></div>
-   <div class="esum-card rise" style="--i:3"><small>Volume total</small><b>${Math.round(r.volume||0).toLocaleString('fr-FR')}<em>kg × rép.</em></b></div>
-   <div class="esum-card rise" style="--i:4"><small>Exercices</small><b>${r.exN||0}</b></div>
-   <div class="esum-card rise" style="--i:5"><small>Séries validées</small><b>${r.sets||0}</b></div>
-   <div class="esum-card wide rise" style="--i:6"><small>Écart de volume avec la séance précédente</small>${d!==null?`<b class="${d>=0?'up':'down'}">${d>=0?'+':''}${d.toFixed(1)}<em>% de volume</em></b>`:`<div class="eh-empty" style="padding:6px 0 0">Pas encore de séance « ${esc(r.day)} » à comparer.</div>`}</div>
-   <div class="esum-card wide rise" style="--i:7"><small>Records personnels</small>${r.prs?.length?`<div class="eh-list" style="margin-top:10px">${r.prs.map(x=>`<div class="eh-row"><div><b>${esc(x)}</b></div>${ico('trophy')}</div>`).join('')}</div>`:`<div class="eh-empty" style="padding:6px 0 0">Aucun nouveau record sur cette séance.</div>`}</div>
+   <div class="esum-card rise" style="--i:2"><small>${t("Durée")}</small><b>${fmtSec(r.dur||0)}</b></div>
+   <div class="esum-card rise" style="--i:3"><small>${t("Volume total")}</small><b>${Math.round(r.volume||0).toLocaleString(forgeLocale())}<em>${t("kg × rép.")}</em></b></div>
+   <div class="esum-card rise" style="--i:4"><small>${t("Exercices")}</small><b>${r.exN||0}</b></div>
+   <div class="esum-card rise" style="--i:5"><small>${t("Séries validées")}</small><b>${r.sets||0}</b></div>
+   <div class="esum-card wide rise" style="--i:6"><small>${t("Écart de volume avec la séance précédente")}</small>${d!==null?`<b class="${d>=0?'up':'down'}">${d>=0?'+':''}${d.toFixed(1)}<em>${t("% de volume")}</em></b>`:`<div class="eh-empty" style="padding:6px 0 0">${t("Pas encore de séance «")} ${esc(r.day)} ${t("» à comparer.")}</div>`}</div>
+   <div class="esum-card wide rise" style="--i:7"><small>${t("Records personnels")}</small>${r.prs?.length?`<div class="eh-list" style="margin-top:10px">${r.prs.map(x=>`<div class="eh-row"><div><b>${esc(x)}</b></div>${ico('trophy')}</div>`).join('')}</div>`:`<div class="eh-empty" style="padding:6px 0 0">${t("Aucun nouveau record sur cette séance.")}</div>`}</div>
   </div>
-  <div class="es-end rise" style="--i:8"><button class="btn primary wide" onclick="nav('home')">Retour à l’accueil</button><button class="btn wide" onclick="nav('history')">Voir l’historique</button></div>
+  <div class="es-end rise" style="--i:8"><button class="btn primary wide" onclick="nav('home')">${t("Retour à l’accueil")}</button><button class="btn wide" onclick="nav('history')">${t("Voir l’historique")}</button></div>
  </div>`}
