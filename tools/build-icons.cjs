@@ -1,0 +1,56 @@
+/* Original FORGE line drawings. No external image/icon source. */
+const fs=require('node:fs'),cp=require('node:child_process');
+const drawings={
+ 'food-poultry':'M8 15c-4-4 0-10 4-7 3-3 9 1 6 5l-5 5zM8 15l-4 4m0-3v4h4',
+ 'food-meat':'M5 7c5-5 15-2 14 5s-11 9-15 4c-3-3-2-6 1-9zM10 8c-4 1-5 6-1 7s7-2 6-4-2-4-5-3z',
+ 'food-fish':'M4 12l-2-4v8l2-4c4-6 12-6 17 0-5 6-13 6-17 0zM16 11h.1M9 8v8',
+ 'food-egg':'M12 3c-3 0-8 8-8 12a8 8 0 0 0 16 0c0-4-5-12-8-12zM8 14c-1 2 0 3 1 4',
+ 'food-dairy':'M6 3h8l3 5v13H5V8zM6 3v5h11M5 12h12M10 15v3',
+ 'food-starch':'M12 3v18M12 7C5 7 5 3 5 3c6 0 7 4 7 4zm0 5c7 0 7-4 7-4-6 0-7 4-7 4zm0 5c-7 0-7-4-7-4 6 0 7 4 7 4z',
+ 'food-legume':'M4 17c-5-8 8-16 15-11 5 5-6 17-13 14zM8 15a2 2 0 1 0 0-.1m5-4a2 2 0 1 0 0-.1',
+ 'food-vegetable':'M9 9c-3 2-6 10-4 11s9-4 11-7zM12 8l1-5m2 6 5-4m-3 7 5-1M7 16l2 1m2-5 2 1',
+ 'food-fruit':'M12 7c-8-4-11 5-7 11s7 2 7 2c6 4 11-7 7-11-2-3-5-3-7-2zM12 7V3m0 2c2-4 5-3 5-3',
+ 'food-nut':'M12 3C2 9 2 18 8 21c10 3 16-9 4-18zM12 6c-4 5-5 10-3 13m5-10c3 4 3 7 0 10',
+ 'food-oil':'M9 3h6v3l3 5v10H6V11l3-5zM9 6h6M6 14h12m-6-4c-4 5 4 5 0 0z',
+ 'food-sweet':'M5 9h14v12H5zM4 9l8-6 8 6M9 10v10m6-10v10M8 14h8',
+ 'food-drink':'M6 7h12l-2 14H8zM11 7l3-5h6M6 11h11',
+ 'food-custom':'M3 10h18c0 6-4 10-9 10s-9-4-9-10zM7 6V3m5 3V2m5 4V3',
+ 'food-chicken':'M7 15c-5-3-3-9 2-10s11 6 8 9c-3 4-6 4-10 1zM7 15l-3 4m-2-2 4 4m-2-4 2 2',
+ 'food-rice':'M3 12h18c-1 6-3 8-9 8s-8-2-9-8zM6 9l1-2m3 2 1-3m3 3 1-2m3 2-1-3',
+ 'food-pasta':'M5 5c8-4 4 14 1 14s-4-10 2-10 5 10 9 10 3-14-1-14-4 10 3 10M3 21h18',
+ 'food-bread':'M4 10C0 3 9 1 12 5c4-4 12-1 8 5v10H4zM8 12v4m4-5v5m4-4v4',
+ 'food-banana':'M4 6c1 10 9 13 15 7-3 10-17 8-17-4zM4 6l1-3m13 10 3-1',
+ 'food-apple':'M12 7c-9-5-12 7-6 12s6 0 6 0 3 5 7-1S23 3 12 7zM12 7V3m0 1 5-2',
+ 'food-broccoli':'M8 13c-7 1-8-7-2-8 1-5 10-5 11 0 7 0 7 9-1 9M9 12v8h6v-8m-3 2-4-4m4 5 5-5',
+ 'food-salmon':'M4 7c7-6 16-2 16 5s-9 11-16 5zM8 7c-2 6-2 8 0 10m4-11c-2 5-2 7 0 12m4-10c-1 3-1 5 0 8',
+ 'food-milk':'M8 2h8v4l3 3v12H5V9l3-3zM8 6h8M5 11h14m-9 4h4',
+ 'food-cheese':'M3 10l13-7 5 7v11H3zM3 10h18m-7 5h.1M8 17h.1m10 1h.1M14 7h.1',
+ 'food-yogurt':'M5 7h14l-2 14H7zM4 4h16v3H4zM8 13c2-3 6-3 8 0m-6 3h4',
+ 'food-avocado':'M12 2c-3 0-9 11-9 15 0 7 18 7 18 0 0-4-6-15-9-15zM12 11a5 5 0 1 0 0 10 5 5 0 0 0 0-10z',
+ 'food-almonds':'M9 3C1 9 1 19 8 20S18 11 9 3zM9 6c-3 3-4 8-3 11m9-11c9 5 9 15 2 15m0-12c3 4 3 7 1 10',
+ 'food-whey':'M6 4h12v4l-2 13H8L6 8zM8 2h8v2M5 8h14m-7 4-2 4h4l-2 3',
+ 'train-push':'M4 8h4v8H4zM16 8h4v8h-4zM8 12h8M11 5l1-2 1 2m-1-2v5',
+ 'train-pull':'M4 8h4v8H4zM16 8h4v8h-4zM8 12h8M9 3l3 3 3-3m-3 0v5',
+ 'train-legs':'M7 3h4l-1 8-3 9H3l3-10zm6 0h4l1 7 3 10h-4l-3-9z',
+ 'train-full':'M7 3h10v4l-3 4 3 10h-4l-1-7-1 7H7l3-10-3-4zM3 5v7m18-7v7M1 8h4m14 0h4',
+ 'train-upper':'M4 4h16l-3 5-2 8H9L7 9zM3 4v8m18-8v8M9 20h6',
+ 'train-lower':'M6 3h12l-2 7 4 11h-5l-3-9-3 9H4l4-11zM7 7h10',
+ 'train-abs':'M8 3v18m8-18v18M9 5h6m-6 5h6m-6 5h6m-6 5h6M4 6v12m16-12v12',
+ 'train-cardio':'M2 12h5l3-8 4 16 3-8h5',
+ 'train-body':'M4 17l6-6 4 3 6-8M3 21h18M17 6h3v3',
+ 'train-dumbbell':'M2 9h3v6H2zM5 6h4v12H5zM9 11h6v2H9zM15 6h4v12h-4zM19 9h3v6h-3z',
+ 'train-gym':'M3 21V4h18v17M7 8h10m-5 0v8m-4 0h8M1 21h22M7 3V1m10 2V1',
+ 'muscle-chest':'M3 7c4-5 8-2 9 1 1-3 5-6 9-1l-2 9c-3 3-6 1-7-2-1 3-4 5-7 2zM12 8v6',
+ 'muscle-back':'M3 4l9 4 9-4-3 12-6 5-6-5zM12 8v11m-6-8 6 3 6-3',
+ 'muscle-shoulders':'M3 13C-1 3 9 1 12 6c3-5 13-3 9 7M8 7l-2 9m10-9 2 9M9 19h6',
+ 'muscle-arms':'M4 7l3-4 4 2-1 5 5 2 3-3 3 3-2 6-9 2-5-5zM10 10l-3 4',
+ 'muscle-glutes':'M6 3l-2 8c-1 10 8 11 8 5 0 6 9 5 8-5l-2-8M12 8v8',
+ 'muscle-calves':'M7 3c4 4 4 8 1 11l-1 6H3l2-8zm10 0c-4 4-4 8-1 11l1 6h4l-2-8z',
+ 'muscle-forearms':'M6 3h4l3 10-4 8H4l5-9zm9 0h4l-1 9 3 9h-5l-3-8z',
+ 'muscle-neck':'M9 3v5l-5 5v7m11-17v5l5 5v7M8 13h8'
+};
+const sprite='<svg xmlns="http://www.w3.org/2000/svg">'+Object.entries(drawings).map(([id,path])=>`<symbol id="${id}" viewBox="0 0 24 24"><path d="${path}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>`).join('')+'</svg>';
+fs.writeFileSync('assets/icons/sprite.svg',sprite+'\n');
+const inline='<!-- FORGE-SPRITE -->'+sprite.replace('<svg ','<svg class="forge-symbols" aria-hidden="true" width="0" height="0" focusable="false" ')+'<!-- /FORGE-SPRITE -->';
+for(const file of ['index.html','preview/demo.html']){const lines=fs.readFileSync(file,'utf8').split(/\r?\n/),existing=lines.findIndex(line=>line.includes('<!-- FORGE-SPRITE -->')),index=existing>=0?existing:lines.findIndex(line=>/<body[\s>]/.test(line));if(index<0)throw Error('Body missing');const old=lines[index],next=existing>=0?old.replace(/<!-- FORGE-SPRITE -->.*<!-- \/FORGE-SPRITE -->/,inline):old+inline;if(old===next)continue;const result=cp.spawnSync('git',['apply','--unidiff-zero','-'],{input:`--- a/${file}\n+++ b/${file}\n@@ -${index+1},1 +${index+1},1 @@\n-${old}\n+${next}\n`,encoding:'utf8'});if(result.status)throw Error(result.stderr)}
+console.log('Generated '+Object.keys(drawings).length+' original symbols; inlined once per HTML entry, zero icon requests.');

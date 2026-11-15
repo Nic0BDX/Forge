@@ -16,6 +16,8 @@ asset('index.html','assets/forge_welcome_clean.mp4');
 asset('index.html','assets/icons/lang.png');
 asset('index.html','assets/foods.json');asset('index.html','assets/SOURCES-NUTRITION.md');
 asset('index.html','assets/recipes.json');
+asset('index.html','assets/icons/sprite.svg');
+const sprite=fs.readFileSync('assets/icons/sprite.svg','utf8'),symbolIds=[...sprite.matchAll(/<symbol id="([^"]+)"/g)].map(match=>match[1]);assert.equal(new Set(symbolIds).size,symbolIds.length);assert.ok(symbolIds.length>=40);for(const html of ['index.html','preview/demo.html']){const content=fs.readFileSync(html,'utf8');for(const id of symbolIds)assert.ok(content.includes('id="'+id+'"'),html+' inline symbol '+id)}
 const foods=JSON.parse(fs.readFileSync('assets/foods.json','utf8'));assert.ok(foods.length>=400&&foods.length<=600);assert.ok(fs.statSync('assets/foods.json').size<500000);assert.equal(new Set(foods.map(food=>food.id)).size,foods.length);
 for(const [file,width,height]of [
  ['assets/icons/icon-192.png',192,192],['assets/icons/icon-512.png',512,512],['assets/icons/icon-maskable-512.png',512,512],

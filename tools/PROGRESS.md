@@ -3,7 +3,7 @@
 - [x] Phase 1 : base CIQUAL officielle et journal nutrition (recherche, groupes, favoris, récents, grammes, aliments personnels).
 - [x] Phase 2 : repas recommandés calculés et estimation calorique indicative.
 - [x] Phase 3 : programmes référencés dans Atlas et validation des séances.
-- [ ] Phase 4 : sprite SVG original et icônes des aliments et séances.
+- [x] Phase 4 : sprite SVG original et icônes des aliments et séances.
 - [ ] Phase 5 : Coach IA local, repli calculé et documentation de test mobile.
 
 Chaque phase : contrôles pertinents, mise à jour de ce fichier, un commit puis `git push origin main`.
@@ -11,7 +11,7 @@ Ne jamais effacer les données utilisateur ; conserver la compatibilité des sau
 
 ## Reprise
 
-L'utilisateur demande désormais toutes les phases restantes sans arrêt volontaire. **Prochaine étape : phase 4**, sans refaire les phases validées.
+L'utilisateur demande désormais toutes les phases restantes sans arrêt volontaire. **Prochaine étape : phase 5**, sans refaire les phases validées.
 Règles de travail : `rg` avant lecture, extraits seulement, patchs ciblés, tous les textes FR/EN dans le système existant, un commit et `git push origin main` par phase. Ne jamais effacer `forge_data_*` ni réinitialiser la session par migration. Résumé de phase en trois lignes maximum ; indiquer les tests impossibles.
 
 ## Phase 1 livrée et vérifiée
@@ -38,6 +38,8 @@ Livrée : 27 programmes / 90 séances (3 structures × 3 équipements × 3 nivea
 Créer `tools/check-templates.cjs` : échec si un exercice est absent d'`atlasRecords` (`js/features/exercise-atlas.js`) ou dupliqué dans une séance. Références par identifiant Atlas, noms affichés depuis Atlas FR/EN. Full body 3 jours, haut/bas 4 jours, push/pull/legs ; chaque programme en variantes sans matériel/haltères/salle. 5–8 exercices, 45–70 min, polyarticulaires d'abord, séries/répétitions/repos par niveau, filtres niveau/matériel/durée/jours. Conseil de double progression et suggestion avant/après séance issue de phase 2. Conserver `installTemplate`, `startWorkout` et tous les programmes existants.
 
 ### Phase 4
+
+Livrée : 47 dessins originaux générés par `tools/build-icons.cjs` dans `assets/icons/sprite.svg` et injectés une seule fois dans les deux entrées HTML. `<use href="#…">` : zéro requête réseau d'icône. `illustrations.js` : correspondance aliments → icône dédiée/groupe (repli personnel), séances/types/matériel/groupes musculaires. Icônes dans aliments, 48 repas, 27 programmes/90 séances et séance active, tailles 24/40/56, couleur d'accent, pastille bordeaux/noir, survol/reduced-motion, aria-hidden. GIF Atlas inchangés. Vérifiés : illustrations-smoke (chaque aliment/séance, symboles valides, cache inline, thème), training-smoke, nutrition-smoke, i18n-smoke, i18n-check, static-paths, check-templates. Captures 390×844 et 1920×1080 inspectées ; aucune erreur console. Non testé : Safari/appareil physique.
 
 Sprite original `assets/icons/sprite.svg` avec `<symbol>/<use>`, `currentColor`, trait arrondi, pastille dégradée noir/bordeaux ; tailles 24/40/56, survol léger, `aria-hidden`, aucune image internet ni modification des GIF Atlas. Groupes alimentaires : volaille/viande/poisson/œuf/laitier/féculent/légumineuse/légume/fruit/oléagineux/huile/sucré/boisson. Icônes dédiées : poulet/œuf/riz/pâtes/pain/banane/pomme/brocoli/saumon/lait/fromage/yaourt/avocat/amandes/whey. Correspondance aliment → icône avec repli groupe. Séances : push/pull/jambes/full body/haut/bas/abdos/cardio/sans matériel/haltères/salle et groupes musculaires. Intégrer dans aliments, repas, séances et programmes ; test d'icône pour chaque aliment et séance.
 
