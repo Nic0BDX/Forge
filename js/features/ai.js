@@ -12,20 +12,20 @@ const AI_PLACEHOLDER={
  objectives:[],
  tips:['Compose tes repas selon tes besoins, tes goûts et ta faim.','Utilise ton journal pour observer tes habitudes, sans viser la perfection.','Pour un accompagnement adapté à ta santé, demande conseil à un professionnel.']
 };
-function aiNote(){return AI_CONNECTED?'':'<p class="ai-note">Aperçu du coach · IA non connectée</p>'}
+function aiNote(){return AI_CONNECTED?'':`<p class="ai-note">${t("Aperçu du coach · IA non connectée")}</p>`}
 function backBtn(to){return `<button class="es-round" onclick="nav('${to}')" aria-label="${t("Retour")}">${ico('back')}</button>`}
 function subHead(title,to,right){return `<div class="r-sub rise" style="--i:0">${backBtn(to)}<h1>${title}</h1>${right||''}</div>`}
 
 /* 9. Mon IA Coach */
 function coachPage(){
- const msg=(AI_CONNECTED&&AI_HOOKS.coachMessage&&AI_HOOKS.coachMessage())||AI_PLACEHOLDER.coach;
+ const msg=(AI_CONNECTED&&AI_HOOKS.coachMessage&&AI_HOOKS.coachMessage())||t(AI_PLACEHOLDER.coach);
  const obj=(AI_CONNECTED&&AI_HOOKS.coachObjectives&&AI_HOOKS.coachObjectives())||AI_PLACEHOLDER.objectives;
  const av=`style="${avatarStyle(DB.profile.avatar||AVATARS[0])}"`;
- return `<div class="r-page">${subHead('Mon IA Coach','progress')}
+ return `<div class="r-page">${subHead(t("Mon IA Coach"),'progress')}
  <section class="eh-card ai-msg rise" style="--i:1"><div class="ai-av" ${av}>${av?'':ico('bolt')}</div><p>${esc(msg).replace(/\n/g,'<br>')}</p></section>${aiNote()}
- <h2 class="r-h2 rise" style="--i:2">Tes repères</h2>
- <section class="eh-card ai-obj rise" style="--i:3">${obj.length?obj.map(o=>`<div class="ai-o"><div class="ai-oh"><span class="ai-ic">${ico(o.icon||'bolt')}</span><b>${esc(o.label)}</b><em>+${o.pct}%</em></div><div class="progress"><i style="width:${o.bar}%"></i></div></div>`).join(''):`<div class="eh-empty">${esc(DB.profile.goal||'Ton objectif')} · ${DB.profile.perWeek||4} séances par semaine<br>Les recommandations personnalisées seront disponibles lorsque le coach sera connecté.</div>`}</section>
- <button class="eh-go rise" style="--i:4" onclick="nav('program')">Retrouver mon programme</button></div>`;
+ <h2 class="r-h2 rise" style="--i:2">${t("Tes repères")}</h2>
+ <section class="eh-card ai-obj rise" style="--i:3">${obj.length?obj.map(o=>`<div class="ai-o"><div class="ai-oh"><span class="ai-ic">${ico(o.icon||'bolt')}</span><b>${esc(o.label)}</b><em>+${o.pct}%</em></div><div class="progress"><i style="width:${o.bar}%"></i></div></div>`).join(''):`<div class="eh-empty">${esc(DB.profile.goal||t("Ton objectif"))} · ${DB.profile.perWeek||4} ${t("séances par semaine")}<br>${t("Les recommandations personnalisées seront disponibles lorsque le coach sera connecté.")}</div>`}</section>
+ <button class="eh-go rise" style="--i:4" onclick="nav('program')">${t("Retrouver mon programme")}</button></div>`;
 }
 
 /* 11. Nutrition IA */

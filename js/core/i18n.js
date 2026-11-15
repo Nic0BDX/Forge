@@ -198,7 +198,17 @@ const I18N_ENTRIES = [
  ['Un rythme qui te ressemble','A rhythm that fits you'],['Observe la durée et la qualité de tes nuits, sans score de santé inventé.','Observe your sleep duration and quality, without an invented health score.'],['Voir ma routine','View my routine'],
  ['Santé & repères','Health & milestones'],['Tes relevés personnels, au même endroit.','Your personal records, all in one place.'],
  ['Les essentiels du quotidien','Everyday essentials'],['Nutrition et hydratation','Nutrition and hydration'],['Mon entraînement','My training'],['Poids et progression','Weight and progress'],
- ['Les relevés sont saisis manuellement. Aucun capteur n’est connecté.','Records are entered manually. No sensor is connected.']
+ ['Les relevés sont saisis manuellement. Aucun capteur n’est connecté.','Records are entered manually. No sensor is connected.'],
+ ['Coach Forge','Forge coach'],['Aperçu · IA non connectée','Preview · AI not connected'],['Heureux de te retrouver,','Good to see you,'],
+ ['Ton entraînement, ta nutrition, ta progression.','Your training, your nutrition, your progress.'],['Message au coach','Message to the coach'],
+ ['Écris ta question…','Write your question…'],['Envoyer le message','Send message'],
+ ['Le coach connecté est en préparation. Aucun message n’est envoyé.','The connected coach is in preparation. No messages are sent.'],
+ ['Mon programme','My programme'],['Mon journal alimentaire','My food journal'],['Mes repères','My milestones'],
+ ['Ton message n’a pas été envoyé : le coach IA n’est pas encore connecté. Tu peux consulter ton programme et ton journal alimentaire.','Your message was not sent: the AI coach is not connected yet. You can view your programme and food journal.'],
+ ['Cet espace accueillera les conseils de ton coach. Pour le moment, consulte ton programme et note ton ressenti après chaque séance.','This space will host your coach’s advice. For now, view your programme and record how you feel after each workout.'],
+ ['Aperçu du coach · IA non connectée','Coach preview · AI not connected'],['Tes repères','Your milestones'],['Ton objectif','Your goal'],
+ ['séances par semaine','workouts per week'],['Les recommandations personnalisées seront disponibles lorsque le coach sera connecté.','Personalised recommendations will be available when the coach is connected.'],
+ ['Retrouver mon programme','Return to my programme']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
