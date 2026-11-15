@@ -136,7 +136,22 @@ const I18N_ENTRIES = [
  ['Accent','Accent'],['La couleur n’a pas pu être enregistrée.','The colour could not be saved.'],
  ['Fermer les notifications','Close notifications'],['Tes rappels Forge','Your Forge reminders'],
  ['Photo :','Photo:'],['Rappel whey activé aux heures enregistrées.','Whey reminder enabled at the saved times.'],['Le rappel whey est désactivé.','The whey reminder is disabled.'],
- ['Reprendre la séance en cours','Resume current workout'],['Gérer mes rappels','Manage my reminders']
+ ['Reprendre la séance en cours','Resume current workout'],['Gérer mes rappels','Manage my reminders'],
+ ['IDENTITÉ','IDENTITY'],['Ma progression','My progress'],['Mon calendrier','My calendar'],['Mon coach IA','My AI coach'],
+ ['Historique des séances','Workout history'],['Paramètres et sauvegardes','Settings and backups'],['XP avant niveau','XP until level'],
+ ['Jours d’entraînement','Training days'],['consécutifs','consecutive'],['Records','Records'],['Badges','Badges'],
+ ['Ton ambiance','Your atmosphere'],['Un espace agréable, de jour comme de nuit.','A pleasant space, day and night.'],
+ ['Passer au mode clair','Switch to light mode'],['Passer au mode sombre','Switch to dark mode'],
+ ['LA SUITE SE PRÉPARE','MORE IS ON THE WAY'],['Un accompagnement plus complet, à construire avec toi.','More comprehensive support, shaped with you.'],
+ ['Découvrir le projet','Discover the project'],['Première','First'],['1 séance','1 workout'],['Régulier','Regular'],['10 séances','10 workouts'],
+ ['Record','Record'],['1 record','1 record'],['7 jours d’entraînement','7 training days'],['20 repas','20 meals'],
+ ['Hydraté','Hydrated'],['7 objectifs eau','7 water targets'],['1K XP','1K XP'],['1000 XP','1000 XP'],['Dans la durée','For the long run'],['50 séances','50 workouts'],
+ ['BIENTÔT, ENSEMBLE','COMING SOON, TOGETHER'],['Aller un peu plus loin.','Go a little further.'],
+ ['Forge évolue avec ta pratique. L’offre Premium est en préparation et n’est pas disponible à l’achat.','Forge evolves with your practice. Premium is in preparation and is not available to buy.'],
+ ['Ton entraînement, ton journal nutritionnel et tes souvenirs restent accessibles dans cette version.','Your training, nutrition journal and memories remain available in this version.'],
+ ['Des programmes plus riches','Richer programmes'],['Une piste pour la suite','An idea for the future'],['Des bilans plus lisibles','Clearer summaries'],
+ ['Un accompagnement connecté','Connected support'],['Le coach IA n’est pas encore connecté','The AI coach is not connected yet'],
+ ['Aucun abonnement actif · Aucun paiement disponible','No active subscription · No payment available'],['Retrouver mon profil','Return to my profile']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
