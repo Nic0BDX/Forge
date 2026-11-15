@@ -174,7 +174,8 @@ const I18N_ENTRIES = [
  ['Les jours entourés contiennent une séance. Le jour actuel est rempli.','Circled days contain a workout. The current day is filled in.'],
  [' Le jour choisi est encadré.',' The selected day is outlined.'],['Séances enregistrées','Recorded workouts'],['séance','workout'],['séances','workouts'],
  ['Aucune séance enregistrée le ','No workout recorded on '],['Aucune séance enregistrée en ','No workout recorded in '],
- ['PLANNIFICATION','PLANNING'],['Lun','Mon'],['Mar','Tue'],['Mer','Wed'],['Jeu','Thu'],['Ven','Fri'],['Sam','Sat'],['Dim','Sun'],['17 mai','17 May'],['19 mai','19 May']
+ ['PLANNIFICATION','PLANNING'],['Lun','Mon'],['Mar','Tue'],['Mer','Wed'],['Jeu','Thu'],['Ven','Fri'],['Sam','Sat'],['Dim','Sun'],['17 mai','17 May'],['19 mai','19 May'],
+ ['ARCHIVE','ARCHIVE'],['séries','sets'],['Aucune séance enregistrée.','No workouts recorded.'],['Durée','Duration'],['Volume','Volume'],['Séries','Sets'],['Série','Set']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
