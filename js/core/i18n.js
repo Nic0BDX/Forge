@@ -390,7 +390,9 @@ const I18N_ENTRIES = [
  ['Passer','Skip'],['Vidéo d’accueil','Welcome video'],
  ['Recadrer la photo','Crop photo'],['Fais glisser la photo pour la centrer, puis ajuste le zoom.','Drag the photo to centre it, then adjust the zoom.'],
  ['Aperçu du recadrage','Crop preview'],['Zoom','Zoom'],['Position horizontale','Horizontal position'],['Position verticale','Vertical position'],
- ['Recentrer','Re-centre'],['Utiliser cette photo','Use this photo']
+ ['Recentrer','Re-centre'],['Utiliser cette photo','Use this photo'],
+ ['Homme','Man'],['Femme','Woman'],['Choisis ton espace','Choose your space'],
+ ['Choisis un espace valide.','Choose a valid space.'],['Choix non enregistré. Vérifie le stockage disponible.','Choice not saved. Check the available storage.']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([key,,source])=>[key,source??key])),

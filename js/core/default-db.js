@@ -1,6 +1,6 @@
 /* FORGE — Schéma de données par défaut */
 const defaultDB=()=>({
-  profile:{setup:false,name:'',goal:'Recomposition',level:'Intermédiaire',perWeek:4,avatar:'🏋️',bio:'',accent:'lime'},
+  profile:{setup:false,name:'',goal:'Recomposition',level:'Intermédiaire',perWeek:4,avatar:'🏋️',bio:'',accent:'lime',bodyType:'male'},
   xp:0, xpLog:[],sessions:[],programs:[],activeProgram:null,lastSets:{},prs:{},
   meals:[],photos:[],whey:{enabled:false,dose:30,times:['10:00','16:00'],lastTaken:{}},foods:[
     {id:'f1',name:'Poulet',kcal:165,p:31,c:0,f:3.6},{id:'f2',name:'Riz cuit',kcal:130,p:2.7,c:28,f:.3},
