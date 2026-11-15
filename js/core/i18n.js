@@ -182,7 +182,17 @@ const I18N_ENTRIES = [
  ['Indique un poids supérieur à 0 kg.','Enter a weight greater than 0 kg.'],['Poids enregistré','Weight recorded'],
  ['4 semaines','4 weeks'],['12 mois','12 months'],['Volume d’entraînement','Training volume'],['kg × rép.','kg × reps'],
  ['Somme des charges × répétitions des séries enregistrées.','Sum of weight × repetitions for recorded sets.'],
- ['Valide une séance pour voir ta progression.','Complete a workout to see your progress.'],['Mon IA Coach','My AI coach']
+ ['Valide une séance pour voir ta progression.','Complete a workout to see your progress.'],['Mon IA Coach','My AI coach'],
+ ['Mon activité du jour','My activity today'],
+ ['Recopie les relevés de ton compteur ou de ta montre. Forge n’est connecté à aucun capteur. Laisse vide ce que tu ne connais pas.','Copy readings from your counter or watch. Forge is not connected to any sensor. Leave unknown values blank.'],
+ ['Calories actives (kcal)','Active calories (kcal)'],['Heures debout (h)','Standing hours (h)'],['Distance parcourue (km)','Distance covered (km)'],
+ ['Étages montés','Floors climbed'],['Énergie ressentie (0 à 100)','Self-reported energy (0 to 100)'],['Récupération ressentie (0 à 100)','Self-reported recovery (0 to 100)'],
+ ['Ex.','E.g.'],['Toutes les mesures sont facultatives. Les calories actives sont distinctes des calories de tes repas ; le temps d’exercice provient de tes séances enregistrées.','All measurements are optional. Active calories are separate from meal calories; exercise time comes from your recorded workouts.'],
+ ['Énergie et récupération : ton ressenti déclaré de 0 à 100. Ces valeurs ne sont pas un score de santé calculé.','Energy and recovery: your self-reported feelings from 0 to 100. These values are not a calculated health score.'],
+ ['Enregistrer mon activité','Save my activity'],['Choisis une date valide, aujourd’hui ou dans le passé.','Choose a valid date, today or in the past.'],
+ [' : indique un nombre valide.',': enter a valid number.'],[' : indique ',': enter '],['un nombre entier','a whole number'],['un nombre','a number'],[' entre 0 et ',' between 0 and '],
+ ['Renseigne au moins une mesure avant d’enregistrer.','Enter at least one measurement before saving.'],['Activité non enregistrée. ','Activity not saved. '],
+ ['Vérifie les mesures et le stockage disponible.','Check the measurements and available storage.'],['Activité enregistrée pour le ','Activity saved for ']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
