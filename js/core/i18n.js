@@ -1,5 +1,11 @@
 /* French source labels are stable keys; exercise names and user data stay untouched. */
 const I18N_ENTRIES = [
+ ["Installer FORGE","Install FORGE"],
+ ["L’application est installable. Le carnet reste sur cet appareil ; conserve tes sauvegardes.","The app can be installed. Your journal stays on this device; keep your backups."],
+ ["Installer l’application","Install the app"],
+ ["Sur iPhone : Partager, puis Sur l’écran d’accueil. Sur ordinateur : utilise l’icône d’installation du navigateur.","On iPhone: Share, then Add to Home Screen. On desktop: use the browser's install icon."],
+ ["Le cache hors ligne contient seulement les fichiers publics de l’application, jamais les échanges privés ni les poids du Coach IA.","The offline cache contains only public app files, never private exchanges or AI coach weights."],
+ ["Le mode hors ligne n’a pas pu être préparé. Ton carnet est conservé.","Offline mode could not be prepared. Your journal is preserved."],
  ["Cardio","Cardio"],
  ["Réalise {n} pompes adaptées, au mur si nécessaire.","Do {n} adapted push-ups, against a wall if needed."],
  ["Réalise {n} squats contrôlés sans charge.","Do {n} controlled bodyweight squats."],
