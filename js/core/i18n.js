@@ -192,7 +192,10 @@ const I18N_ENTRIES = [
  ['Enregistrer mon activité','Save my activity'],['Choisis une date valide, aujourd’hui ou dans le passé.','Choose a valid date, today or in the past.'],
  [' : indique un nombre valide.',': enter a valid number.'],[' : indique ',': enter '],['un nombre entier','a whole number'],['un nombre','a number'],[' entre 0 et ',' between 0 and '],
  ['Renseigne au moins une mesure avant d’enregistrer.','Enter at least one measurement before saving.'],['Activité non enregistrée. ','Activity not saved. '],
- ['Vérifie les mesures et le stockage disponible.','Check the measurements and available storage.'],['Activité enregistrée pour le ','Activity saved for ']
+ ['Vérifie les mesures et le stockage disponible.','Check the measurements and available storage.'],['Activité enregistrée pour le ','Activity saved for '],
+ ['Les nuits que tu as enregistrées dans Forge.','The nights you have recorded in Forge.'],['Enregistrer une nuit','Record a night'],
+ ['Mes dernières nuits','My recent nights'],['Qualité','Quality'],['Enregistre ta première nuit pour voir ton historique.','Record your first night to see your history.'],
+ ['Un rythme qui te ressemble','A rhythm that fits you'],['Observe la durée et la qualité de tes nuits, sans score de santé inventé.','Observe your sleep duration and quality, without an invented health score.'],['Voir ma routine','View my routine']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
