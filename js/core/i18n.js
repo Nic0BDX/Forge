@@ -175,7 +175,14 @@ const I18N_ENTRIES = [
  [' Le jour choisi est encadré.',' The selected day is outlined.'],['Séances enregistrées','Recorded workouts'],['séance','workout'],['séances','workouts'],
  ['Aucune séance enregistrée le ','No workout recorded on '],['Aucune séance enregistrée en ','No workout recorded in '],
  ['PLANNIFICATION','PLANNING'],['Lun','Mon'],['Mar','Tue'],['Mer','Wed'],['Jeu','Thu'],['Ven','Fri'],['Sam','Sat'],['Dim','Sun'],['17 mai','17 May'],['19 mai','19 May'],
- ['ARCHIVE','ARCHIVE'],['séries','sets'],['Aucune séance enregistrée.','No workouts recorded.'],['Durée','Duration'],['Volume','Volume'],['Séries','Sets'],['Série','Set']
+ ['ARCHIVE','ARCHIVE'],['séries','sets'],['Aucune séance enregistrée.','No workouts recorded.'],['Durée','Duration'],['Volume','Volume'],['Séries','Sets'],['Série','Set'],
+ ['DATA','DATA'],['Transforme tes données en historique lisible.','Turn your data into a readable history.'],['Poids actuel','Current weight'],['kg vs précédent','kg vs previous'],
+ ['Volume total','Total volume'],['niveau','level'],['Enregistre ton premier poids.','Record your first weight.'],['Records personnels','Personal records'],
+ ['Tes records apparaîtront après tes séances.','Your records will appear after your workouts.'],['Nouveau poids','New weight'],
+ ['Indique un poids supérieur à 0 kg.','Enter a weight greater than 0 kg.'],['Poids enregistré','Weight recorded'],
+ ['4 semaines','4 weeks'],['12 mois','12 months'],['Volume d’entraînement','Training volume'],['kg × rép.','kg × reps'],
+ ['Somme des charges × répétitions des séries enregistrées.','Sum of weight × repetitions for recorded sets.'],
+ ['Valide une séance pour voir ta progression.','Complete a workout to see your progress.'],['Mon IA Coach','My AI coach']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
