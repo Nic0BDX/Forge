@@ -78,7 +78,7 @@ function validateBackup(data){
  const meta=data._forgeBackup;
  if(meta!==undefined){backupObject(meta,'Version');if(meta.format!=='forge-carnet'||!Number.isInteger(meta.version)||meta.version<1)throw backupError(t("La version est inconnue."));if(meta.version>FORGE_BACKUP_VERSION)throw new Error(t("Cette sauvegarde provient d’une version plus récente de Forge."));if(meta.exportedAt!==undefined)backupTimestamp(meta.exportedAt,t("Date d’export"))}
  const defaults=defaultDB(),result={...defaults,...data};delete result._forgeBackup;
- const text=(value,label)=>backupText(value,label),id=(value,label)=>backupId(value,label),num=(value,label)=>backupNumber(value,label),int=(value,label)=>backupNumber(value,label,0,Number.MAX_SAFE_INTEGER,true);
+ const text=(value,label)=>backupText(value,label),id=(value,label)=>backupId(value,label),num=(value,label)=>backupNumber(value,label),nullable=(value,label)=>value===null?null:num(value,label),int=(value,label)=>backupNumber(value,label,0,Number.MAX_SAFE_INTEGER,true);
  result.profile=backupFields(data.profile,t("Profil"),defaults.profile,{setup:backupBool,name:(v,l)=>backupText(v,l,150),goal:text,level:(v,l)=>backupText(v,l,100),perWeek:(v,l)=>backupNumber(v,l,1,7,true),avatar:backupAvatar,bio:(v,l)=>backupText(v,l,10000),accent:(v,l)=>backupText(v,l,50),bodyType:(v,l)=>{if(!['male','female'].includes(v))throw backupError(l+' '+t('Choisis un espace valide.'));return v}});
  result.settings=backupFields(result.settings,t("Réglages"),defaults.settings,{theme:(v,l)=>{if(!['light','dark'].includes(v))throw backupError(l+(" "+t("doit être clair ou sombre.")));return v},bodyMotion:backupBool,calories:(v,l)=>backupNumber(v,l,1),protein:(v,l)=>backupNumber(v,l,1),carbs:(v,l)=>backupNumber(v,l,1),fat:(v,l)=>backupNumber(v,l,1),water:(v,l)=>backupNumber(v,l,1),steps:int,activityCalories:(v,l)=>backupNumber(v,l,1,30000),exerciseMinutes:(v,l)=>backupNumber(v,l,1,1440),standHours:(v,l)=>backupNumber(v,l,1,24)});
  result.steps=backupObject(result.steps,'Pas');
@@ -117,13 +117,14 @@ function validateBackup(data){
   record.exercises=backupList(record.exercises,label+(" "+t("· exercices")),(e,el)=>{const exercise=backupFields(e,el,{}, {name:text,catalogId:id});text(exercise.name,el);exercise.sets=backupList(exercise.sets,el+(" "+t("· séries")),(s,sl)=>backupSet(s,sl,true),100);return exercise},100);return record;
  },50000),t("Séances"));
  result.meals=backupUnique(backupList(result.meals,t("Repas"),(m,label)=>{
-  const item=backupFields(m,label,{}, {id,date:backupDay,meal:text,food:text,grams:num,kcal:num,p:num,c:num,f:num});
+  const item=backupFields(m,label,{}, {id,date:backupDay,meal:text,food:text,grams:num,kcal:nullable,p:nullable,c:nullable,f:nullable,sugars:nullable,saturates:nullable,fiber:nullable,salt:nullable,foodId:id,source:text,group:text});
   for(const key of ['id','date','meal','food','grams','kcal','p','c','f'])if(item[key]===undefined)throw backupError(label+(" "+t("est incomplet.")));return item;
  }),t("Repas"));
  result.foods=backupUnique(backupList(result.foods,t("Aliments"),(f,label)=>{
-  const item=backupFields(f,label,{}, {id,name:text,kcal:num,p:num,c:num,f:num});for(const key of ['id','name','kcal','p','c','f'])if(item[key]===undefined)throw backupError(label+(" "+t("est incomplet.")));return item;
+  const item=backupFields(f,label,{}, {id,name:text,kcal:nullable,p:nullable,c:nullable,f:nullable,sugars:nullable,saturates:nullable,fiber:nullable,salt:nullable,source:text,group:text});for(const key of ['id','name','kcal','p','c','f'])if(item[key]===undefined)throw backupError(label+(" "+t("est incomplet.")));return item;
  },10000),t("Aliments"));
  if(!result.foods.length)result.foods=defaults.foods;
+ result.nutrition=backupFields(data.nutrition||{},t('Nutrition'),{favorites:[],recent:[]},{favorites:(items,label)=>backupList(items,label,id,10000),recent:(items,label)=>backupList(items,label,id,30)});
  result.photos=backupUnique(backupList(result.photos,t("Photos"),(p,label)=>{
   const photo=backupFields(p,label,{caption:'',pose:'',tag:''},{id,date:backupDay,takenAt:backupTimestamp,caption:text,pose:text,tag:(v,l)=>{if(!['','train','event'].includes(v))throw backupError(l+' contient une catégorie inconnue.');return v},data:backupImage});
   for(const key of ['id','date','data'])if(photo[key]===undefined)throw backupError(label+(" "+t("est incomplète.")));return photo;

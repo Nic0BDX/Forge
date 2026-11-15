@@ -19,6 +19,8 @@ for(const [file,name,labels]of [
  ['js/features/activity.js','FORGE_ACTIVITY_FIELDS',rows=>rows.map(row=>row.label)],
  ['js/data/catalog.js','routineBlocks',rows=>rows.flatMap(row=>[row[1],row[3]])],
  ['js/data/catalog.js','mealPlans',rows=>rows.flatMap(row=>[row.name,row.note,...row.items])],
+ ['js/features/food-library.js','FOOD_GROUPS',rows=>Object.values(rows)],
+ ['js/features/food-library.js','FOOD_METRICS',rows=>Object.values(rows)],
  ['js/core/streak.js','STREAK_LABELS',rows=>Object.values(rows)]
 ]){
  const code=fs.readFileSync(file,'utf8'),match=code.match(new RegExp('const '+name+'\\s*=\\s*([\\s\\S]*?);'));

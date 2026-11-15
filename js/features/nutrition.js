@@ -11,18 +11,12 @@ function nutrition(){
  <div class="grid g4" style="margin-top:16px"><div class="stat"><small>${t("Calories")}</small><b>${m.kcal}</b><small>/ ${DB.settings.calories} kcal</small></div><div class="stat"><small>${t("Protéines")}</small><b>${Math.round(m.p)}g</b><small>/ ${DB.settings.protein}g</small></div><div class="stat"><small>${t("Glucides")}</small><b>${Math.round(m.c)}g</b><small>/ ${DB.settings.carbs}g</small></div><div class="stat"><small>${t("Lipides")}</small><b>${Math.round(m.f)}g</b><small>/ ${DB.settings.fat}g</small></div></div>
  <div class="card" style="margin-top:14px">${macroBar(t("Calories"),m.kcal,DB.settings.calories,'orange')}${macroBar(t("Protéines"),m.p,DB.settings.protein,'green')}${macroBar(t("Glucides"),m.c,DB.settings.carbs,'blue')}${macroBar(t("Lipides"),m.f,DB.settings.fat,'orange')}</div>
  <div class="card" style="margin-top:14px"><div class="row"><h2>${t("Repas du jour")}</h2><button class="btn small" onclick="openMealModal()">+ ${t("Ajouter")}</button></div><div class="list">${DB.meals.filter(x=>x.date===today()).map(m=>`<div class="item"><div><b>${esc(m.meal)}</b><div class="sub">${esc(m.food)} · ${m.grams}g</div></div><div><b>${m.kcal} kcal</b><br><small>${m.p}P · ${m.c}G · ${m.f}L</small></div><button class="btn small" onclick="deleteMeal('${m.id}')">×</button></div>`).join('')||`<div class="empty">${t("Ton journal est prêt. Ajoute ton premier repas de la journée.")}</div>`}</div></div>
- <div class="card" style="margin-top:14px"><h2>${t("Aliments")}</h2><div class="grid g3">${DB.foods.map(f=>`<div class="item"><div><b>${esc(f.name)}</b><div class="sub">${f.kcal} kcal/100g</div></div><button class="btn small" onclick="quickFood('${f.id}')">+</button></div>`).join('')}</div></div>`;
+ ${foodLibraryPanel()}`;
 }
 function openMealModal(foodId){
- const f=foodId?DB.foods.find(x=>x.id===foodId):null;
- document.getElementById('modalbox').innerHTML=`<div class="row"><h2>${t("Ajouter un repas")}</h2><button class="icon" onclick="closeModal()">×</button></div>
- <label>${t("Type de repas")}</label><select id="mealType"><option value="Petit-déjeuner">${t("Petit-déjeuner")}</option><option value="Déjeuner">${t("Déjeuner")}</option><option value="Dîner">${t("Dîner")}</option><option value="Collation">${t("Collation")}</option></select>
- <label>${t("Aliment")}</label><select id="foodSel">${DB.foods.map(x=>`<option value="${x.id}" ${f?.id===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select>
- <label>${t("Quantité (g)")}</label><input id="mealGrams" type="number" value="${f?100:100}">
- <button class="btn primary wide" onclick="addMeal()">${t("Ajouter")}</button>`;
- document.getElementById('modal').classList.add('show')
+ return openFoodMealModal(foodId)
 }
-function addMeal(){const f=DB.foods.find(x=>x.id===document.getElementById('foodSel').value),g=Number(document.getElementById('mealGrams').value);if(!f||!Number.isFinite(g)||g<=0)return toast(t("Choisis un aliment et une quantité supérieure à 0 g."));const m=g/100;if(![f.kcal,f.p,f.c,f.f].every(value=>Number.isFinite(value*m)))return toast(t("La quantité saisie est trop élevée."));const meal={id:uid(),date:today(),meal:document.getElementById('mealType').value,food:f.name,grams:g,kcal:Math.round(f.kcal*m),p:+(f.p*m).toFixed(1),c:+(f.c*m).toFixed(1),f:+(f.f*m).toFixed(1)};DB.meals.push(meal);save();closeModal();award(10,t("Repas enregistré"));if(todayMeals().p>=DB.settings.protein)award(50,t("Objectif protéines atteint"));render()}
+function addMeal(){return addFoodMeal()}
 function quickFood(id){openMealModal(id)}
 function deleteMeal(id){DB.meals=DB.meals.filter(x=>x.id!==id);save();render()}
 
