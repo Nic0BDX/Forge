@@ -345,7 +345,13 @@ const I18N_ENTRIES = [
  ['Ajouter à cette séance','Add to this workout'],['Chargement de la démonstration…','Loading demonstration…'],['Arrêter l’animation','Stop animation'],['Arrêter le chargement','Stop loading'],
  ['Animation arrêtée.','Animation stopped.'],['Choisis un programme disponible.','Choose an available programme.'],['Séance personnalisée','Custom workout'],['Choisis une séance disponible.','Choose an available workout.'],
  ['Cet exercice est déjà dans ta séance.','This exercise is already in your workout.'],['Cette séance contient déjà 100 exercices.','This workout already contains 100 exercises.'],
- ['L’exercice n’a pas été enregistré. Vérifie le stockage et réessaie.','The exercise was not saved. Check storage and try again.'],['ajouté à','added to'],['fiches','entries']
+ ['L’exercice n’a pas été enregistré. Vérifie le stockage et réessaie.','The exercise was not saved. Check storage and try again.'],['ajouté à','added to'],['fiches','entries'],
+ ['TON ESPACE, TON RYTHME','YOUR SPACE, YOUR PACE'],['Ton entraînement, ta nutrition, tes habitudes et ta progression dans un seul espace.','Your training, nutrition, habits and progress in one space.'],
+ ['Ex. Camille','E.g. Camille'],['Prise de masse','Muscle gain'],['Perte de poids','Weight loss'],['Recomposition','Recomposition'],['Force','Strength'],['Maintien','Maintenance'],
+ ['Débutant','Beginner'],['Avancé','Advanced'],['Séances / semaine','Workouts / week'],['Créer mon espace →','Create my space →'],
+ ['100% local au départ · tes données restent dans ce navigateur.','100% local to start · your data stays in this browser.'],
+ ['Configuration non enregistrée.','Configuration not saved.'],['Bienvenue dans FORGE','Welcome to FORGE'],['Séance terminée','Workout finished'],['Nouveau record personnel','New personal record'],
+ ['Le réglage d’animation n’a pas pu être enregistré.','The animation setting could not be saved.'],['Membre Forge','Forge member'],['Whey','Whey']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
