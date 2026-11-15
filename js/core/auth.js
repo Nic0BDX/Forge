@@ -48,7 +48,7 @@ async function loginAccount(){
  const email=(document.getElementById('authEmail')?.value||'').trim().toLowerCase(),pass=document.getElementById('authPass')?.value||'';
  const account=AUTH[email];if(!account)return setAuthError(t("Compte introuvable. Vérifie ton email ou crée un compte."));
  const hash=await hashPassword(pass,account.salt);if(hash!==account.hash)return setAuthError(t("Mot de passe incorrect."));
- localStorage.setItem('forge_session_v1',email);DB=loadUserDB(email);if(!currentStorageIssue()){if(!DB.profile.avatar)DB.profile.avatar=account.avatar;save()}showFaceUnlock('login');
+ localStorage.setItem('forge_session_v1',email);DB=loadUserDB(email);if(!currentStorageIssue()){if(DB.profile.avatar==null)DB.profile.avatar=account.avatar;save()}showFaceUnlock('login');
 }
 function loadUserDB(email){return readStoredDB('forge_data_'+email,email)}
 function saveUserDB(){ensureWritableDB();const e=currentEmail();if(e)return commitUserDB(DB,e)}

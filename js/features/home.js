@@ -27,7 +27,7 @@ function home(){
  const tiles=[['program','train',t("Programmes")],['exercises','book',t("Exercices")],['nutrition','food',t("Nutrition")],['habits','habit',t("Habitudes")],['goals','goals',t("Objectifs")],['calendar','calendar',t("Calendrier")],['progress','stats',t("Progression")],['coach','bolt',t("Coach IA")]];
  return `<div class="eh">
   <header class="eh-head rise" style="--i:0">
-   <button class="eh-avatar" style="${avatarStyle(p.avatar||AUTH[currentEmail()]?.avatar||AVATARS[0])}" onclick="nav('profile')" aria-label="${t("Mon profil")}"></button>
+   <button class="eh-avatar" onclick="nav('profile')" aria-label="${t("Mon profil")}">${profileAvatar()}</button>
    <div class="eh-hello"><small>${greet},</small><b>${me}<span class="eh-greeting-dot">.</span></b></div>
    <span class="eh-chip" title="${t("Jours de présence consécutifs")}">${flame()}${st}</span><button class="es-round sm" onclick="showNotifs()" aria-label="${t("Notifications")}">${ico('bell')}</button><span class="eh-chip eh-elite" title="${t("Niveau")}">${t("Niv.")} ${lvl.level}</span>
   </header>

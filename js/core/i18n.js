@@ -382,7 +382,11 @@ const I18N_ENTRIES = [
  ['Présence enregistrée','Attendance recorded'],['Jours de présence ce mois-ci :','Days of attendance this month:'],['Rien de nouveau pour l’instant.','Nothing new yet.'],
  ['Premier élan','First momentum'],['Une semaine de feu','A week on fire'],['Deux semaines solides','Two solid weeks'],['Régularité exceptionnelle','Exceptional consistency'],['Discipline de fer','Iron discipline'],['Légende FORGE','FORGE legend'],
  ['Aucune séance validée pour le moment','No completed workouts yet'],['Pas assez de données pour un graphique.','Not enough data for a chart.'],['Séance ajoutée à ton programme ⚡','Workout added to your programme ⚡'],
- ['macro.carbs.short','C','G'],['macro.fat.short','F','L']
+ ['macro.carbs.short','C','G'],['macro.fat.short','F','L'],
+ ['Photo de profil','Profile photo'],['Choisir une photo','Choose a photo'],['Prendre une photo','Take a photo'],
+ ['Choisis un fichier image valide.','Choose a valid image file.'],['Photo trop volumineuse (8 Mo maximum).','Photo is too large (8 MB maximum).'],
+ ['Photo non enregistrée. Vérifie le stockage disponible.','Photo not saved. Check the available storage.'],
+ ['Photo de profil enregistrée.','Profile photo saved.'],['Photo de profil supprimée.','Profile photo removed.']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([key,,source])=>[key,source??key])),

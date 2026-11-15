@@ -70,7 +70,7 @@ function shell(content){
       <div class="progress green" style="height:5px;margin-top:8px"><i style="width:${xpPct}%"></i></div>
     </div>
     <div class="side-streak"><div class="fire">${flame()}</div><div><small>${t("JOURS DE PRÉSENCE")}</small><b>${st} ${t("jours")}</b></div></div>
-    <button class="side-account" onclick="nav('profile')"><div class="account-avatar" style="${avatarStyle(DB.profile.avatar||AUTH[currentEmail()]?.avatar||AVATARS[0])}"></div><div><b>${esc(me)}</b><small>${t("Voir le profil")}</small></div></button>
+    <button class="side-account" onclick="nav('profile')">${profileAvatar('account-avatar')}<div><b>${esc(me)}</b><small>${t("Voir le profil")}</small></div></button>
    </aside>
    <main class="main" id="main-content">${workoutResumeCard()}${content}</main>
   </div>
