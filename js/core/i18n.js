@@ -217,7 +217,13 @@ const I18N_ENTRIES = [
  ['Garde tes repères, célèbre tes progrès.','Keep your milestones, celebrate your progress.'],['Force & régularité','Strength & consistency'],
  ['Équilibre au quotidien','Everyday balance'],['Un peu chaque jour','A little every day'],['Progression personnelle','Personal progress'],
  ['Retrouve tes repères dans ton carnet.','Find your milestones in your log.'],['Explorer','Explore'],['Le projet communautaire','The community project'],
- ['Emplacement réservé pour','Space reserved for'],['la silhouette Forge','the Forge silhouette'],['une image Forge','a Forge image'],['Silhouette Forge','Forge silhouette'],['Image Forge','Forge image']
+ ['Emplacement réservé pour','Space reserved for'],['la silhouette Forge','the Forge silhouette'],['une image Forge','a Forge image'],['Silhouette Forge','Forge silhouette'],['Image Forge','Forge image'],
+ ['Réveil','Wake up'],['500 ml d’eau · lumière naturelle · 5 min de mobilité','500 ml water · natural light · 5 min mobility'],
+ ['Petit-déjeuner','Breakfast'],['Repas prévu · protéines + glucides','Planned meal · protein + carbs'],
+ ['250–500 ml selon soif et activité','250–500 ml depending on thirst and activity'],['Déjeuner','Lunch'],['Repas complet · légumes + source de protéines','Complete meal · vegetables + protein source'],
+ ['Pré-séance','Before training'],['Snack si besoin · 60–120 min avant l’entraînement','Snack if needed · 60–120 min before training'],
+ ['Échauffement → séries de travail → retour au calme','Warm-up → working sets → cool-down'],['Dîner','Dinner'],['Repas de récupération · hydratation','Recovery meal · hydration'],
+ ['Réduire les écrans · viser une durée de sommeil régulière','Reduce screen time · aim for a consistent sleep duration']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
