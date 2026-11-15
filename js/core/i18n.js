@@ -230,7 +230,27 @@ const I18N_ENTRIES = [
  ['Retrouve les habitudes que tu as choisies et avance à ton rythme.','Find the habits you have chosen and move at your own pace.'],
  ['Durée et qualité saisies manuellement. Aucun capteur connecté.','Duration and quality entered manually. No sensor connected.'],
  ['Mon dernier relevé','My latest reading'],['Saisie manuelle du pouls.','Manually entered pulse.'],['Aucun score de santé calculé.','No calculated health score.'],
- ['Mon sommeil','My sleep'],['Manger et s’hydrater','Eat and hydrate'],['Rester en mouvement','Keep moving'],['Des habitudes','Habits'],['qui te font','that help you'],['avancer.','move forward.']
+ ['Mon sommeil','My sleep'],['Manger et s’hydrater','Eat and hydrate'],['Rester en mouvement','Keep moving'],['Des habitudes','Habits'],['qui te font','that help you'],['avancer.','move forward.'],
+ ['THÈME · NUTRITION','THEME · NUTRITION'],['Idées de repas','Meal ideas'],['Une journée type à adapter à tes objectifs et à tes besoins.','A sample day to adapt to your goals and needs.'],
+ ['kcal enregistrées aujourd’hui','kcal recorded today'],['TON SUIVI','YOUR TRACKING'],['Objectifs du jour','Daily targets'],['Objectif hydratation','Hydration target'],
+ ['Journal alimentaire','Food journal'],['Ton journal est prêt. Ajoute ton premier repas de la journée.','Your journal is ready. Add your first meal of the day.'],
+ ['NUTRITION','NUTRITION'],['Repas du jour','Today’s meals'],['Aliments','Foods'],['Type de repas','Meal type'],['Collation','Snack'],['Aliment','Food'],['Quantité (g)','Quantity (g)'],
+ ['Choisis un aliment et une quantité supérieure à 0 g.','Choose a food and a quantity greater than 0 g.'],['La quantité saisie est trop élevée.','The quantity entered is too large.'],
+ ['Repas enregistré','Meal recorded'],['Objectif protéines atteint','Protein target reached'],['Un repère pour ta journée','A guideline for your day'],
+ ['Dans la période','In this period'],['Garde tes repères,','Keep your milestones,'],['Des repas, de l’eau, de la régularité.','Meals, water, consistency.'],
+ ['Ton carnet s’adapte à ton quotidien.','Your log adapts to your daily life.'],['Ton journal est prêt. Ajoute ton premier repas.','Your journal is ready. Add your first meal.'],
+ ['Calories sur 7 jours','Calories over 7 days'],['Journal & réglages','Journal & settings'],['% de ton repère','% of your target'],
+ ['À partir de tes repas enregistrés.','Based on your recorded meals.'],['Ajout rapide','Quick add'],['Analyse nutritionnelle · aperçu','Nutrition analysis · preview'],
+ ['Analyse nutritionnelle IA','AI nutrition analysis'],['Repères généraux','General guidelines'],['Analyse nutritionnelle','Nutrition analysis'],
+ ['Pourcentages : parts de l’énergie apportée par les macronutriments.','Percentages: share of energy supplied by macronutrients.'],['Retrouver mon journal alimentaire','Return to my food journal'],
+ ['Compose tes repas selon tes besoins, tes goûts et ta faim.','Plan your meals around your needs, tastes and hunger.'],
+ ['Utilise ton journal pour observer tes habitudes, sans viser la perfection.','Use your journal to observe your habits without aiming for perfection.'],
+ ['Pour un accompagnement adapté à ta santé, demande conseil à un professionnel.','For guidance tailored to your health, seek advice from a professional.'],
+ ['Petit-déj · Énergie','Breakfast · Energy'],['Flocons d’avoine','Oats'],['Banane','Banana'],['Yaourt grec','Greek yoghurt'],['Base riche en glucides + protéines.','A base rich in carbs + protein.'],
+ ['Déjeuner · Performance','Lunch · Performance'],['Poulet grillé','Grilled chicken'],['Riz basmati','Basmati rice'],['Légumes verts','Green vegetables'],['Huile d’olive','Olive oil'],
+ ['Idéal avant une séance l’après-midi.','Ideal before an afternoon workout.'],['Pré-workout','Pre-workout'],['Skyr ou yaourt','Skyr or yoghurt'],['Café si tu en consommes','Coffee if you drink it'],
+ ['Simple et digeste, environ 60–120 min avant.','Simple and easy to digest, about 60–120 min beforehand.'],['Dîner · Récupération','Dinner · Recovery'],
+ ['Saumon ou œufs','Salmon or eggs'],['Pommes de terre','Potatoes'],['Légumes','Vegetables'],['Fruit','Fruit'],['Repas complet, à adapter à tes objectifs.','A complete meal to adapt to your goals.']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),

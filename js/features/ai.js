@@ -31,14 +31,14 @@ function coachPage(){
 /* 11. Nutrition IA */
 function nutriAIPage(){
  const ms=todayMeals(),S=DB.settings,pct=Math.min(100,Math.round(ms.kcal/Math.max(1,S.calories)*100)),sh=macroShares(ms);
- const tips=(AI_CONNECTED&&AI_HOOKS.nutritionTips&&AI_HOOKS.nutritionTips())||AI_PLACEHOLDER.tips;
+ const tips=(AI_CONNECTED&&AI_HOOKS.nutritionTips&&AI_HOOKS.nutritionTips())||AI_PLACEHOLDER.tips.map(key=>t(key));
  const icons=['bolt','flame','habit'];
- const card=()=>`<section class="eh-card ai-tips"><div class="ai-th">${ico('bolt')}<b>Repères généraux</b></div>${tips.map((t,i)=>`<div class="ai-tip"><span class="ai-dot">${ico(icons[i%3])}</span><p>${esc(t)}</p></div>`).join('')}</section>`;
- return `<div class="r-page">${subHead('Analyse nutritionnelle','nutrition')}
+ const card=()=>`<section class="eh-card ai-tips"><div class="ai-th">${ico('bolt')}<b>${t("Repères généraux")}</b></div>${tips.map((t,i)=>`<div class="ai-tip"><span class="ai-dot">${ico(icons[i%3])}</span><p>${esc(t)}</p></div>`).join('')}</section>`;
+ return `<div class="r-page">${subHead(t("Analyse nutritionnelle"),'nutrition')}
  <div class="r-nut rise" style="--i:1"><div class="r-ring" style="--v:${pct}"><div><b>${ms.kcal}</b><small>kcal</small></div></div>
-  <div class="r-macros">${[['Protéines',sh.p],['Glucides',sh.c],['Lipides',sh.f]].map(x=>`<div class="r-macro"><div><small>${x[0]}</small><b>${x[1]}%</b></div><div class="progress"><i style="width:${x[1]}%"></i></div></div>`).join('')}</div></div>
- <p class="sub">Pourcentages : parts de l’énergie apportée par les macronutriments.</p><div class="rise" style="--i:2;display:grid;gap:12px">${card()}</div>${aiNote()}
- <button class="eh-go rise" style="--i:3" onclick="nav('nutrition')">Retrouver mon journal alimentaire</button></div>`;
+  <div class="r-macros">${[[t("Protéines"),sh.p],[t("Glucides"),sh.c],[t("Lipides"),sh.f]].map(x=>`<div class="r-macro"><div><small>${x[0]}</small><b>${x[1]}%</b></div><div class="progress"><i style="width:${x[1]}%"></i></div></div>`).join('')}</div></div>
+ <p class="sub">${t("Pourcentages : parts de l’énergie apportée par les macronutriments.")}</p><div class="rise" style="--i:2;display:grid;gap:12px">${card()}</div>${aiNote()}
+ <button class="eh-go rise" style="--i:3" onclick="nav('nutrition')">${t("Retrouver mon journal alimentaire")}</button></div>`;
 }
 
 /* 10. Calendrier : la sélection porte uniquement sur des séances enregistrées. */
