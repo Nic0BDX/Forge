@@ -157,7 +157,17 @@ const I18N_ENTRIES = [
  ['Ex. 100 kg au développé couché','E.g. 100 kg bench press'],['Type','Type'],['Performance','Performance'],['Poids','Weight'],['Habitude','Habit'],
  ['Valeur actuelle','Current value'],['Cible','Target'],['Créer','Create'],
  ['Donne un nom à cet objectif (1 à 1 000 caractères).','Give this goal a name (1 to 1,000 characters).'],
- ['La valeur actuelle doit être positive ou nulle et la cible supérieure à 0.','The current value must be zero or greater and the target greater than 0.']
+ ['La valeur actuelle doit être positive ou nulle et la cible supérieure à 0.','The current value must be zero or greater and the target greater than 0.'],
+ ['THÈME · ROUTINE','THEME · ROUTINE'],['Routine','Routine'],['Un fil conducteur pour structurer ta journée.','A guiding thread to structure your day.'],
+ ['SÉANCE','WORKOUT'],['JOURNÉE','DAY'],['Hydratation','Hydration'],['Eau','Water'],
+ ['Repères simples : un peu régulièrement plutôt qu’une grosse quantité d’un coup. Ajuste selon chaleur, activité et soif.','Simple guidelines: drink small amounts regularly rather than a lot at once. Adjust for heat, activity and thirst.'],
+ ['Garde des horaires de sommeil aussi réguliers que possible et prévois des jours plus légers lorsque la fatigue s’accumule.','Keep your sleep schedule as regular as possible and plan lighter days when fatigue builds up.'],
+ ['Gérer mes habitudes','Manage my habits'],['ROUTINES','ROUTINES'],['Construis ta régularité.','Build consistency.'],
+ ['Hydratation & sommeil','Hydration & sleep'],['Enregistrer le sommeil','Record sleep'],['Nouvelle habitude','New habit'],
+ ['Ex. Marche 8 000 pas','E.g. Walk 8,000 steps'],['Donne un nom à cette habitude (1 à 1 000 caractères).','Give this habit a name (1 to 1,000 characters).'],
+ ['Les XP doivent être un entier entre 0 et 1 000 000.','XP must be a whole number between 0 and 1,000,000.'],
+ ['Durée (heures)','Duration (hours)'],['Qualité / 5','Quality / 5'],
+ ['Indique une durée de 0 à 24 heures et une qualité de 1 à 5.','Enter a duration from 0 to 24 hours and a quality from 1 to 5.'],['Sommeil enregistré','Sleep recorded']
 ];
 const I18N = {
  fr:Object.fromEntries(I18N_ENTRIES.map(([source])=>[source,source])),
